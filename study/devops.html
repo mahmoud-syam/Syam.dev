@@ -3,94 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stage 01 · Linux — SYAM.DEV</title>
-<style>
-  :root{
-    --bg: #0a0e1a;
-    --card: #0e1424;
-    --card-hover: #121a30;
-    --border: #1d2540;
-    --text: #eef1f8;
-    --text-dim: #93a0bd;
-    --gold: #eab147;
-    --blue: #6ea8ee;
-    --teal: #4fd1c5;
-    --purple: #b58cf0;
-    --green: #4ade80;
-    --gray: #667085;
-    --code-bg: #0c1120;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--bg);color:var(--text);font-family:"Segoe UI", Tahoma, Arial, sans-serif;line-height:1.7;}
-  header{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;flex-wrap:wrap;gap:16px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:10;}
-  .brand{display:flex;align-items:center;gap:4px;}
-  .brand .logo{width:66px;height:66px;display:flex;align-items:center;justify-content:center;}
-  .brand .titles b{display:block;font-size:1.05rem;}
-  .brand .titles span{display:block;font-size:.72rem;color:var(--gold);letter-spacing:1px;}
-  nav{display:flex;gap:24px;flex-wrap:wrap;}
-  nav a{color:var(--text);text-decoration:none;font-size:.9rem;opacity:.85;}
-  nav a.active{color:var(--gold);opacity:1;}
-
-  .crumb{max-width:1000px;margin:0 auto;padding:20px 24px 0;font-size:.82rem;color:var(--text-dim);}
-  .crumb a{color:var(--text-dim);text-decoration:none;}
-  .crumb b{color:var(--gold);}
-
-  .pagehead{max-width:1000px;margin:0 auto;padding:14px 24px 30px;}
-  .pagehead .tag{color:var(--gold);font-size:.78rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:10px;}
-  .pagehead h1{font-size:2rem;margin-bottom:10px;}
-  .pagehead p{color:var(--text-dim);max-width:680px;margin-bottom:24px;}
-
-  .statbar{display:flex;gap:14px;flex-wrap:wrap;}
-  .stat{border:1px solid var(--border);background:var(--card);border-radius:10px;padding:12px 20px;min-width:100px;}
-  .stat b{display:block;color:var(--gold);font-size:1.3rem;}
-  .stat span{color:var(--text-dim);font-size:.75rem;}
-
-  .jump{max-width:1000px;margin:0 auto;padding:0 24px 20px;display:flex;gap:10px;flex-wrap:wrap;position:sticky;top:76px;z-index:9;}
-  .jump a{font-size:.78rem;padding:6px 14px;border:1px solid var(--border);border-radius:20px;color:var(--text-dim);text-decoration:none;background:var(--bg);}
-  .jump a:hover{border-color:var(--gold);color:var(--gold);}
-
-  main{max-width:1000px;margin:0 auto;padding:10px 24px 60px;}
-  section.block{padding:40px 0;border-top:1px solid var(--border);}
-  section.block:first-of-type{border-top:none;}
-  .block h2{font-size:1.3rem;margin-bottom:6px;}
-  .block .block-sub{color:var(--text-dim);font-size:.88rem;margin-bottom:22px;}
-
-  .topic{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 22px;margin-bottom:16px;}
-  .topic h3{font-size:1rem;margin-bottom:8px;color:var(--gold);}
-  .topic p{color:var(--text-dim);font-size:.9rem;margin-bottom:12px;}
-  .topic code, code{background:var(--code-bg);border:1px solid var(--border);border-radius:5px;padding:1px 6px;font-family:"Cascadia Code","Consolas",monospace;font-size:.85rem;color:var(--teal);}
-  pre{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:14px 16px;overflow-x:auto;font-family:"Cascadia Code","Consolas",monospace;font-size:.83rem;color:var(--text);margin:10px 0;}
-  pre .c{color:var(--text-dim);}
-
-  .cmd-table{width:100%;border-collapse:collapse;font-size:.85rem;}
-  .cmd-table th{text-align:left;color:var(--gold);padding:8px 10px;border-bottom:1px solid var(--border);font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;}
-  .cmd-table td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text-dim);}
-  .cmd-table td code{color:var(--teal);}
-
-  .flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:.85rem;color:var(--text-dim);margin:10px 0 4px;}
-  .flow b{color:var(--text);font-weight:600;}
-  .flow .arrow{color:var(--border);}
-
-  .scenario{border-left:3px solid var(--purple);background:var(--card);border-radius:8px;padding:16px 18px;margin-bottom:14px;}
-  .scenario h4{font-size:.92rem;margin-bottom:8px;}
-
-  .lab-steps{list-style:none;counter-reset:step;}
-  .lab-steps li{counter-increment:step;position:relative;padding:10px 0 10px 34px;border-bottom:1px solid var(--border);font-size:.9rem;color:var(--text-dim);}
-  .lab-steps li::before{content:counter(step);position:absolute;left:0;top:8px;width:22px;height:22px;border:1px solid var(--gold);color:var(--gold);border-radius:6px;font-size:.75rem;display:flex;align-items:center;justify-content:center;}
-  .lab-steps li b{color:var(--text);}
-
-  .done-box{margin-top:30px;border:1px solid var(--gold);border-radius:10px;padding:18px 22px;background:rgba(234,177,71,.06);}
-  .done-box b{color:var(--gold);}
-
-  .pagenav{display:flex;justify-content:space-between;margin-top:40px;padding-top:24px;border-top:1px solid var(--border);}
-  .pagenav a{color:var(--text-dim);text-decoration:none;font-size:.88rem;}
-  .pagenav a:hover{color:var(--gold);}
-
-  footer{border-top:1px solid var(--border);padding:26px 40px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--text-dim);font-size:.8rem;}
-  footer .ref{color:var(--gold);}
-
-  @media (max-width:700px){header{padding:14px 20px;}.jump{position:static;}}
-</style>
+<title>DevOps Roadmap — SYAM.DEV</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 
@@ -100,259 +14,152 @@
     <div class="titles"><b>SYAM.DEV</b></div>
   </div>
   <nav>
-    <a href="../../../index.html">Topics</a>
-    <a href="../index.html">Roadmap</a>
-    <a href="../../index.html" class="active">Study</a>
-    <a href="#">Resources</a>
+    <a href="../index.html">Topics</a>
+    <a href="devops.html" class="active">Study</a>
+    <a href="../index.html#resources">Resources</a>
+    <a href="../index.html#about">About</a>
   </nav>
 </header>
 
-<div class="crumb"><a href="../index.html">DevOps Roadmap</a> / <b>Stage 01 · Linux</b></div>
+<div class="hero">
+  <div class="eyebrow">Study Roadmap · DevOps Track</div>
+  <h1>From SysAdmin to <span class="accent">DevOps Engineer</span></h1>
+  <p>A self-paced, hands-on path from Linux fundamentals to SRE. Fourteen stages, each one a full study page with explanations, commands, troubleshooting flows, and a lab — not just a checklist.</p>
 
-<div class="pagehead">
-  <div class="tag">Stage 01 of 14</div>
-  <h1>🐧 Linux</h1>
-  <p>The base every other stage stands on. Filesystem, permissions, processes, storage, networking, logs — and the muscle memory to troubleshoot all of it without a tutorial open in another tab.</p>
-
-  <div class="statbar">
-    <div class="stat"><b>5</b><span>Topic groups</span></div>
-    <div class="stat"><b>~14h</b><span>Est. study time</span></div>
-    <div class="stat"><b>8</b><span>Troubleshooting labs</span></div>
-    <div class="stat"><b>Not started</b><span>Status</span></div>
+  <div class="stats">
+    <div class="stat"><b>14</b><span>Stages</span></div>
+    <div class="stat"><b>31</b><span>Topic groups</span></div>
+    <div class="stat"><b>~170h</b><span>Est. study time</span></div>
+    <div class="stat"><b>9</b><span>Hands-on projects</span></div>
   </div>
 </div>
 
-<div class="jump">
-  <a href="#fundamentals">Fundamentals</a>
-  <a href="#storage">Storage</a>
-  <a href="#networking">Networking</a>
-  <a href="#logs">Logs & Performance</a>
-  <a href="#troubleshooting">Troubleshooting Labs</a>
-  <a href="#lab">Hands-on Lab</a>
-  <a href="#cheatsheet">Cheat Sheet</a>
-</div>
+<section>
+  <div class="sec-eyebrow">The fourteen stages</div>
+  <a class="sec-link" href="devops-roadmap.html">See the full roadmap →</a>
+  <div class="sec-sub">An ordered chain — Linux first, interview prep last. Start at Stage 01 and go in order. All fourteen pages are built.</div>
 
-<main>
-
-  <section class="block" id="fundamentals">
-    <h2>Fundamentals</h2>
-    <div class="block-sub">The concepts every other topic on this page assumes you already have.</div>
-
-    <div class="topic">
-      <h3>Filesystem & permissions</h3>
-      <p>Everything in Linux is a file, organized under a single root tree. Know what lives where before you touch anything: <code>/etc</code> config, <code>/var</code> logs & variable data, <code>/home</code> user files, <code>/proc</code> a live view of the kernel and running processes.</p>
-      <pre>ls -la /etc          <span class="c"># long listing, shows owner/group/permissions</span>
-chmod 750 script.sh   <span class="c"># rwx for owner, r-x for group, nothing for others</span>
-chown mahmoud:sysadmins file.txt
-umask                 <span class="c"># default permission mask for new files</span></pre>
-    </div>
-
-    <div class="topic">
-      <h3>Users, groups & sudo</h3>
-      <p>User accounts live in <code>/etc/passwd</code>, group membership in <code>/etc/group</code>. Never edit <code>/etc/sudoers</code> directly — always <code>visudo</code>, which validates syntax before saving so you can't lock yourself out.</p>
-      <pre>useradd -m -s /bin/bash newuser
-usermod -aG sudo newuser
-groups newuser
-visudo</pre>
-    </div>
-
-    <div class="topic">
-      <h3>Processes & signals</h3>
-      <p>Every running program is a process with a PID. Signals are how you talk to it — <code>SIGTERM</code> (15) asks nicely, <code>SIGKILL</code> (9) doesn't ask.</p>
-      <pre>ps aux | grep nginx
-kill -15 1234          <span class="c"># graceful stop</span>
-kill -9 1234            <span class="c"># force kill, last resort</span>
-nice -n 10 ./script.sh   <span class="c"># lower priority</span></pre>
-    </div>
-
-    <div class="topic">
-      <h3>systemd & services</h3>
-      <p>Almost every modern distro boots and manages services through systemd. A unit file describes a service; <code>systemctl</code> is how you control it.</p>
-      <pre>systemctl status sshd
-systemctl restart sshd
-systemctl enable sshd    <span class="c"># start on boot</span>
-journalctl -u sshd -n 50 --no-pager</pre>
-    </div>
-
-    <div class="topic">
-      <h3>Package management, SSH, cron</h3>
-      <p>Know your distro's package manager (<code>apt</code> on Debian/Ubuntu, <code>dnf</code>/<code>yum</code> on RHEL-family). SSH keys beat passwords for anything you touch regularly. Scheduled jobs: <code>cron</code> for simple recurring tasks, systemd timers for anything that needs logging or dependencies.</p>
-      <pre>apt update && apt install nginx -y
-ssh-keygen -t ed25519 -C "mahmoud@syam.dev"
-ssh-copy-id user@server
-crontab -e
-<span class="c"># 0 2 * * * /scripts/backup.sh   → every day at 02:00</span></pre>
-    </div>
-  </section>
-
-  <section class="block" id="storage">
-    <h2>Storage</h2>
-    <div class="block-sub">Partitions, filesystems, and how to not run out of either disk or inodes.</div>
-
-    <div class="topic">
-      <h3>Partitions & filesystems</h3>
-      <pre>lsblk                    <span class="c"># see disks & partitions</span>
-fdisk -l /dev/sda
-mkfs.ext4 /dev/sdb1
-mount /dev/sdb1 /mnt/data</pre>
-    </div>
-
-    <div class="topic">
-      <h3>Persistent mounts — /etc/fstab</h3>
-      <p>A mount you set with <code>mount</code> disappears on reboot. Add it to <code>/etc/fstab</code> to make it permanent — always test with <code>mount -a</code> before rebooting, a bad fstab entry can stop a machine from booting cleanly.</p>
-      <pre>UUID=xxxx-xxxx  /mnt/data  ext4  defaults  0  2
-mount -a   <span class="c"># applies fstab without reboot — test here first</span></pre>
-    </div>
-
-    <div class="topic">
-      <h3>LVM (Logical Volume Manager)</h3>
-      <p>Lets you resize storage without repartitioning. Physical Volume → Volume Group → Logical Volume.</p>
-      <pre>pvcreate /dev/sdb
-vgcreate data_vg /dev/sdb
-lvcreate -L 20G -n data_lv data_vg
-lvextend -L +10G /dev/data_vg/data_lv</pre>
-    </div>
-
-    <div class="topic">
-      <h3>Disk & inode usage</h3>
-      <p><code>df</code> can show 0% full while you're still out of space — that's inode exhaustion, usually from millions of tiny files.</p>
-      <pre>df -h        <span class="c"># disk space</span>
-df -i         <span class="c"># inode usage</span>
-du -sh /var/*  <span class="c"># what's actually using the space</span></pre>
-    </div>
-  </section>
-
-  <section class="block" id="networking">
-    <h2>Networking</h2>
-    <div class="block-sub">Diagnosing connectivity from the command line, layer by layer.</div>
-
-    <table class="cmd-table">
-      <tr><th>Command</th><th>What it tells you</th></tr>
-      <tr><td><code>ip addr</code></td><td>Interfaces and their IPs</td></tr>
-      <tr><td><code>ip route</code></td><td>Routing table / default gateway</td></tr>
-      <tr><td><code>ss -tulnp</code></td><td>Listening ports and which process owns them</td></tr>
-      <tr><td><code>ping -c4 host</code></td><td>Basic reachability</td></tr>
-      <tr><td><code>traceroute host</code></td><td>Which hop the traffic dies at</td></tr>
-      <tr><td><code>curl -v url</code></td><td>Full HTTP request/response, TLS handshake included</td></tr>
-      <tr><td><code>dig domain</code></td><td>DNS resolution, which record type, which server answered</td></tr>
-    </table>
-
-    <div class="topic" style="margin-top:16px;">
-      <h3>DNS troubleshooting order</h3>
-      <div class="flow"><b>dig domain</b><span class="arrow">→</span><b>check /etc/resolv.conf</b><span class="arrow">→</span><b>dig @8.8.8.8 domain</b><span class="arrow">→</span><b>compare results</b></div>
-      <p>If a public resolver (8.8.8.8) resolves fine but the configured one doesn't, the problem is your DNS server, not the domain.</p>
-    </div>
-  </section>
-
-  <section class="block" id="logs">
-    <h2>Logs & Performance</h2>
-    <div class="block-sub">Where the evidence lives, and how to read system load correctly.</div>
-
-    <table class="cmd-table">
-      <tr><th>Command</th><th>Use it for</th></tr>
-      <tr><td><code>journalctl -xe</code></td><td>Most recent systemd logs with explanations</td></tr>
-      <tr><td><code>tail -f /var/log/syslog</code></td><td>Live-follow a log file</td></tr>
-      <tr><td><code>top</code> / <code>htop</code></td><td>Live CPU/memory per process</td></tr>
-      <tr><td><code>free -h</code></td><td>Memory + swap usage</td></tr>
-      <tr><td><code>vmstat 2</code></td><td>CPU/memory/IO snapshots every 2s</td></tr>
-      <tr><td><code>iostat -x 2</code></td><td>Disk I/O saturation per device</td></tr>
-      <tr><td><code>uptime</code></td><td>Load average — 1/5/15 min</td></tr>
-    </table>
-
-    <div class="topic" style="margin-top:16px;">
-      <h3>Reading load average</h3>
-      <p>Load average means "processes waiting for CPU time," not "% CPU used." A load of <code>4.0</code> is fine on an 8-core box and a fire on a 2-core box — always compare against <code>nproc</code>.</p>
-    </div>
-  </section>
-
-  <section class="block" id="troubleshooting">
-    <h2>Troubleshooting Labs</h2>
-    <div class="block-sub">Eight scenarios. Work each one with the diagnostic flow, not the fix — the flow is the skill.</div>
-
-    <div class="scenario">
-      <h4>Service won't start</h4>
-      <div class="flow"><b>systemctl status svc</b><span class="arrow">→</span><b>journalctl -u svc -n 50</b><span class="arrow">→</span><b>check config syntax</b><span class="arrow">→</span><b>check port conflicts (ss -tulnp)</b></div>
-    </div>
-    <div class="scenario">
-      <h4>Disk is full</h4>
-      <div class="flow"><b>df -h</b><span class="arrow">→</span><b>du -sh /var/* /home/*</b><span class="arrow">→</span><b>lsof +L1 (deleted-but-held files)</b><span class="arrow">→</span><b>clear or extend</b></div>
-    </div>
-    <div class="scenario">
-      <h4>High CPU</h4>
-      <div class="flow"><b>top</b><span class="arrow">→</span><b>identify PID</b><span class="arrow">→</span><b>ps -o cmd= -p PID</b><span class="arrow">→</span><b>decide: kill, renice, or scale</b></div>
-    </div>
-    <div class="scenario">
-      <h4>High memory</h4>
-      <div class="flow"><b>free -h</b><span class="arrow">→</span><b>top sorted by %MEM</b><span class="arrow">→</span><b>check for swap thrashing (vmstat)</b></div>
-    </div>
-    <div class="scenario">
-      <h4>High load average</h4>
-      <div class="flow"><b>uptime</b><span class="arrow">→</span><b>compare vs nproc</b><span class="arrow">→</span><b>vmstat 2 (CPU-bound vs IO-bound?)</b><span class="arrow">→</span><b>iostat if IO-bound</b></div>
-    </div>
-    <div class="scenario">
-      <h4>DNS failure</h4>
-      <div class="flow"><b>dig domain</b><span class="arrow">→</span><b>cat /etc/resolv.conf</b><span class="arrow">→</span><b>dig @8.8.8.8 domain</b><span class="arrow">→</span><b>isolate client vs server</b></div>
-    </div>
-    <div class="scenario">
-      <h4>Network failure</h4>
-      <div class="flow"><b>ip addr</b><span class="arrow">→</span><b>ip route</b><span class="arrow">→</span><b>ping gateway</b><span class="arrow">→</span><b>ping external IP</b><span class="arrow">→</span><b>ping domain</b></div>
-    </div>
-    <div class="scenario">
-      <h4>Broken mount</h4>
-      <div class="flow"><b>mount | grep path</b><span class="arrow">→</span><b>cat /etc/fstab</b><span class="arrow">→</span><b>mount -a</b><span class="arrow">→</span><b>check UUID with blkid</b></div>
-    </div>
-  </section>
-
-  <section class="block" id="lab">
-    <h2>Hands-on Lab</h2>
-    <div class="block-sub">Build it once with your own hands — this is what actually makes it stick.</div>
-
-    <ol class="lab-steps">
-      <li><b>Build 2–3 Linux VMs</b> — one Ubuntu/Debian, one RHEL-family (Rocky/AlmaLinux) so you see both package managers.</li>
-      <li><b>Configure SSH</b> — key-based auth only, disable password login in <code>sshd_config</code>.</li>
-      <li><b>Create users & groups</b> — one admin user with sudo, one restricted user.</li>
-      <li><b>Deploy a web server</b> — nginx or Apache, serving a static page.</li>
-      <li><b>Configure the firewall</b> — allow only SSH + HTTP, deny everything else.</li>
-      <li><b>Investigate the logs</b> — find the web server's access/error logs, tail them while you curl the site.</li>
-      <li><b>Break something on purpose</b> — stop the service, fill the disk, kill a process — then use the flows above to diagnose it.</li>
-      <li><b>Practice disk management</b> — add a second disk, partition it, mount it persistently via fstab.</li>
-    </ol>
-  </section>
-
-  <section class="block" id="cheatsheet">
-    <h2>Cheat Sheet</h2>
-    <div class="block-sub">The one page to keep open in the next lab.</div>
-    <pre># Permissions
-chmod 750 file   chown user:group file   umask
-
-# Processes
-ps aux | grep name    kill -15 PID    top / htop
-
-# systemd
-systemctl status|restart|enable svc    journalctl -u svc -xe
-
-# Storage
-lsblk    df -h    df -i    du -sh path    mount -a
-
-# Networking
-ip addr    ip route    ss -tulnp    dig domain    curl -v url
-
-# Logs & performance
-journalctl -xe    tail -f /var/log/syslog    free -h    vmstat 2    uptime</pre>
-  </section>
-
-  <div class="done-box"><b>Done when:</b> you can troubleshoot Linux without a step-by-step tutorial open in another tab.</div>
-
-  <div class="pagenav">
-    <a href="../index.html">← Back to Roadmap</a>
-    <a href="../page-02/index.html">Stage 02 · Git →</a>
+  <div class="grid">
+    <a class="stage-card" href="devops/linux.html" style="--bar: var(--blue)">
+      <span class="p-badge">01</span>
+      <h3>🐧 Linux</h3>
+      <div class="meta">5 topic groups · ~14h · 8 troubleshooting labs</div>
+      <span class="status live">Page live</span>
+    </a>
+    <a class="stage-card" href="devops/git.html" style="--bar: var(--teal)">
+      <span class="p-badge">02</span>
+      <h3>🔀 Git</h3>
+      <div class="meta">2 topic groups · ~4h</div>
+      <span class="status live">Page live</span>
+    </a>
+    <a class="stage-card" href="devops/bash.html" style="--bar: var(--purple)">
+      <span class="p-badge">03</span>
+      <h3>⚙️ Bash & Automation</h3>
+      <div class="meta">2 topic groups · ~10h · admin toolkit project</div>
+      <span class="status live">Page live</span>
+    </a>
+    <a class="stage-card" href="devops/python.html" style="--bar: var(--gold)">
+      <span class="p-badge">04</span>
+      <h3>🐍 Python for DevOps</h3>
+      <div class="meta">2 topic groups · ~10h</div>
+      <span class="status live">Page live</span>
+    </a>
+    <a class="stage-card" href="devops/ansible.html" style="--bar: var(--green)">
+      <span class="p-badge">05</span>
+      <h3>🤖 Ansible</h3>
+      <div class="meta">1 topic group · ~8h · automate 3 servers</div>
+      <span class="status live">Page live</span>
+    </a>
+    <a class="stage-card" href="devops/aws.html" style="--bar: var(--blue)">
+      <span class="p-badge">06</span>
+      <h3>☁️ AWS</h3>
+      <div class="meta">3 topic groups · ~14h</div>
+      <span class="status live">Page live</span>
+    </a>
+    <a class="stage-card" href="devops/terraform.html" style="--bar: var(--teal)">
+      <span class="p-badge">07</span>
+      <h3>🏗️ Terraform</h3>
+      <div class="meta">1 topic group · ~8h</div>
+      <span class="status live">Page live</span>
+    </a>
+    <a class="stage-card" href="devops/docker.html" style="--bar: var(--purple)">
+      <span class="p-badge">08</span>
+      <h3>🐳 Docker</h3>
+      <div class="meta">1 topic group · ~8h</div>
+      <span class="status live">Page live</span>
+    </a>
+    <a class="stage-card" href="devops/kubernetes.html" style="--bar: var(--gold)">
+      <span class="p-badge">09</span>
+      <h3>☸️ Kubernetes</h3>
+      <div class="meta">4 topic groups · ~16h</div>
+      <span class="status live">Page live</span>
+    </a>
+    <a class="stage-card" href="devops/cicd.html" style="--bar: var(--green)">
+      <span class="p-badge">10</span>
+      <h3>🔄 CI/CD</h3>
+      <div class="meta">2 topic groups · ~8h</div>
+      <span class="status live">Page live</span>
+    </a>
+    <a class="stage-card" href="devops/observability.html" style="--bar: var(--blue)">
+      <span class="p-badge">11</span>
+      <h3>📊 Observability</h3>
+      <div class="meta">2 topic groups · ~10h</div>
+      <span class="status live">Page live</span>
+    </a>
+    <a class="stage-card" href="devops/sre.html" style="--bar: var(--teal)">
+      <span class="p-badge">12</span>
+      <h3>🧠 SRE</h3>
+      <div class="meta">3 topic groups · ~8h</div>
+      <span class="status live">Page live</span>
+    </a>
+    <a class="stage-card" href="devops/projects.html" style="--bar: var(--purple)">
+      <span class="p-badge">13</span>
+      <h3>🚀 Real-World Projects</h3>
+      <div class="meta">9 projects · ~40h</div>
+      <span class="status live">Page live</span>
+    </a>
+    <a class="stage-card" href="devops/interview.html" style="--bar: var(--gold)">
+      <span class="p-badge">14</span>
+      <h3>🎤 Interview Preparation</h3>
+      <div class="meta">1 topic group · ~10h</div>
+      <span class="status live">Page live</span>
+    </a>
   </div>
+</section>
 
-</main>
+<section>
+  <div class="sec-eyebrow">Existing Strengths</div>
+  <div class="sec-sub">Solid foundations already in place — building on these rather than relearning from scratch.</div>
+  <div class="grid">
+    <div class="icon-card strength-card"><h3>Networking</h3><p>Strong already, from current work experience.</p></div>
+    <div class="icon-card strength-card"><h3>Virtualization</h3><p>Strong already, from current work experience.</p></div>
+    <div class="icon-card strength-card"><h3>Windows</h3><p>Strong already, from current work experience.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-eyebrow">Resources</div>
+  <div class="sec-sub">Reference material that supports every stage.</div>
+  <div class="grid">
+    <a class="icon-card" href="devops-roadmap.html" style="--bar: var(--blue)"><span class="ic">🗺</span><h3>Full Roadmap</h3><p>Every topic group, its hours, and which stage it belongs to.</p></a>
+    <a class="icon-card" href="#" style="--bar: var(--teal)"><span class="ic">📋</span><h3>Cheat Sheets</h3><p>One per stage, printable — the page you keep open in the next lab.</p></a>
+    <a class="icon-card" href="#" style="--bar: var(--purple)"><span class="ic">📚</span><h3>Glossary</h3><p>Every term across all 14 stages, in plain English.</p></a>
+    <a class="icon-card" href="#" style="--bar: var(--gold)"><span class="ic">✅</span><h3>Progress Tracker</h3><p>Tick off topics as you finish them, across the whole roadmap.</p></a>
+  </div>
+</section>
+
+<section>
+  <div class="sec-eyebrow">About this roadmap</div>
+  <div class="grid">
+    <div class="icon-card" style="--bar: var(--blue)"><h3>Who it's for</h3><p>Me — moving from SysAdmin into DevOps, then SRE / Platform Engineering. Networking, virtualization and Windows fundamentals are assumed, not re-taught.</p></div>
+    <div class="icon-card" style="--bar: var(--teal)"><h3>How it works</h3><p>Learn → Practice → Lab → Build → Document → Review. Every stage ends in something built by hand, not just read.</p></div>
+    <div class="icon-card" style="--bar: var(--purple)"><h3>What I leave with</h3><p>9 real projects, a working home lab, and the ability to troubleshoot each layer of the stack without a tutorial open.</p></div>
+  </div>
+</section>
 
 <footer>
   <div>SYAM.DEV</div>
-  <div class="ref">Study Roadmap · DevOps Track · Stage 01</div>
+  <div class="ref">Study Roadmap · DevOps Track</div>
 </footer>
 
 </body>

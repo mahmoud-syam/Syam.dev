@@ -3,168 +3,147 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stage 04 · Python for DevOps — SYAM.DEV</title>
-<style>
-  :root{--bg:#0a0e1a;--card:#0e1424;--card-hover:#121a30;--border:#1d2540;--text:#eef1f8;--text-dim:#93a0bd;--gold:#eab147;--blue:#6ea8ee;--teal:#4fd1c5;--purple:#b58cf0;--green:#4ade80;--gray:#667085;--code-bg:#0c1120;}
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--bg);color:var(--text);font-family:"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.7;}
-  header{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;flex-wrap:wrap;gap:16px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:10;}
-  .brand{display:flex;align-items:center;gap:4px;}
-  .brand .logo{width:66px;height:66px;display:flex;align-items:center;justify-content:center;}
-  .brand .titles b{display:block;font-size:1.05rem;}
-  .brand .titles span{display:block;font-size:.72rem;color:var(--gold);letter-spacing:1px;}
-  nav{display:flex;gap:24px;flex-wrap:wrap;}
-  nav a{color:var(--text);text-decoration:none;font-size:.9rem;opacity:.85;}
-  nav a.active{color:var(--gold);opacity:1;}
-  .crumb{max-width:1000px;margin:0 auto;padding:20px 24px 0;font-size:.82rem;color:var(--text-dim);}
-  .crumb a{color:var(--text-dim);text-decoration:none;}
-  .crumb b{color:var(--gold);}
-  .pagehead{max-width:1000px;margin:0 auto;padding:14px 24px 30px;}
-  .pagehead .tag{color:var(--gold);font-size:.78rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:10px;}
-  .pagehead h1{font-size:2rem;margin-bottom:10px;}
-  .pagehead p{color:var(--text-dim);max-width:680px;margin-bottom:24px;}
-  .statbar{display:flex;gap:14px;flex-wrap:wrap;}
-  .stat{border:1px solid var(--border);background:var(--card);border-radius:10px;padding:12px 20px;min-width:100px;}
-  .stat b{display:block;color:var(--gold);font-size:1.3rem;}
-  .stat span{color:var(--text-dim);font-size:.75rem;}
-  .jump{max-width:1000px;margin:0 auto;padding:0 24px 20px;display:flex;gap:10px;flex-wrap:wrap;position:sticky;top:76px;z-index:9;}
-  .jump a{font-size:.78rem;padding:6px 14px;border:1px solid var(--border);border-radius:20px;color:var(--text-dim);text-decoration:none;background:var(--bg);}
-  .jump a:hover{border-color:var(--gold);color:var(--gold);}
-  main{max-width:1000px;margin:0 auto;padding:10px 24px 60px;}
-  section.block{padding:40px 0;border-top:1px solid var(--border);}
-  section.block:first-of-type{border-top:none;}
-  .block h2{font-size:1.3rem;margin-bottom:6px;}
-  .block .block-sub{color:var(--text-dim);font-size:.88rem;margin-bottom:22px;}
-  .topic{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 22px;margin-bottom:16px;}
-  .topic h3{font-size:1rem;margin-bottom:8px;color:var(--gold);}
-  .topic p{color:var(--text-dim);font-size:.9rem;margin-bottom:12px;}
-  code{background:var(--code-bg);border:1px solid var(--border);border-radius:5px;padding:1px 6px;font-family:"Cascadia Code","Consolas",monospace;font-size:.85rem;color:var(--teal);}
-  pre{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:14px 16px;overflow-x:auto;font-family:"Cascadia Code","Consolas",monospace;font-size:.83rem;color:var(--text);margin:10px 0;}
-  pre .c{color:var(--text-dim);}
-  .lab-steps{list-style:none;counter-reset:step;}
-  .lab-steps li{counter-increment:step;position:relative;padding:10px 0 10px 34px;border-bottom:1px solid var(--border);font-size:.9rem;color:var(--text-dim);}
-  .lab-steps li::before{content:counter(step);position:absolute;left:0;top:8px;width:22px;height:22px;border:1px solid var(--gold);color:var(--gold);border-radius:6px;font-size:.75rem;display:flex;align-items:center;justify-content:center;}
-  .lab-steps li b{color:var(--text);}
-  .done-box{margin-top:30px;border:1px solid var(--gold);border-radius:10px;padding:18px 22px;background:rgba(234,177,71,.06);}
-  .done-box b{color:var(--gold);}
-  .pagenav{display:flex;justify-content:space-between;margin-top:40px;padding-top:24px;border-top:1px solid var(--border);}
-  .pagenav a{color:var(--text-dim);text-decoration:none;font-size:.88rem;}
-  .pagenav a:hover{color:var(--gold);}
-  footer{border-top:1px solid var(--border);padding:26px 40px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--text-dim);font-size:.8rem;}
-  footer .ref{color:var(--gold);}
-  @media (max-width:700px){header{padding:14px 20px;}.jump{position:static;}}
-</style>
+<title>Stage 03 · Bash & Automation — SYAM.DEV</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body>
 
 <header>
   <div class="brand"><div class="logo"><img src="data:image/png;base64,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" alt="SYAM.DEV" style="width:100%;height:100%;object-fit:contain;"></div><div class="titles"><b>SYAM.DEV</b></div></div>
-  <nav><a href="../../../index.html">Topics</a><a href="../index.html">Roadmap</a><a href="../../index.html" class="active">Study</a><a href="#">Resources</a></nav>
+  <nav>
+    <a href="../../index.html">Topics</a>
+    <a href="../devops.html" class="active">Study</a>
+    <a href="../../index.html#resources">Resources</a>
+    <a href="../../index.html#about">About</a>
+  </nav>
 </header>
 
-<div class="crumb"><a href="../index.html">DevOps Roadmap</a> / <b>Stage 04 · Python for DevOps</b></div>
+<div class="crumb"><a href="../devops.html">DevOps Roadmap</a> / <b>Stage 03 · Bash & Automation</b></div>
 
 <div class="pagehead">
-  <div class="tag">Stage 04 of 14</div>
-  <h1>🐍 Python for DevOps</h1>
-  <p>Bash breaks down past a certain complexity. Python is what you reach for once a script needs real logic, API calls, or structured data.</p>
+  <div class="tag">Stage 03 of 14</div>
+  <h1>⚙️ Bash & Automation</h1>
+  <p>The point where you stop clicking through tasks by hand. Everything a DevOps engineer automates starts as a Bash script before it becomes anything more sophisticated.</p>
   <div class="statbar">
     <div class="stat"><b>2</b><span>Topic groups</span></div>
     <div class="stat"><b>~10h</b><span>Est. study time</span></div>
-    <div class="stat"><b>4</b><span>Hands-on labs</span></div>
+    <div class="stat"><b>1</b><span>Toolkit project</span></div>
     <div class="stat"><b>Not started</b><span>Status</span></div>
   </div>
 </div>
 
 <div class="jump">
-  <a href="#fundamentals">Fundamentals</a><a href="#devops-python">DevOps Python</a><a href="#lab">Hands-on Labs</a><a href="#cheatsheet">Cheat Sheet</a>
+  <a href="#bash">Bash</a><a href="#text">Text Processing</a><a href="#automation">Automation Scripts</a><a href="#lab">Hands-on Project</a><a href="#cheatsheet">Cheat Sheet</a>
 </div>
 
 <main>
 
-  <section class="block" id="fundamentals">
-    <h2>Python Fundamentals</h2>
-    <div class="block-sub">Just enough core Python to write real automation, not full software-engineering depth.</div>
+  <section class="block" id="bash">
+    <h2>Bash Fundamentals</h2>
+    <div class="block-sub">Variables, conditions, loops, functions — the building blocks of every script you'll write.</div>
     <div class="topic">
-      <h3>Core types & control flow</h3>
-      <pre>servers = {"web1": "up", "web2": "down"}
-for name, status in servers.items():
-    if status == "down":
-        print(f"{name} needs attention")</pre>
+      <h3>Variables & conditions</h3>
+      <pre>name="mahmoud"
+if [ -f "$file" ]; then
+  echo "exists"
+elif [ -d "$file" ]; then
+  echo "is a directory"
+else
+  echo "not found"
+fi</pre>
     </div>
     <div class="topic">
-      <h3>Functions, exceptions, file handling</h3>
-      <pre>def read_config(path):
-    try:
-        with open(path) as f:
-            return f.read()
-    except FileNotFoundError:
-        print(f"Missing config: {path}")
-        return None</pre>
+      <h3>Loops & functions</h3>
+      <pre>for host in web1 web2 web3; do
+  ping -c1 "$host"
+done
+
+check_disk() {
+  local threshold=$1
+  df -h / | awk -v t="$threshold" 'NR==2 && $5+0 > t {print "over threshold"}'
+}
+check_disk 80</pre>
+    </div>
+    <div class="topic">
+      <h3>Exit codes & pipes</h3>
+      <p>Every command returns an exit code — <code>0</code> means success, anything else is failure. Chain commands with <code>&&</code> (run next only on success) or <code>||</code> (run next only on failure). Pipes (<code>|</code>) feed one command's output into the next.</p>
+      <pre>systemctl restart nginx && echo "restarted" || echo "failed"</pre>
     </div>
   </section>
 
-  <section class="block" id="devops-python">
-    <h2>DevOps Python</h2>
-    <div class="block-sub">The libraries that actually show up in infrastructure scripts.</div>
+  <section class="block" id="text">
+    <h2>Text Processing</h2>
+    <div class="block-sub">The tools that turn raw log output into an actual answer.</div>
+    <table class="cmd-table">
+      <tr><th>Tool</th><th>Use it for</th></tr>
+      <tr><td><code>grep -i "error" file</code></td><td>Find matching lines, case-insensitive</td></tr>
+      <tr><td><code>sed 's/old/new/g' file</code></td><td>Find & replace text</td></tr>
+      <tr><td><code>awk '{print $1,$3}'</code></td><td>Extract columns from structured text</td></tr>
+      <tr><td><code>cut -d: -f1 /etc/passwd</code></td><td>Extract a field by delimiter</td></tr>
+      <tr><td><code>sort | uniq -c</code></td><td>Count occurrences</td></tr>
+      <tr><td><code>xargs</code></td><td>Turn piped input into command arguments</td></tr>
+      <tr><td><code>find . -name "*.log" -mtime +7</code></td><td>Find files by name/age</td></tr>
+      <tr><td><code>jq '.data[0].name'</code></td><td>Parse and query JSON</td></tr>
+    </table>
+  </section>
+
+  <section class="block" id="automation">
+    <h2>Automation Scripts</h2>
+    <div class="block-sub">Real scripts you'll actually reuse, not toy examples.</div>
     <div class="topic">
-      <h3>JSON / YAML</h3>
-      <pre>import json, yaml
-data = json.loads(response.text)
-config = yaml.safe_load(open("config.yaml"))</pre>
+      <h3>Disk monitoring script</h3>
+      <pre>#!/bin/bash
+THRESHOLD=80
+USAGE=$(df / | awk 'NR==2{print $5}' | tr -d '%')
+if [ "$USAGE" -gt "$THRESHOLD" ]; then
+  echo "WARNING: disk at ${USAGE}%" | mail -s "Disk alert" admin@syam.dev
+fi</pre>
     </div>
     <div class="topic">
-      <h3>subprocess & requests</h3>
-      <pre>import subprocess, requests
-
-result = subprocess.run(["systemctl", "is-active", "nginx"], capture_output=True, text=True)
-resp = requests.get("https://api.example.com/health", timeout=5)
-print(resp.status_code, resp.json())</pre>
-    </div>
-    <div class="topic">
-      <h3>argparse & logging</h3>
-      <pre>import argparse, logging
-
-logging.basicConfig(level=logging.INFO)
-parser = argparse.ArgumentParser()
-parser.add_argument("--host", required=True)
-args = parser.parse_args()
-logging.info(f"Checking {args.host}")</pre>
+      <h3>Service health check</h3>
+      <pre>#!/bin/bash
+for svc in nginx sshd docker; do
+  systemctl is-active --quiet "$svc" || echo "$svc is DOWN"
+done</pre>
     </div>
   </section>
 
   <section class="block" id="lab">
-    <h2>Hands-on Labs</h2>
-    <div class="block-sub">Four small tools, each one reusable on its own.</div>
+    <h2>Hands-on Project</h2>
+    <div class="block-sub">Build a Bash Linux administration toolkit — one script, multiple checks.</div>
     <ol class="lab-steps">
-      <li><b>API health checker</b> — hit an endpoint, log status code and latency.</li>
-      <li><b>Server inventory tool</b> — read a list of hosts, SSH or ping each, output a report.</li>
-      <li><b>Log parser</b> — count error types from a log file, print a summary table.</li>
-      <li><b>Disk monitoring script</b> — same idea as the Bash version, in Python with proper exception handling.</li>
+      <li><b>Server health check</b> — combines CPU, memory, disk into one summary.</li>
+      <li><b>Disk check</b> — alert past a usage threshold.</li>
+      <li><b>Memory check</b> — alert on low free memory.</li>
+      <li><b>CPU check</b> — alert on sustained high load.</li>
+      <li><b>Service check</b> — verify a list of critical services are active.</li>
+      <li><b>Log check</b> — grep recent logs for ERROR/CRITICAL lines.</li>
+      <li><b>Network check</b> — ping a list of hosts, report failures.</li>
     </ol>
   </section>
 
   <section class="block" id="cheatsheet">
     <h2>Cheat Sheet</h2>
-    <pre>import json, yaml, subprocess, requests, argparse, logging
+    <pre># Conditions & loops
+if [ -f file ]; then ... fi     for x in a b c; do ... done
 
-json.loads(text) / json.dumps(obj)
-yaml.safe_load(file)
-subprocess.run([...], capture_output=True, text=True)
-requests.get(url, timeout=5)
-logging.basicConfig(level=logging.INFO)</pre>
+# Text processing
+grep -i pattern file   sed 's/a/b/g' file   awk '{print $1}'   sort | uniq -c   jq '.field'
+
+# Exit codes
+cmd1 && cmd2   cmd1 || cmd2   echo $?</pre>
   </section>
 
-  <div class="done-box"><b>Done when:</b> you can write a script that calls an API, parses the response, and logs the result — without copy-pasting from an old project.</div>
+  <div class="done-box"><b>Done when:</b> you can write a script to check something and alert on it, from a blank file, without looking up syntax.</div>
 
   <div class="pagenav">
-    <a href="../page-03/index.html">← Stage 03 · Bash & Automation</a>
-    <a href="../page-05/index.html">Stage 05 · Ansible →</a>
+    <a href="git.html">← Stage 02 · Git</a>
+    <a href="python.html">Stage 04 · Python for DevOps →</a>
   </div>
 
 </main>
 
-<footer><div>SYAM.DEV</div><div class="ref">Study Roadmap · DevOps Track · Stage 04</div></footer>
+<footer><div>SYAM.DEV</div><div class="ref">Study Roadmap · DevOps Track · Stage 03</div></footer>
 
 </body>
 </html>

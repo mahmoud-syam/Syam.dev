@@ -3,72 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DevOps Roadmap — SYAM.DEV</title>
-<style>
-  :root{
-    --bg: #0a0e1a;
-    --card: #0e1424;
-    --card-hover: #121a30;
-    --border: #1d2540;
-    --text: #eef1f8;
-    --text-dim: #93a0bd;
-    --gold: #eab147;
-    --blue: #6ea8ee;
-    --teal: #4fd1c5;
-    --purple: #b58cf0;
-    --green: #4ade80;
-    --gray: #667085;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--bg);color:var(--text);font-family:"Segoe UI", Tahoma, Arial, sans-serif;line-height:1.7;}
-  header{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;flex-wrap:wrap;gap:16px;border-bottom:1px solid var(--border);}
-  .brand{display:flex;align-items:center;gap:4px;}
-  .brand .logo{width:66px;height:66px;display:flex;align-items:center;justify-content:center;}
-  .brand .titles b{display:block;font-size:1.05rem;}
-  .brand .titles span{display:block;font-size:.72rem;color:var(--gold);letter-spacing:1px;}
-  nav{display:flex;gap:24px;flex-wrap:wrap;}
-  nav a{color:var(--text);text-decoration:none;font-size:.9rem;opacity:.85;}
-  nav a.active{color:var(--gold);opacity:1;border-bottom:2px solid var(--gold);padding-bottom:4px;}
-
-  .hero{max-width:900px;margin:0 auto;padding:60px 24px 20px;text-align:center;}
-  .eyebrow{color:var(--gold);font-size:.8rem;letter-spacing:2px;font-weight:600;margin-bottom:16px;text-transform:uppercase;}
-  .hero h1{font-size:2.2rem;font-weight:800;margin-bottom:16px;}
-  .hero h1 .accent{color:var(--gold);}
-  .hero p{color:var(--text-dim);font-size:1rem;max-width:640px;margin:0 auto 30px;}
-
-  .stats{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;}
-  .stat{border:1px solid var(--border);border-radius:10px;padding:16px 26px;min-width:110px;background:var(--card);}
-  .stat b{display:block;font-size:1.5rem;color:var(--gold);}
-  .stat span{color:var(--text-dim);font-size:.78rem;}
-
-  section{max-width:1160px;margin:0 auto;padding:50px 24px;}
-  .sec-eyebrow{color:var(--gold);font-size:.78rem;letter-spacing:2px;font-weight:700;text-transform:uppercase;margin-bottom:10px;}
-  .sec-sub{color:var(--text-dim);font-size:.92rem;margin-bottom:28px;max-width:700px;}
-  .sec-link{float:right;font-size:.82rem;color:var(--gold);text-decoration:none;}
-
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;}
-
-  .stage-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 22px;text-decoration:none;color:var(--text);border-left:4px solid var(--bar,var(--blue));display:block;transition:.2s;}
-  .stage-card:hover{background:var(--card-hover);border-color:var(--gold);}
-  .stage-card .p-badge{display:inline-block;border:1px solid var(--gold);color:var(--gold);font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:5px;margin-bottom:10px;}
-  .stage-card h3{font-size:1rem;margin-bottom:6px;}
-  .stage-card .meta{font-size:.78rem;color:var(--text-dim);margin-bottom:10px;}
-  .stage-card .status{font-size:.72rem;padding:2px 9px;border-radius:20px;border:1px solid var(--gray);color:var(--gray);display:inline-block;}
-  .stage-card .status.live{border-color:var(--green);color:var(--green);}
-
-  .icon-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px;border-left:4px solid var(--bar,var(--gold));text-decoration:none;color:var(--text);display:block;}
-  .icon-card:hover{background:var(--card-hover);}
-  .icon-card .ic{font-size:1.5rem;margin-bottom:10px;display:block;}
-  .icon-card h3{font-size:.98rem;margin-bottom:6px;}
-  .icon-card p{color:var(--text-dim);font-size:.85rem;}
-
-  .strength-card{--bar:var(--green);}
-
-  footer{border-top:1px solid var(--border);padding:26px 40px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--text-dim);font-size:.8rem;}
-  footer .ref{color:var(--gold);}
-
-  @media (max-width:700px){header{padding:14px 20px;}.hero h1{font-size:1.7rem;}.sec-link{float:none;display:block;margin-top:6px;}}
-</style>
+<title>Full Roadmap — SYAM.DEV</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 
@@ -78,152 +14,157 @@
     <div class="titles"><b>SYAM.DEV</b></div>
   </div>
   <nav>
-    <a href="../../index.html">Topics</a>
-    <a href="#" class="active">Study</a>
-    <a href="#">Resources</a>
-    <a href="#">About</a>
+    <a href="../index.html">Topics</a>
+    <a href="devops.html" class="active">Study</a>
+    <a href="../index.html#resources">Resources</a>
+    <a href="../index.html#about">About</a>
   </nav>
 </header>
 
-<div class="hero">
-  <div class="eyebrow">Study Roadmap · DevOps Track</div>
-  <h1>From SysAdmin to <span class="accent">DevOps Engineer</span></h1>
-  <p>A self-paced, hands-on path from Linux fundamentals to SRE. Fourteen stages, each one a full study page with explanations, commands, troubleshooting flows, and a lab — not just a checklist.</p>
+<div class="crumb"><a href="devops.html">DevOps Roadmap</a> / <b>Full Roadmap</b></div>
 
-  <div class="stats">
-    <div class="stat"><b>14</b><span>Stages</span></div>
-    <div class="stat"><b>31</b><span>Topic groups</span></div>
-    <div class="stat"><b>~170h</b><span>Est. study time</span></div>
-    <div class="stat"><b>9</b><span>Hands-on projects</span></div>
-  </div>
+<div class="pagehead">
+  <div class="tag">31 topic groups · 14 stages</div>
+  <h1>Full Roadmap</h1>
+  <p>Every topic group across all 14 stages, in study order. Each stage builds on the one before it — don't skip ahead.</p>
 </div>
 
-<section>
-  <div class="sec-eyebrow">The fourteen stages</div>
-  <a class="sec-link" href="roadmap.html">See the full roadmap →</a>
-  <div class="sec-sub">An ordered chain — Linux first, interview prep last. Start at Stage 01 and go in order. All fourteen pages are built.</div>
+<main>
 
-  <div class="grid">
-    <a class="stage-card" href="page-01/index.html" style="--bar: var(--blue)">
-      <span class="p-badge">01</span>
-      <h3>🐧 Linux</h3>
-      <div class="meta">5 topic groups · ~14h · 8 troubleshooting labs</div>
-      <span class="status live">Page live</span>
-    </a>
-    <a class="stage-card" href="page-02/index.html" style="--bar: var(--teal)">
-      <span class="p-badge">02</span>
-      <h3>🔀 Git</h3>
-      <div class="meta">2 topic groups · ~4h</div>
-      <span class="status live">Page live</span>
-    </a>
-    <a class="stage-card" href="page-03/index.html" style="--bar: var(--purple)">
-      <span class="p-badge">03</span>
-      <h3>⚙️ Bash & Automation</h3>
-      <div class="meta">2 topic groups · ~10h · admin toolkit project</div>
-      <span class="status live">Page live</span>
-    </a>
-    <a class="stage-card" href="page-04/index.html" style="--bar: var(--gold)">
-      <span class="p-badge">04</span>
-      <h3>🐍 Python for DevOps</h3>
-      <div class="meta">2 topic groups · ~10h</div>
-      <span class="status live">Page live</span>
-    </a>
-    <a class="stage-card" href="page-05/index.html" style="--bar: var(--green)">
-      <span class="p-badge">05</span>
-      <h3>🤖 Ansible</h3>
-      <div class="meta">1 topic group · ~8h · automate 3 servers</div>
-      <span class="status live">Page live</span>
-    </a>
-    <a class="stage-card" href="page-06/index.html" style="--bar: var(--blue)">
-      <span class="p-badge">06</span>
-      <h3>☁️ AWS</h3>
-      <div class="meta">3 topic groups · ~14h</div>
-      <span class="status live">Page live</span>
-    </a>
-    <a class="stage-card" href="page-07/index.html" style="--bar: var(--teal)">
-      <span class="p-badge">07</span>
-      <h3>🏗️ Terraform</h3>
-      <div class="meta">1 topic group · ~8h</div>
-      <span class="status live">Page live</span>
-    </a>
-    <a class="stage-card" href="page-08/index.html" style="--bar: var(--purple)">
-      <span class="p-badge">08</span>
-      <h3>🐳 Docker</h3>
-      <div class="meta">1 topic group · ~8h</div>
-      <span class="status live">Page live</span>
-    </a>
-    <a class="stage-card" href="page-09/index.html" style="--bar: var(--gold)">
-      <span class="p-badge">09</span>
-      <h3>☸️ Kubernetes</h3>
-      <div class="meta">4 topic groups · ~16h</div>
-      <span class="status live">Page live</span>
-    </a>
-    <a class="stage-card" href="page-10/index.html" style="--bar: var(--green)">
-      <span class="p-badge">10</span>
-      <h3>🔄 CI/CD</h3>
-      <div class="meta">2 topic groups · ~8h</div>
-      <span class="status live">Page live</span>
-    </a>
-    <a class="stage-card" href="page-11/index.html" style="--bar: var(--blue)">
-      <span class="p-badge">11</span>
-      <h3>📊 Observability</h3>
-      <div class="meta">2 topic groups · ~10h</div>
-      <span class="status live">Page live</span>
-    </a>
-    <a class="stage-card" href="page-12/index.html" style="--bar: var(--teal)">
-      <span class="p-badge">12</span>
-      <h3>🧠 SRE</h3>
-      <div class="meta">3 topic groups · ~8h</div>
-      <span class="status live">Page live</span>
-    </a>
-    <a class="stage-card" href="page-13/index.html" style="--bar: var(--purple)">
-      <span class="p-badge">13</span>
-      <h3>🚀 Real-World Projects</h3>
-      <div class="meta">9 projects · ~40h</div>
-      <span class="status live">Page live</span>
-    </a>
-    <a class="stage-card" href="page-14/index.html" style="--bar: var(--gold)">
-      <span class="p-badge">14</span>
-      <h3>🎤 Interview Preparation</h3>
-      <div class="meta">1 topic group · ~10h</div>
-      <span class="status live">Page live</span>
-    </a>
+  <div class="stage" style="--bar: var(--blue)">
+    <div class="stage-head">
+      <div class="left"><span class="p-badge">01</span><h3>🐧 Linux</h3></div>
+      <div class="hrs">~14h · <a href="devops/linux.html">Open page →</a></div>
+    </div>
+    <div class="topic-row"><span class="name">Fundamentals</span><span class="items">filesystem, permissions, users, sudo, systemd, cron</span></div>
+    <div class="topic-row"><span class="name">Storage</span><span class="items">partitions, LVM, fstab, disk & inode usage</span></div>
+    <div class="topic-row"><span class="name">Networking</span><span class="items">ip, ss, dig, curl, DNS troubleshooting</span></div>
+    <div class="topic-row"><span class="name">Logs & Performance</span><span class="items">journalctl, top, vmstat, load average</span></div>
+    <div class="topic-row"><span class="name">Troubleshooting Labs</span><span class="items">8 real-world scenarios</span></div>
   </div>
-</section>
 
-<section>
-  <div class="sec-eyebrow">Existing Strengths</div>
-  <div class="sec-sub">Solid foundations already in place — building on these rather than relearning from scratch.</div>
-  <div class="grid">
-    <div class="icon-card strength-card"><h3>Networking</h3><p>Strong already, from current work experience.</p></div>
-    <div class="icon-card strength-card"><h3>Virtualization</h3><p>Strong already, from current work experience.</p></div>
-    <div class="icon-card strength-card"><h3>Windows</h3><p>Strong already, from current work experience.</p></div>
+  <div class="stage" style="--bar: var(--teal)">
+    <div class="stage-head">
+      <div class="left"><span class="p-badge">02</span><h3>🔀 Git</h3></div>
+      <div class="hrs">~4h · <a href="devops/git.html">Open page →</a></div>
+    </div>
+    <div class="topic-row"><span class="name">Fundamentals</span><span class="items">repo, staging, branches, merge, rebase, PRs</span></div>
+    <div class="topic-row"><span class="name">Commands</span><span class="items">init → revert, full command set</span></div>
   </div>
-</section>
 
-<section>
-  <div class="sec-eyebrow">Resources</div>
-  <div class="sec-sub">Reference material that supports every stage.</div>
-  <div class="grid">
-    <a class="icon-card" href="roadmap.html" style="--bar: var(--blue)"><span class="ic">🗺</span><h3>Full Roadmap</h3><p>Every topic group, its hours, and which stage it belongs to.</p></a>
-    <a class="icon-card" href="#" style="--bar: var(--teal)"><span class="ic">📋</span><h3>Cheat Sheets</h3><p>One per stage, printable — the page you keep open in the next lab.</p></a>
-    <a class="icon-card" href="#" style="--bar: var(--purple)"><span class="ic">📚</span><h3>Glossary</h3><p>Every term across all 14 stages, in plain English.</p></a>
-    <a class="icon-card" href="#" style="--bar: var(--gold)"><span class="ic">✅</span><h3>Progress Tracker</h3><p>Tick off topics as you finish them, across the whole roadmap.</p></a>
+  <div class="stage" style="--bar: var(--purple)">
+    <div class="stage-head">
+      <div class="left"><span class="p-badge">03</span><h3>⚙️ Bash & Automation</h3></div>
+      <div class="hrs">~10h · <a href="devops/bash.html">Open page →</a></div>
+    </div>
+    <div class="topic-row"><span class="name">Bash</span><span class="items">variables, loops, grep/sed/awk, jq</span></div>
+    <div class="topic-row"><span class="name">Automation scripts</span><span class="items">backup, log cleanup, health checks</span></div>
   </div>
-</section>
 
-<section>
-  <div class="sec-eyebrow">About this roadmap</div>
-  <div class="grid">
-    <div class="icon-card" style="--bar: var(--blue)"><h3>Who it's for</h3><p>Me — moving from SysAdmin into DevOps, then SRE / Platform Engineering. Networking, virtualization and Windows fundamentals are assumed, not re-taught.</p></div>
-    <div class="icon-card" style="--bar: var(--teal)"><h3>How it works</h3><p>Learn → Practice → Lab → Build → Document → Review. Every stage ends in something built by hand, not just read.</p></div>
-    <div class="icon-card" style="--bar: var(--purple)"><h3>What I leave with</h3><p>9 real projects, a working home lab, and the ability to troubleshoot each layer of the stack without a tutorial open.</p></div>
+  <div class="stage" style="--bar: var(--gold)">
+    <div class="stage-head">
+      <div class="left"><span class="p-badge">04</span><h3>🐍 Python for DevOps</h3></div>
+      <div class="hrs">~10h · <a href="devops/python.html">Open page →</a></div>
+    </div>
+    <div class="topic-row"><span class="name">Fundamentals</span><span class="items">data types, functions, exceptions, files</span></div>
+    <div class="topic-row"><span class="name">DevOps Python</span><span class="items">JSON/YAML, subprocess, requests, argparse</span></div>
   </div>
-</section>
+
+  <div class="stage" style="--bar: var(--green)">
+    <div class="stage-head">
+      <div class="left"><span class="p-badge">05</span><h3>🤖 Ansible</h3></div>
+      <div class="hrs">~8h · <a href="devops/ansible.html">Open page →</a></div>
+    </div>
+    <div class="topic-row"><span class="name">Core</span><span class="items">inventory, playbooks, roles, vault, idempotency</span></div>
+  </div>
+
+  <div class="stage" style="--bar: var(--blue)">
+    <div class="stage-head">
+      <div class="left"><span class="p-badge">06</span><h3>☁️ AWS</h3></div>
+      <div class="hrs">~14h · <a href="devops/aws.html">Open page →</a></div>
+    </div>
+    <div class="topic-row"><span class="name">Core</span><span class="items">IAM, EC2, AMI, EBS, S3</span></div>
+    <div class="topic-row"><span class="name">Networking</span><span class="items">VPC, subnets, security groups, load balancer</span></div>
+    <div class="topic-row"><span class="name">Operations</span><span class="items">auto scaling, RDS, CloudWatch, CloudTrail</span></div>
+  </div>
+
+  <div class="stage" style="--bar: var(--teal)">
+    <div class="stage-head">
+      <div class="left"><span class="p-badge">07</span><h3>🏗️ Terraform</h3></div>
+      <div class="hrs">~8h · <a href="devops/terraform.html">Open page →</a></div>
+    </div>
+    <div class="topic-row"><span class="name">Core</span><span class="items">providers, resources, state, modules, workspaces</span></div>
+  </div>
+
+  <div class="stage" style="--bar: var(--purple)">
+    <div class="stage-head">
+      <div class="left"><span class="p-badge">08</span><h3>🐳 Docker</h3></div>
+      <div class="hrs">~8h · <a href="devops/docker.html">Open page →</a></div>
+    </div>
+    <div class="topic-row"><span class="name">Core</span><span class="items">images, Dockerfile, volumes, Compose, multi-stage builds</span></div>
+  </div>
+
+  <div class="stage" style="--bar: var(--gold)">
+    <div class="stage-head">
+      <div class="left"><span class="p-badge">09</span><h3>☸️ Kubernetes</h3></div>
+      <div class="hrs">~16h · <a href="devops/kubernetes.html">Open page →</a></div>
+    </div>
+    <div class="topic-row"><span class="name">Fundamentals</span><span class="items">pods, deployments, services, namespaces</span></div>
+    <div class="topic-row"><span class="name">Config & Networking</span><span class="items">ConfigMaps, secrets, Ingress, DNS</span></div>
+    <div class="topic-row"><span class="name">Storage & Reliability</span><span class="items">PV/PVC, probes, HPA</span></div>
+    <div class="topic-row"><span class="name">Security & Deployment</span><span class="items">RBAC, rolling updates, Helm</span></div>
+  </div>
+
+  <div class="stage" style="--bar: var(--green)">
+    <div class="stage-head">
+      <div class="left"><span class="p-badge">10</span><h3>🔄 CI/CD</h3></div>
+      <div class="hrs">~8h · <a href="devops/cicd.html">Open page →</a></div>
+    </div>
+    <div class="topic-row"><span class="name">Concepts</span><span class="items">CI, CD, artifact, rollback</span></div>
+    <div class="topic-row"><span class="name">GitHub Actions</span><span class="items">workflows, jobs, runners, secrets</span></div>
+  </div>
+
+  <div class="stage" style="--bar: var(--blue)">
+    <div class="stage-head">
+      <div class="left"><span class="p-badge">11</span><h3>📊 Observability</h3></div>
+      <div class="hrs">~10h · <a href="devops/observability.html">Open page →</a></div>
+    </div>
+    <div class="topic-row"><span class="name">Concepts</span><span class="items">golden signals, RED, USE methods</span></div>
+    <div class="topic-row"><span class="name">Tools</span><span class="items">Prometheus, Grafana, Loki/ELK, OpenTelemetry</span></div>
+  </div>
+
+  <div class="stage" style="--bar: var(--teal)">
+    <div class="stage-head">
+      <div class="left"><span class="p-badge">12</span><h3>🧠 SRE</h3></div>
+      <div class="hrs">~8h · <a href="devops/sre.html">Open page →</a></div>
+    </div>
+    <div class="topic-row"><span class="name">Reliability & Metrics</span><span class="items">SLI, SLO, SLA, error budget</span></div>
+    <div class="topic-row"><span class="name">Incidents & Capacity</span><span class="items">on-call, RCA, postmortem</span></div>
+    <div class="topic-row"><span class="name">Disaster Recovery</span><span class="items">RPO, RTO, failover</span></div>
+  </div>
+
+  <div class="stage" style="--bar: var(--purple)">
+    <div class="stage-head">
+      <div class="left"><span class="p-badge">13</span><h3>🚀 Real-World Projects</h3></div>
+      <div class="hrs">~40h · <a href="devops/projects.html">Open page →</a></div>
+    </div>
+    <div class="topic-row"><span class="name">Projects 01–05</span><span class="items">Linux · Ansible · AWS · Terraform · Docker</span></div>
+    <div class="topic-row"><span class="name">Projects 06–09</span><span class="items">Kubernetes · CI/CD · Observability · SRE</span></div>
+  </div>
+
+  <div class="stage" style="--bar: var(--gold)">
+    <div class="stage-head">
+      <div class="left"><span class="p-badge">14</span><h3>🎤 Interview Preparation</h3></div>
+      <div class="hrs">~10h · <a href="devops/interview.html">Open page →</a></div>
+    </div>
+    <div class="topic-row"><span class="name">Covers</span><span class="items">every stage, framed as interview questions</span></div>
+  </div>
+
+</main>
 
 <footer>
   <div>SYAM.DEV</div>
-  <div class="ref">Study Roadmap · DevOps Track</div>
+  <div class="ref">Study Roadmap · DevOps Track · Full Roadmap</div>
 </footer>
 
 </body>
