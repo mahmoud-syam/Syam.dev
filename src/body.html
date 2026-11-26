@@ -1,0 +1,34 @@
+
+</head>
+<body>
+</head>
+<body>
+<header class="top"><button class="menu" id="menu" aria-label="Toggle course menu">☰</button><div class="brand" id="brand" role="link" tabindex="0" title="Home"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2l9 5v12l-9 5-9-5V7z"/><path d="M9 11l-3 2 3 2M17 11l3 2-3 2"/></svg>SYAM<span>.DEV</span></div>
+<div class="search" id="search" role="button" tabindex="0" aria-label="Search lessons and commands"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="7" r="4.8"/><path d="M10.6 10.6L14 14"/></svg><span>Search the course…</span><kbd id="kbdk">Ctrl K</kbd></div><button class="sbtn" id="sbtn" aria-label="Search"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="7" r="4.8"/><path d="M10.6 10.6L14 14"/></svg></button><nav id="nav"><span data-v="learn" class="on" role="button" tabindex="0">Learn</span><span data-v="practice" role="button" tabindex="0">Practice</span><span data-v="cheat" role="button" tabindex="0">Cheatsheets</span></nav><button class="theme" id="theme" aria-label="Toggle theme">◐</button></header>
+<div class="body">
+<aside class="side" id="side" aria-label="Course menu"><div class="dhead"><div class="brand"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2l9 5v12l-9 5-9-5V7z"/><path d="M9 11l-3 2 3 2M17 11l3 2-3 2"/></svg>SYAM<span>.DEV</span></div><button class="dclose" id="dclose" aria-label="Close menu">✕</button></div><div class="dnav" id="dnav"><button data-v="home">Home</button><button data-v="learn" class="on">Learn</button><button data-v="practice">Practice</button><button data-v="cheat">Cheatsheets</button></div><div class="sscroll"><div class="root">Course <small id="tot"></small></div><div id="tree" role="navigation" aria-label="Course"></div></div>
+<div class="prog" id="prog"><button class="ph" id="ph" aria-expanded="true"><span>PROGRESS</span><b id="pc">0 / 0</b><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5L6 4l3.5 3.5"/></svg></button>
+<div class="bar2"><i id="pb2"><u></u></i></div>
+<div class="pbody"><div><ul id="plist"></ul><button class="prs" id="prs">Reset progress</button></div></div></div></aside>
+<main class="sheet">
+<div class="head"><div class="crumb" id="crumb"></div><div class="hrow"><h1 id="ttl"></h1><div class="tags" id="tags"></div></div><p class="sub" id="sub"></p></div>
+<div class="stage"><div class="sbar"><div class="hud" id="hud"></div><div class="tools"><button class="tool" id="replay">Replay</button><button class="tool" id="pause">Pause</button></div></div>
+<svg class="scene" id="svg" viewBox="0 0 720 470" role="img" aria-label="Interactive lesson scene"></svg>
+<div class="legend" id="legend"></div></div>
+<div class="sw" id="sw"></div><div class="goal" id="goal"></div><div class="log" id="log"></div>
+<div class="tl"><div class="tlh">IN THIS LESSON <span id="tc"></span></div><div class="tlt" id="tlt"><div class="rail"><i id="rl"></i></div><div class="steps" id="steps"></div></div></div>
+</main>
+<section class="rail2"><div class="guide"><div class="meta"><span id="sn"></span><span class="pill" id="pill"></span></div><h2 id="st"></h2><p id="sb"></p>
+<div class="call" id="call"><div class="ic" id="ci"></div><div><h5 id="ch"></h5><p id="ct"></p></div></div>
+<div class="nav2"><button class="back" id="back">Back</button><button class="next" id="next"><span id="nl"></span><span>→</span></button></div><div class="hint">← → step · Space pause</div></div>
+<div class="goals"><h3>You’ll learn</h3><ul id="goals"></ul></div>
+<div class="goals" id="swcard" hidden><h3 id="swt">Try it</h3><p class="hintp">Turn each permission on or off and watch the scene react.</p><div id="swslot"></div></div>
+<div class="cmds" id="cmds" hidden><h3 id="cmdh">Commands in this lesson <small><span id="cmdn"></span><i class="chev" id="cmdc"></i></small></h3><ul id="cmdl"></ul></div></section>
+<section class="view" id="vhome" hidden><div class="vhead"><div class="crumb">Home</div><h1 id="hhi">Welcome back</h1><p class="sub" id="hsub"></p></div><div class="hgrid"><div class="hcont" id="hcont"></div><div class="hstats" id="hstats"></div></div><div class="hsec"><h3>Your modules</h3><div class="hmods" id="hmods"></div></div><div class="hkeys" id="hkeys"></div></section>
+<section class="view" id="vpractice" hidden><div class="vhead"><div class="crumb">Practice</div><h1>Check what you know</h1><p class="sub">Short questions for every module. Each answer explains why, and links back to the lesson to review.</p></div>
+<div class="pchips" id="pchips"></div><div class="pgrid"><div class="pcard" id="pcard"></div><aside class="pstats" id="pstats"></aside></div></section>
+<section class="view" id="vcheat" hidden><div class="vhead"><div class="crumb">Cheatsheets</div><h1>Every command, in one place</h1><p class="sub">All the commands from the lessons, grouped by module and lesson. Search, copy, or jump to the step that explains it.</p></div>
+<div class="ctools"><input id="cq" type="search" placeholder="Search commands, e.g. kubectl, git reset, df" aria-label="Search commands"><span id="ccount"></span></div><div class="pchips" id="cchips"></div><div id="clist"></div></section>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="kbar" id="kbar" hidden role="dialog" aria-modal="true" aria-label="Search"><div class="kpanel"><div class="kin"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="7" r="4.8"/><path d="M10.6 10.6L14 14"/></svg><input id="kq" type="text" placeholder="Search lessons, steps and commands…" autocomplete="off" spellcheck="false" aria-label="Search"><kbd>Esc</kbd></div><div class="kres" id="kres" role="listbox"></div><div class="kfoot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span><kbd>Esc</kbd> close</span><span class="kcount" id="kcount"></span></div></div></div>

@@ -1,0 +1,63 @@
+(function(){
+var CODE=[{t:'provider "aws" { region = "eu-west-1" }',tone:'gold'},'resource "aws_security_group" "web" {','  ingress {','    from_port   = 443','    to_port     = 443','    protocol    = "tcp"','    cidr_blocks = ["0.0.0.0/0"]','  }','}','resource "aws_instance" "web" {','  ami           = "ami-0abc"',function(S){return {t:'  instance_type = "'+(S.code=='m'?'t3.medium':'t3.small')+'"',tone:S.code=='m'?'amber':undefined}},'  vpc_security_group_ids = [aws_security_group.web.id]','}'];
+var CV=CODE.map(function(c,i){return function(S){return typeof c=='function'?c(S):c}});
+var SYM=['Plan symbols',{t:'+    create',tone:'green'},{t:'~    update in place',tone:'amber'},{t:'-/+  destroy and re-create (replace)',tone:'red'},{t:'-    destroy',tone:'red'},'','Plan: 1 to add, 1 to change, 0 to destroy.',{t:'Read every -/+ before you type yes.',tone:'red'}];
+var WF=['The workflow',{t:'terraform init      download providers',tone:'gold'},{t:'terraform fmt       format the code',tone:'gold'},{t:'terraform validate  check the syntax',tone:'gold'},{t:'terraform plan      show the diff',tone:'green'},{t:'terraform apply     make it real',tone:'green'},{t:'terraform destroy   remove it all',tone:'red'}];
+function diff(S){var L=[];if(!S.real){L.push(['+','aws_security_group.web'],['+','aws_instance.web']);return L}
+ if(S.real.type!=(S.code=='m'?'t3.medium':'t3.small'))L.push(['~','aws_instance.web','instance_type: "'+S.real.type+'" → "'+(S.code=='m'?'t3.medium':'t3.small')+'"']);
+ if(S.real.drift)L.push(['~','aws_security_group.web','ingress 22 from 0.0.0.0/0 → (removed)']);return L}
+function vis(S,A){var r=S.real;A.set('sg',{show:!!r,status:r&&r.drift?'#e5534b':'run',sub:r&&r.drift?'port 22 open!':'443 only'});A.set('ec2',{show:!!r,status:'run',sub:r?r.type:''});A.set('state',{show:!!r,sub:r?'2 resources':''});A.set('code',{rows:CV});A.refresh()}
+function act(S,A,a){var id=S.rid=(S.rid||0)+1;
+ if(a=='init'){S.init=true;A.send(['tf','reg'],{label:'get',tone:'blue',ok:true});A.term('term',['$ terraform init','- Installing hashicorp/aws v5.70.0...','Terraform has been successfully initialized!'],true)}
+ if(a=='plan'){if(!S.init){A.term('term',['$ terraform plan','! Error: Inconsistent dependency lock file','! run terraform init first'],true);return}var d=diff(S);S.planned=true;if(S.real&&S.real.drift)S.sawDrift=true;if(S.code=='m'&&S.real&&S.real.type=='t3.small')S.sawUpd=true;
+  A.send(['code','tf'],{label:'plan',tone:'amber',ok:true});A.term('term',['$ terraform plan'].concat(d.length?d.map(function(x){return '  '+x[0]+' '+x[1]+(x[2]?'':' will be created')}).concat(d.filter(function(x){return x[2]}).map(function(x){return '      '+x[2]})).concat(['Plan: '+d.filter(function(x){return x[0]=='+'}).length+' to add, '+d.filter(function(x){return x[0]=='~'}).length+' to change, 0 to destroy.']):['No changes. Your infrastructure matches','the configuration.']),true)}
+ if(a=='apply'){if(!S.init){A.term('term',['! run terraform init first'],true);return}var d=diff(S);if(!d.length){A.term('term',['$ terraform apply','No changes.'],true);return}var fixed=S.real&&S.real.drift;S.real={type:S.code=='m'?'t3.medium':'t3.small',drift:false};S.applies++;if(fixed)S.fixed=true;
+  A.send(['tf','ec2'],{label:'apply',tone:'green',ok:true});A.send(['tf','sg'],{label:'',tone:'green',ok:true});A.term('term',['$ terraform apply -auto-approve'].concat(d.map(function(x){return x[1]+': '+(x[0]=='+'?'Creation':'Modifications')+' complete'})).concat(['Apply complete! Resources: '+d.filter(function(x){return x[0]=='+'}).length+' added, '+d.filter(function(x){return x[0]=='~'}).length+' changed, 0 destroyed.']),true)}
+ if(a=='edit'){S.code=S.code=='m'?'s':'m';A.fx('code','pulse');A.term('term',['$ vim main.tf','# instance_type = "'+(S.code=='m'?'t3.medium':'t3.small')+'"'],true)}
+ if(a=='drift'){if(!S.real){A.term('term',['# nothing deployed yet'],true);return}S.real.drift=true;A.send(['you','sg'],{label:'click',tone:'red',ok:true});A.term('term',['# someone opened port 22 to the world','# in the AWS console, "just for a test"'],true)}
+ vis(S,A)}
+LESSON('terraform','iac',{
+ title:'IaC & the Terraform workflow',sub:'Describe infrastructure in code, preview every change with plan, and apply it the same way every time.',time:'15 min',level:'Intermediate',
+ S:{init:false,real:null,code:'s',applies:0,planned:false,sawUpd:false,sawDrift:false,fixed:false},
+ legend:[['#3fa456','matches the code'],['#e8a33a','change planned'],['#e5534b','drift (changed by hand)']],
+ hud:[{id:'i',l:'Initialized',v:function(S){return S.init?'yes':'no'},lv:function(S){return S.init?'good':'warn'}},{id:'r',l:'Resources',v:function(S){return S.real?'2':'0'},lv:'none'},{id:'t',l:'Instance type',v:function(S){return S.real?S.real.type:'—'},lv:'none'},{id:'d',l:'Drift',v:function(S){return S.real&&S.real.drift?'yes':'none'},lv:function(S){return S.real&&S.real.drift?'bad':'good'}}],
+ nodes:[
+  H.tile('code',70,46,'main.tf','code in Git','gold',{w:118}),
+  H.box('tf',212,34,'terraform','violet',{center:true}),
+  H.tile('reg',330,130,'registry','aws provider','slate',{w:110}),
+  H.tile('state',70,222,'terraform.tfstate','what exists','blue',{w:150,show:false}),
+  H.tile('sg',206,296,'security group','443 only','green',{w:142,show:false,status:'run'}),
+  H.tile('ec2',206,376,'aws_instance','t3.small','green',{w:142,show:false,status:'run'}),
+  {t:'crowd',id:'you',x:334,y:300,tone:'red',label:'console',n:1,w:40,anchor:[296,300]},
+  {t:'panel',id:'code',x:392,y:14,w:316,h:262,title:'main.tf',rows:CV,fs:8.8},
+  {t:'term',id:'term',x:392,y:286,w:316,h:164,title:'terminal'}],
+ links:[H.lk('code','tf','gold'),H.lk('tf','reg','slate',{dash:true}),H.lk('tf','state','blue',{dash:true}),H.lk('tf','sg','violet'),H.lk('sg','ec2','green')],
+ controls:{title:'Run Terraform',groups:[{items:[['init','terraform init'],['plan','terraform plan'],['apply','terraform apply'],['edit','edit instance_type'],['drift','change SG in console']].map(function(g){return {label:g[1],wide:true,click:function(S,A){act(S,A,g[0])}}})}]},
+ goal:function(S){if(S.applies>=2&&S.sawUpd&&S.sawDrift&&S.fixed)return [true,'Done. plan showed your edit as ~ update, caught the console change as drift, and apply put reality back to what the code says.'];
+  return [false,'Goal: init, plan and apply. Then edit instance_type and plan again. Then change the security group in the console and let plan catch it. Apply to fix.']},
+ learn:[['Know why IaC',0],['Read provider and resource blocks',1],['Run init',2],['Read plan symbols',3],['Apply and understand state',4],['Spot replacements',5],['Detect drift',6]],
+ steps:[
+  {t:'Infrastructure as Code',b:'Instead of clicking in the console, you describe servers, networks and permissions in files. The files live in Git, get reviewed in pull requests and build the same result every time.',k:['idea','Key idea','Terraform is declarative: you write the end state, it works out the create, change and delete steps.'],pill:'setup',tt:'IaC',focus:['code','tf'],S:{init:false,real:null,code:'s',applies:0,planned:false,sawUpd:false,sawDrift:false,fixed:false},
+   set:{sg:{show:false},ec2:{show:false},state:{show:false},code:{title:'main.tf',rows:CV,hl:[]}},termClear:true,term:{term:['$ git log --oneline -1 -- infra/','a1c9e2f add web security group']}},
+  {t:'Providers and resources',b:'A provider block connects Terraform to a platform, here AWS. Each resource block describes one object. Referencing aws_security_group.web.id links the two resources.',k:['tip','Remember','The reference also tells Terraform the order: the security group is created before the instance that uses it.'],pill:'idea',tt:'HCL',focus:['code'],
+   set:{code:{rows:CV,hl:[0,1,9,12]}},termClear:true,term:{term:['$ terraform fmt','main.tf','$ terraform validate','Success! The configuration is valid.']}},
+  {t:'terraform init',b:'init downloads the providers your code needs and records their exact versions in .terraform.lock.hcl. Run it once per folder, and again when you add providers or modules.',k:['tip','Remember','Commit .terraform.lock.hcl to Git, but never the .terraform folder.'],pill:'idea',tt:'init',focus:['tf','reg'],S:{init:true},
+   set:{code:{title:'workflow',rows:WF,hl:[1]}},termClear:true,term:{term:['$ terraform init','- Installing hashicorp/aws v5.70.0...','Terraform has been successfully initialized!']},
+   once:[{path:['tf','reg'],label:'get',tone:'blue'}]},
+  {t:'terraform plan',b:'plan compares your code with what exists and prints the difference: + create, ~ change in place, - destroy, -/+ replace. Nothing changes yet.',k:['problem','Watch out','-/+ means the resource is destroyed and created again. For a database that means data loss unless you planned for it.'],pill:'problem',tt:'plan',focus:['code','tf'],
+   set:{code:{title:'plan symbols',rows:SYM,hl:[1,2,3]}},termClear:true,term:{term:['$ terraform plan','  + aws_security_group.web will be created','  + aws_instance.web will be created','Plan: 2 to add, 0 to change, 0 to destroy.']},
+   once:[{path:['code','tf'],label:'plan',tone:'amber'}]},
+  {t:'apply and state',b:'apply runs the plan. Terraform then writes terraform.tfstate: a map from each resource in your code to the real ID in AWS. Next time it uses that map to compare.',k:['problem','Watch out','The state file can contain secrets and must not be lost. In a team it belongs in remote storage, not on a laptop.'],pill:'idea',tt:'apply',focus:['tf','sg','ec2','state'],S:{real:{type:'t3.small',drift:false},applies:1},
+   set:{sg:{show:true,status:'run',sub:'443 only'},ec2:{show:true,status:'run',sub:'t3.small'},state:{show:true,sub:'2 resources'},code:{title:'main.tf',rows:CV,hl:[]}},termClear:true,term:{term:['$ terraform apply','  Enter a value: yes','Apply complete! Resources: 2 added, 0 changed,','0 destroyed.','$ terraform state list','aws_security_group.web','aws_instance.web']},
+   once:[{path:['tf','sg','ec2'],label:'apply',tone:'green'},{path:['tf','state'],label:'ids',tone:'blue',delay:900}]},
+  {t:'Change vs replace',b:'Change the code and plan again. Some attributes, like instance_type, can be updated in place. Others, like the AMI, force a replacement: a new instance with a new ID.',k:['tip','Remember','The plan says "forces replacement" next to the attribute that causes a -/+. That line is the one to read.'],pill:'idea',tt:'Replace',focus:['code','ec2'],S:{code:'m'},
+   set:{code:{title:'main.tf',rows:CV,hl:[11]}},termClear:true,term:{term:['$ terraform plan','  ~ aws_instance.web','      instance_type: "t3.small" → "t3.medium"','# changing ami instead would show:','  -/+ ami: forces replacement']}},
+  {t:'Drift',b:'Drift is when reality no longer matches the code, usually because someone changed something by hand. The next plan shows it, and apply puts it back.',k:['problem','Watch out','Hand changes are overwritten by the next apply. Make every change in code, through a pull request.'],pill:'problem',tt:'Drift',focus:['you','sg'],S:{code:'s',real:{type:'t3.small',drift:true}},
+   set:{sg:{show:true,status:'#e5534b',sub:'port 22 open!'},code:{title:'main.tf',rows:CV,hl:[3,4,6]}},termClear:true,term:{term:['$ terraform plan','  ~ aws_security_group.web','      ingress 22 from 0.0.0.0/0 → (removed)','Plan: 0 to add, 1 to change, 0 to destroy.']},
+   once:[{path:['you','sg'],label:'click',tone:'red'}]},
+  {t:'Try it: plan, apply, catch drift',b:'Use the buttons: init, plan and apply. Then edit instance_type and plan. Then make a change in the console and see whether Terraform notices.',k:['tip','Challenge','Run plan before init, and apply twice in a row. What does Terraform say each time?'],pill:'problem',tt:'Try it',S:{init:false,real:null,code:'s',applies:0,planned:false,sawUpd:false,sawDrift:false,fixed:false},goal:true,focus:null,
+   set:{sg:{show:false},ec2:{show:false},state:{show:false},code:{title:'main.tf',rows:CV,hl:[]}},termClear:true,term:{term:['$ ls','main.tf']}},
+  {t:'Recap',b:'Write infrastructure as code, init once, plan before every change, apply to make it real, and let state track what exists. Plan also shows drift from hand changes.',k:['idea','Next up','Variables, state and outputs: make the code reusable and understand the state file.'],pill:'recap',tt:'Recap',S:{init:true,real:{type:'t3.medium',drift:false},code:'m',applies:3,sawUpd:true,sawDrift:true,fixed:true},
+   set:{sg:{show:true,status:'run',sub:'443 only'},ec2:{show:true,status:'run',sub:'t3.medium'},state:{show:true,sub:'2 resources'},code:{title:'workflow',rows:WF,hl:[]}},termClear:true,term:{term:['$ terraform plan','No changes. Your infrastructure matches','the configuration.']}}
+ ]});
+})();

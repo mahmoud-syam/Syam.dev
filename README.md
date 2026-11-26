@@ -1,0 +1,53 @@
+# SYAM.DEV — Interactive DevOps Course
+
+An animated, hands-on DevOps course that runs as a single web page. Every lesson has an isometric scene that reacts as you move through the steps, a terminal, and a "Try it" challenge.
+
+**70 lessons · 14 modules · 605 steps**
+
+Linux → Git → Bash → Python → Ansible → Docker → AWS → Terraform → Kubernetes → CI/CD → Observability → SRE → 10 real-world projects → Interview preparation
+
+## Features
+
+- **Learn**: step-by-step animated lessons with a live scene, terminal output and a Try-it challenge in every lesson
+- **Practice**: 64 questions across 12 modules, explained answers, links back to the lesson, best scores saved
+- **Cheatsheets**: every command from every lesson (577), searchable, one-click copy, jump to the step that explains it
+- **Search** (`Ctrl K` / `⌘K` / `/`): lessons, steps and commands in one place
+- **Home**: progress, continue where you left off, module overview
+- Light and dark theme, works on desktop, tablet and phone
+- No framework, no build step for visitors: one self-contained `index.html`
+
+Progress is stored in your browser (localStorage), so it stays on the device you use.
+
+## Run locally
+
+Open `index.html` in a browser. That's it.
+
+## Project layout
+
+```
+index.html          the built site (served by GitHub Pages)
+src/
+  head.html body.html tail.html   page shell
+  all.css           all styles
+  core_pre.js       engine: scene renderer, steps, HUD, terminal, course tree
+  lessons/          one file per lesson + practice bank, views, search
+  build.py          concatenates everything into one HTML file
+  BUILD_NOTES.md    conventions for writing lessons
+tools/              Playwright checks used while building (layout, mobile, behaviour)
+```
+
+## Rebuild after editing
+
+```bash
+cd src
+python3 build.py ../index.html
+```
+
+## Checks (optional)
+
+The tools need Python Playwright with Chromium.
+
+```bash
+LES=docker/images VPS=1280x720,1440x900 python3 tools/layout.py
+python3 tools/ctlchk.py
+```
