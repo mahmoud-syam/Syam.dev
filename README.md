@@ -14,9 +14,11 @@ Linux → Git → Bash → Python → Ansible → Docker → AWS → Terraform �
 - **Search** (`Ctrl K` / `⌘K` / `/`): lessons, steps and commands in one place
 - **Home**: progress, continue where you left off, module overview
 - Light and dark theme, works on desktop, tablet and phone
-- No framework, no build step for visitors: one self-contained `index.html`
+- **Installable app**: add it to your phone or computer home screen; it keeps working offline
+- **Move your progress**: export a code or file on one device and import it on another (Home page or the Progress card)
+- No framework: the whole course is one self-contained `index.html` plus a small service worker
 
-Progress is stored in your browser (localStorage), so it stays on the device you use.
+Progress is saved in your browser (localStorage). Use Export / Import to carry it to another device.
 
 ## Run locally
 
@@ -26,6 +28,7 @@ Open `index.html` in a browser. That's it.
 
 ```
 index.html          the built site (served by GitHub Pages)
+manifest.webmanifest, sw.js, icon-*.png   install-as-app + offline support
 src/
   head.html body.html tail.html   page shell
   all.css           all styles

@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 26 26%22%3E%3Crect width=%2226%22 height=%2226%22 rx=%226%22 fill=%22%23c9e3a4%22/%3E%3Cpath d=%22M13 3.5l8 4.5v10l-8 4.5-8-4.5V8z%22 fill=%22none%22 stroke=%22%231c1a17%22 stroke-width=%221.8%22/%3E%3Cpath d=%22M10 11l-2.5 2 2.5 2M16 11l2.5 2-2.5 2%22 fill=%22none%22 stroke=%22%231c1a17%22 stroke-width=%221.8%22 stroke-linecap=%22round%22/%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#f2e9db" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#201d19" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="SYAM.DEV">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>SYAM.DEV — Interactive Course</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap">
 <style>
@@ -401,6 +409,32 @@ mark{background:var(--amber);color:var(--ink);border-radius:3px;padding:0 1px}
 .hkeys kbd{font-family:inherit;font-size:10.5px;font-weight:700;border:1px solid var(--strong);border-radius:5px;padding:1px 6px;background:var(--card);color:var(--ink2)}
 a.pbtn{text-decoration:none;display:inline-flex;align-items:center}
 @media (max-width:700px){.hmods{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.hmod{padding:12px}.hmod .ht{font-size:12.5px}.hmod .ht em{display:none}.hmod .hn{flex-direction:column;gap:2px}.hkeys{display:none}.hbtns .pbtn{flex:1;justify-content:center}}
+/* ---------- sync + install ---------- */
+.hsync{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.hcard{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.hcard b{font-size:14px}.hcard p{margin:0;font-size:12.5px;color:var(--mut);line-height:1.5}
+.hcard .hbtns{margin-top:2px}.hcard .pbtn{padding:8px 14px;font-size:12.5px}
+.hok{color:#2f8a43;font-weight:700;font-size:13px}
+.mdl{position:fixed;inset:0;z-index:55;background:rgba(20,16,10,.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:flex-start;justify-content:center;padding:10vh 16px 16px;animation:kfade .18s ease-out}
+.mdl[hidden]{display:none}
+.mpanel{width:min(560px,100%);max-height:80vh;overflow:auto;background:var(--paper);border:1.5px solid var(--ink);border-radius:16px;box-shadow:3px 4px 0 var(--drop),0 24px 60px rgba(0,0,0,.35);animation:kpop .2s cubic-bezier(.22,.8,.24,1)}
+.mhead{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 12px 20px;border-bottom:1px solid var(--line)}
+.mhead h2{margin:0;font-size:17px}
+.mbody{padding:16px 20px 20px;display:flex;flex-direction:column;gap:12px;font-size:13px;line-height:1.55}
+.mbody p{margin:0;color:var(--mut)}
+.mbody textarea{width:100%;box-sizing:border-box;min-height:110px;resize:vertical;border:1.3px solid var(--strong);border-radius:10px;background:var(--card);color:var(--ink);font-family:inherit;font-size:11.5px;padding:10px;word-break:break-all}
+.mbody .hbtns{gap:8px}
+.mmsg{border-radius:10px;padding:10px 12px;border:1px solid var(--line);background:var(--card);font-weight:600}
+.mmsg.bad{background:var(--red)}.mmsg.good{background:var(--green)}
+.mbody input[type=file]{font-family:inherit;font-size:12px;color:var(--mut)}
+@media (max-width:700px){.mdl{padding:10px}.mpanel{max-height:calc(100vh - 20px)}}
+.prow2{display:flex;gap:14px;flex-wrap:wrap}.prow2 #prs{margin-left:auto}
+.prog:not(.shut) .pbody>div{overflow-y:auto;max-height:min(40vh,360px);scrollbar-width:thin}
+/* ---------- screen-size pass ---------- */
+/* big screens: use the width, give the side columns more room */
+@media (min-width:1600px){.body{max-width:1880px;grid-template-columns:300px minmax(0,1fr) 380px;gap:20px;padding:0 20px}}
+/* tablet & phone: keep the scene from pushing the step text far down */
+@media (max-width:1100px){svg.scene{max-height:58vh;margin:0 auto}}
 </style>
 </head>
 <body>
@@ -412,7 +446,7 @@ a.pbtn{text-decoration:none;display:inline-flex;align-items:center}
 <aside class="side" id="side" aria-label="Course menu"><div class="dhead"><div class="brand"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2l9 5v12l-9 5-9-5V7z"/><path d="M9 11l-3 2 3 2M17 11l3 2-3 2"/></svg>SYAM<span>.DEV</span></div><button class="dclose" id="dclose" aria-label="Close menu">✕</button></div><div class="dnav" id="dnav"><button data-v="home">Home</button><button data-v="learn" class="on">Learn</button><button data-v="practice">Practice</button><button data-v="cheat">Cheatsheets</button></div><div class="sscroll"><div class="root">Course <small id="tot"></small></div><div id="tree" role="navigation" aria-label="Course"></div></div>
 <div class="prog" id="prog"><button class="ph" id="ph" aria-expanded="true"><span>PROGRESS</span><b id="pc">0 / 0</b><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5L6 4l3.5 3.5"/></svg></button>
 <div class="bar2"><i id="pb2"><u></u></i></div>
-<div class="pbody"><div><ul id="plist"></ul><button class="prs" id="prs">Reset progress</button></div></div></div></aside>
+<div class="pbody"><div><ul id="plist"></ul><span class="prow2"><button class="prs" id="pexp">Export</button><button class="prs" id="pimp">Import</button><button class="prs" id="prs">Reset progress</button></span></div></div></div></aside>
 <main class="sheet">
 <div class="head"><div class="crumb" id="crumb"></div><div class="hrow"><h1 id="ttl"></h1><div class="tags" id="tags"></div></div><p class="sub" id="sub"></p></div>
 <div class="stage"><div class="sbar"><div class="hud" id="hud"></div><div class="tools"><button class="tool" id="replay">Replay</button><button class="tool" id="pause">Pause</button></div></div>
@@ -427,13 +461,14 @@ a.pbtn{text-decoration:none;display:inline-flex;align-items:center}
 <div class="goals"><h3>You’ll learn</h3><ul id="goals"></ul></div>
 <div class="goals" id="swcard" hidden><h3 id="swt">Try it</h3><p class="hintp">Turn each permission on or off and watch the scene react.</p><div id="swslot"></div></div>
 <div class="cmds" id="cmds" hidden><h3 id="cmdh">Commands in this lesson <small><span id="cmdn"></span><i class="chev" id="cmdc"></i></small></h3><ul id="cmdl"></ul></div></section>
-<section class="view" id="vhome" hidden><div class="vhead"><div class="crumb">Home</div><h1 id="hhi">Welcome back</h1><p class="sub" id="hsub"></p></div><div class="hgrid"><div class="hcont" id="hcont"></div><div class="hstats" id="hstats"></div></div><div class="hsec"><h3>Your modules</h3><div class="hmods" id="hmods"></div></div><div class="hkeys" id="hkeys"></div></section>
+<section class="view" id="vhome" hidden><div class="vhead"><div class="crumb">Home</div><h1 id="hhi">Welcome back</h1><p class="sub" id="hsub"></p></div><div class="hgrid"><div class="hcont" id="hcont"></div><div class="hstats" id="hstats"></div></div><div class="hsec"><h3>Your modules</h3><div class="hmods" id="hmods"></div></div><div class="hsec"><h3>Your data &amp; app</h3><div class="hsync" id="hsync"></div></div><div class="hkeys" id="hkeys"></div></section>
 <section class="view" id="vpractice" hidden><div class="vhead"><div class="crumb">Practice</div><h1>Check what you know</h1><p class="sub">Short questions for every module. Each answer explains why, and links back to the lesson to review.</p></div>
 <div class="pchips" id="pchips"></div><div class="pgrid"><div class="pcard" id="pcard"></div><aside class="pstats" id="pstats"></aside></div></section>
 <section class="view" id="vcheat" hidden><div class="vhead"><div class="crumb">Cheatsheets</div><h1>Every command, in one place</h1><p class="sub">All the commands from the lessons, grouped by module and lesson. Search, copy, or jump to the step that explains it.</p></div>
 <div class="ctools"><input id="cq" type="search" placeholder="Search commands, e.g. kubectl, git reset, df" aria-label="Search commands"><span id="ccount"></span></div><div class="pchips" id="cchips"></div><div id="clist"></div></section>
 </div>
 <div class="scrim" id="scrim"></div>
+<div class="mdl" id="mdl" hidden role="dialog" aria-modal="true" aria-labelledby="mdlt"><div class="mpanel"><div class="mhead"><h2 id="mdlt"></h2><button class="dclose" id="mdlx" aria-label="Close">✕</button></div><div class="mbody" id="mbody"></div></div></div>
 <div class="kbar" id="kbar" hidden role="dialog" aria-modal="true" aria-label="Search"><div class="kpanel"><div class="kin"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="7" r="4.8"/><path d="M10.6 10.6L14 14"/></svg><input id="kq" type="text" placeholder="Search lessons, steps and commands…" autocomplete="off" spellcheck="false" aria-label="Search"><kbd>Esc</kbd></div><div class="kres" id="kres" role="listbox"></div><div class="kfoot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span><kbd>Esc</kbd> close</span><span class="kcount" id="kcount"></span></div></div></div>
 <script>
 var NS='http://www.w3.org/2000/svg',$=function(i){return document.getElementById(i)},SV=$('svg');
@@ -677,7 +712,7 @@ function go(i){var L=LES,n=L.steps.length;cur=Math.max(0,Math.min(n-1,i));TOK++;
  $('back').disabled=cur==0;var nk=nextLessonKey(),last=cur==n-1;$('next').disabled=last&&!nk;$('nl').textContent=last?(nk?'Next lesson: '+LESSONS[nk].title:'Lesson complete'):'Next: '+L.steps[cur+1].tt;
  var stp=$('steps').querySelectorAll('button');stp.forEach(function(b,j){b.className=j==cur?'cr':j<cur?'dn':''});$('rl').style.width=(cur/Math.max(1,n-1)*100)+'%';$('tc').textContent='Step '+(cur+1)+' of '+n;
  $('goals').querySelectorAll('li').forEach(function(l,j){l.classList.toggle('hit',cur>=((L.learn||[])[j]||[0,99])[1])});
- if(cur==n-1)markDone(KEY);PS.last={k:KEY,s:cur};save();
+ if(cur==n-1)markDone(KEY);PS.last={k:KEY,s:cur};PS.lastAt=Date.now();save();
  refreshAll();
  var tok=TOK;(s.once||[]).forEach(function(o,j){TIMERS.push(setTimeout(function(){if(tok===TOK)send(o.path,o)},(o.delay||0)+j*(o.stagger||160)))});
  (s.fx||[]).forEach(function(f){TIMERS.push(setTimeout(function(){if(tok===TOK)API.fx(f.n,f.k)},f.delay||250))});
@@ -757,7 +792,7 @@ function renderTree(){var sc=document.querySelector('.sscroll'),top=sc?sc.scroll
   in1.appendChild(ls);mb.appendChild(in1);d.appendChild(h);d.appendChild(mb);tree.appendChild(d)});
  $('ea').onclick=function(){COURSE.forEach(function(m){PS.open[m.id]=1});save();renderTree()};$('ca').onclick=function(){PS.open={};save();renderTree()};
  renderProg();if(sc)sc.scrollTop=top}
-function boot(){renderTree();if(PS.shut===undefined&&innerHeight<=800)PS.shut=true;if(PS.shut){$('prog').classList.add('shut');$('ph').setAttribute('aria-expanded','false')}
+function boot(){renderTree();if(PS.shut===undefined)PS.shut=true;if(PS.shut){$('prog').classList.add('shut');$('ph').setAttribute('aria-expanded','false')}
  $('ph').onclick=function(){var pr=$('prog');pr.classList.toggle('shut');var sh=pr.classList.contains('shut');$('ph').setAttribute('aria-expanded',!sh);PS.shut=sh;save()};
  $('prs').onclick=function(){PS.done={};save();renderTree()};
  $('menu').onclick=function(){document.documentElement.classList.toggle('drawer')};
@@ -4962,6 +4997,47 @@ function kClose(){$('kbar').hidden=true;document.documentElement.classList.remov
   if((e.ctrlKey||e.metaKey)&&k=='k'){e.preventDefault();if($('kbar').hidden)kOpen();else kClose();return}
   if(k=='/'&&$('kbar').hidden&&!/INPUT|TEXTAREA/.test(e.target.tagName)){e.preventDefault();kOpen()}
   if(k=='escape'&&!$('kbar').hidden)kClose()},true)})();
+// ---------- Move progress between devices + install as an app ----------
+var INSTALL_EVT=null;
+function syncData(){return {v:1,app:'syam-course',at:new Date().toISOString(),ps:PS,recent:kRecent()}}
+function syncCode(){return 'SYAM1.'+btoa(unescape(encodeURIComponent(JSON.stringify(syncData()))))}
+function syncParse(t){t=(t||'').trim();if(!t)throw new Error('Paste a code or choose a file first.');
+ var j;try{if(t.indexOf('SYAM1.')===0)j=JSON.parse(decodeURIComponent(escape(atob(t.slice(6).replace(/\s+/g,'')))));else j=JSON.parse(t)}catch(e){throw new Error('This is not a valid progress code or file.')}
+ if(!j||j.app!=='syam-course'||!j.ps||typeof j.ps!=='object')throw new Error('This code is not from this course.');return j}
+function syncMerge(inc){var a=PS,b=inc.ps,n0=Object.keys(a.done||{}).length,pq0=Object.keys(a.pq||{}).length;
+ a.done=a.done||{};Object.keys(b.done||{}).forEach(function(k){if(LESSONS[k])a.done[k]=1});
+ a.open=a.open||{};Object.keys(b.open||{}).forEach(function(k){a.open[k]=1});
+ a.pq=a.pq||{};Object.keys(b.pq||{}).forEach(function(m){var x=b.pq[m],y=a.pq[m];if(x&&x.t&&(!y||x.r/x.t>y.r/y.t))a.pq[m]={r:x.r,t:x.t}});
+ if(b.last&&LESSONS[b.last.k]&&(!a.last||(b.lastAt||0)>(a.lastAt||0))){a.last={k:b.last.k,s:b.last.s};a.lastAt=b.lastAt||Date.now()}
+ try{var r=kRecent();(inc.recent||[]).forEach(function(q){if(r.indexOf(q)<0)r.push(q)});localStorage.setItem('syam:recent',JSON.stringify(r.slice(0,5)))}catch(e){}
+ save();renderTree();if(VIEW=='home')renderHome();if(VIEW=='practice'){pqChips();pqStats()}
+ return {lessons:Object.keys(a.done).length-n0,scores:Object.keys(a.pq).length-pq0,total:Object.keys(a.done).length}}
+function mdlOpen(title,html){$('mdlt').textContent=title;$('mbody').innerHTML=html;$('mdl').hidden=false}
+function mdlClose(){$('mdl').hidden=true}
+function syncExport(){var code=syncCode(),n=Object.keys(PS.done||{}).length;
+ mdlOpen('Export your progress','<p>Send this code to your other device (WhatsApp, Telegram or email), then open the course there and choose <b>Import</b>. It holds '+n+' finished lesson'+(n==1?'':'s')+', your practice scores and where you stopped.</p><textarea id="scode" readonly>'+esc(code)+'</textarea><div class="hbtns"><button class="pbtn" id="scopy">Copy code</button><button class="pbtn alt" id="sfile">Download file</button></div>');
+ $('scode').onclick=function(){this.select()};
+ $('scopy').onclick=function(){copyText(code,this);var b=this;setTimeout(function(){b.textContent='Copy code'},1300)};
+ $('sfile').onclick=function(){var blob=new Blob([JSON.stringify(syncData(),null,1)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='syam-progress-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)}}
+function syncImport(){mdlOpen('Import progress','<p>Paste the code from your other device, or choose the progress file. Nothing is lost: lessons you finished here stay finished, and the best practice score is kept.</p><textarea id="sin" placeholder="SYAM1.…"></textarea><input type="file" id="sinf" accept=".json,application/json,text/plain"><div class="hbtns"><button class="pbtn" id="sgo">Import</button></div><div id="smsg"></div>');
+ $('sinf').onchange=function(){var f=this.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){$('sin').value=rd.result};rd.readAsText(f)};
+ $('sgo').onclick=function(){var m=$('smsg');try{var r=syncMerge(syncParse($('sin').value));m.className='mmsg good';m.textContent='Imported. '+(r.lessons?r.lessons+' new finished lesson'+(r.lessons==1?'':'s')+', ':'')+(r.scores?r.scores+' new practice score'+(r.scores==1?'':'s')+', ':'')+r.total+' lesson'+(r.total==1?'':'s')+' done in total.'}catch(e){m.className='mmsg bad';m.textContent=e.message}}}
+function isStandalone(){return (window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true}
+function renderSync(){var el=$('hsync');if(!el)return;var ios=/iPhone|iPad|iPod/.test(navigator.userAgent),inst;
+ if(isStandalone())inst='<span class="hok">✓ Installed. You are using the app.</span>';
+ else if(INSTALL_EVT)inst='<div class="hbtns"><button class="pbtn" id="sinst">Install app</button></div>';
+ else if(ios)inst='<p>On iPhone or iPad: open this site in Safari, tap <b>Share</b>, then <b>Add to Home Screen</b>.</p>';
+ else if(location.protocol!=='https:'||!/github\.io$|localhost/.test(location.hostname))inst='<p>Open the live site to install it:<br><b>mahmoud-syam.github.io/Syam.dev</b></p>';
+ else inst='<p>In Chrome or Edge: open the browser menu and choose <b>Install app</b> or <b>Add to Home screen</b>.</p>';
+ el.innerHTML='<div class="hcard"><b>Move your progress</b><p>Progress is saved in this browser only. Export it here and import it on your phone or another computer.</p><div class="hbtns"><button class="pbtn" id="sexp">Export</button><button class="pbtn alt" id="simp">Import</button></div></div><div class="hcard"><b>Install as an app</b><p>Open the course from your home screen, full screen, and keep studying when you are offline.</p>'+inst+'</div>';
+ $('sexp').onclick=syncExport;$('simp').onclick=syncImport;
+ if($('sinst'))$('sinst').onclick=function(){var e=INSTALL_EVT;if(!e)return;e.prompt();e.userChoice.then(function(){INSTALL_EVT=null;renderSync()})}}
+addEventListener('beforeinstallprompt',function(e){e.preventDefault();INSTALL_EVT=e;renderSync()});
+addEventListener('appinstalled',function(){INSTALL_EVT=null;renderSync()});
+$('mdlx').onclick=mdlClose;$('pexp').onclick=syncExport;$('pimp').onclick=syncImport;$('mdl').addEventListener('mousedown',function(e){if(e.target===$('mdl'))mdlClose()});
+document.addEventListener('keydown',function(e){if(e.key=='Escape'&&!$('mdl').hidden)mdlClose()});
+(function(){var _rh=renderHome;renderHome=function(){_rh();renderSync()}})();
+if('serviceWorker' in navigator&&location.protocol==='https:'&&/github\.io$/.test(location.hostname)){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}
 boot();
 </script>
 </body>

@@ -240,7 +240,7 @@ function go(i){var L=LES,n=L.steps.length;cur=Math.max(0,Math.min(n-1,i));TOK++;
  $('back').disabled=cur==0;var nk=nextLessonKey(),last=cur==n-1;$('next').disabled=last&&!nk;$('nl').textContent=last?(nk?'Next lesson: '+LESSONS[nk].title:'Lesson complete'):'Next: '+L.steps[cur+1].tt;
  var stp=$('steps').querySelectorAll('button');stp.forEach(function(b,j){b.className=j==cur?'cr':j<cur?'dn':''});$('rl').style.width=(cur/Math.max(1,n-1)*100)+'%';$('tc').textContent='Step '+(cur+1)+' of '+n;
  $('goals').querySelectorAll('li').forEach(function(l,j){l.classList.toggle('hit',cur>=((L.learn||[])[j]||[0,99])[1])});
- if(cur==n-1)markDone(KEY);PS.last={k:KEY,s:cur};save();
+ if(cur==n-1)markDone(KEY);PS.last={k:KEY,s:cur};PS.lastAt=Date.now();save();
  refreshAll();
  var tok=TOK;(s.once||[]).forEach(function(o,j){TIMERS.push(setTimeout(function(){if(tok===TOK)send(o.path,o)},(o.delay||0)+j*(o.stagger||160)))});
  (s.fx||[]).forEach(function(f){TIMERS.push(setTimeout(function(){if(tok===TOK)API.fx(f.n,f.k)},f.delay||250))});
@@ -320,7 +320,7 @@ function renderTree(){var sc=document.querySelector('.sscroll'),top=sc?sc.scroll
   in1.appendChild(ls);mb.appendChild(in1);d.appendChild(h);d.appendChild(mb);tree.appendChild(d)});
  $('ea').onclick=function(){COURSE.forEach(function(m){PS.open[m.id]=1});save();renderTree()};$('ca').onclick=function(){PS.open={};save();renderTree()};
  renderProg();if(sc)sc.scrollTop=top}
-function boot(){renderTree();if(PS.shut===undefined&&innerHeight<=800)PS.shut=true;if(PS.shut){$('prog').classList.add('shut');$('ph').setAttribute('aria-expanded','false')}
+function boot(){renderTree();if(PS.shut===undefined)PS.shut=true;if(PS.shut){$('prog').classList.add('shut');$('ph').setAttribute('aria-expanded','false')}
  $('ph').onclick=function(){var pr=$('prog');pr.classList.toggle('shut');var sh=pr.classList.contains('shut');$('ph').setAttribute('aria-expanded',!sh);PS.shut=sh;save()};
  $('prs').onclick=function(){PS.done={};save();renderTree()};
  $('menu').onclick=function(){document.documentElement.classList.toggle('drawer')};

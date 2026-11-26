@@ -393,3 +393,29 @@ mark{background:var(--amber);color:var(--ink);border-radius:3px;padding:0 1px}
 .hkeys kbd{font-family:inherit;font-size:10.5px;font-weight:700;border:1px solid var(--strong);border-radius:5px;padding:1px 6px;background:var(--card);color:var(--ink2)}
 a.pbtn{text-decoration:none;display:inline-flex;align-items:center}
 @media (max-width:700px){.hmods{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.hmod{padding:12px}.hmod .ht{font-size:12.5px}.hmod .ht em{display:none}.hmod .hn{flex-direction:column;gap:2px}.hkeys{display:none}.hbtns .pbtn{flex:1;justify-content:center}}
+/* ---------- sync + install ---------- */
+.hsync{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.hcard{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.hcard b{font-size:14px}.hcard p{margin:0;font-size:12.5px;color:var(--mut);line-height:1.5}
+.hcard .hbtns{margin-top:2px}.hcard .pbtn{padding:8px 14px;font-size:12.5px}
+.hok{color:#2f8a43;font-weight:700;font-size:13px}
+.mdl{position:fixed;inset:0;z-index:55;background:rgba(20,16,10,.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:flex-start;justify-content:center;padding:10vh 16px 16px;animation:kfade .18s ease-out}
+.mdl[hidden]{display:none}
+.mpanel{width:min(560px,100%);max-height:80vh;overflow:auto;background:var(--paper);border:1.5px solid var(--ink);border-radius:16px;box-shadow:3px 4px 0 var(--drop),0 24px 60px rgba(0,0,0,.35);animation:kpop .2s cubic-bezier(.22,.8,.24,1)}
+.mhead{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 12px 20px;border-bottom:1px solid var(--line)}
+.mhead h2{margin:0;font-size:17px}
+.mbody{padding:16px 20px 20px;display:flex;flex-direction:column;gap:12px;font-size:13px;line-height:1.55}
+.mbody p{margin:0;color:var(--mut)}
+.mbody textarea{width:100%;box-sizing:border-box;min-height:110px;resize:vertical;border:1.3px solid var(--strong);border-radius:10px;background:var(--card);color:var(--ink);font-family:inherit;font-size:11.5px;padding:10px;word-break:break-all}
+.mbody .hbtns{gap:8px}
+.mmsg{border-radius:10px;padding:10px 12px;border:1px solid var(--line);background:var(--card);font-weight:600}
+.mmsg.bad{background:var(--red)}.mmsg.good{background:var(--green)}
+.mbody input[type=file]{font-family:inherit;font-size:12px;color:var(--mut)}
+@media (max-width:700px){.mdl{padding:10px}.mpanel{max-height:calc(100vh - 20px)}}
+.prow2{display:flex;gap:14px;flex-wrap:wrap}.prow2 #prs{margin-left:auto}
+.prog:not(.shut) .pbody>div{overflow-y:auto;max-height:min(40vh,360px);scrollbar-width:thin}
+/* ---------- screen-size pass ---------- */
+/* big screens: use the width, give the side columns more room */
+@media (min-width:1600px){.body{max-width:1880px;grid-template-columns:300px minmax(0,1fr) 380px;gap:20px;padding:0 20px}}
+/* tablet & phone: keep the scene from pushing the step text far down */
+@media (max-width:1100px){svg.scene{max-height:58vh;margin:0 auto}}
