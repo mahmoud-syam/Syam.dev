@@ -240,7 +240,7 @@ function go(i){var L=LES,n=L.steps.length;cur=Math.max(0,Math.min(n-1,i));TOK++;
  $('back').disabled=cur==0;var nk=nextLessonKey(),last=cur==n-1;$('next').disabled=last&&!nk;$('nl').textContent=last?(nk?'Next lesson: '+LESSONS[nk].title:'Lesson complete'):'Next: '+L.steps[cur+1].tt;
  var stp=$('steps').querySelectorAll('button');stp.forEach(function(b,j){b.className=j==cur?'cr':j<cur?'dn':''});$('rl').style.width=(cur/Math.max(1,n-1)*100)+'%';$('tc').textContent='Step '+(cur+1)+' of '+n;
  $('goals').querySelectorAll('li').forEach(function(l,j){l.classList.toggle('hit',cur>=((L.learn||[])[j]||[0,99])[1])});
- if(cur==n-1)markDone(KEY);PS.last={k:KEY,s:cur};PS.lastAt=Date.now();save();
+ if(cur==n-1)markDone(KEY);PS.last={k:KEY,s:cur};PS.lastAt=Date.now();if(typeof trackDay=='function')trackDay();save();
  refreshAll();
  var tok=TOK;(s.once||[]).forEach(function(o,j){TIMERS.push(setTimeout(function(){if(tok===TOK)send(o.path,o)},(o.delay||0)+j*(o.stagger||160)))});
  (s.fx||[]).forEach(function(f){TIMERS.push(setTimeout(function(){if(tok===TOK)API.fx(f.n,f.k)},f.delay||250))});
@@ -306,7 +306,7 @@ function renderProg(){var tot=0,dn=0,rows=[];COURSE.forEach(function(m){var d=0;
  $('pb2').style.width=(dn/tot*100)+'%';$('tot').textContent=tot+' lessons';
  var from=pDone<0?0:pDone;cancelAnimationFrame(tween);var t0=performance.now();(function step(t){var k=Math.min(1,(t-t0)/700);$('pc').textContent=Math.round(from+(dn-from)*k)+' / '+tot;if(k<1)tween=requestAnimationFrame(step)})(t0);
  if(pDone>=0&&dn>pDone){var pr=$('prog');pr.classList.remove('pulse');void pr.offsetWidth;pr.classList.add('pulse')}pDone=dn}
-function markDone(key){if(PS.done[key])return;PS.done[key]=1;save();renderTree()}
+function markDone(key){if(PS.done[key])return;PS.done[key]=1;PS.doneAt=PS.doneAt||{};PS.doneAt[key]=Date.now();save();renderTree()}
 function renderTree(){var sc=document.querySelector('.sscroll'),top=sc?sc.scrollTop:0;tree.innerHTML='';
  var ctl=document.createElement('div');ctl.className='ctl';ctl.innerHTML='<button id="ea">Expand all</button><button id="ca">Collapse all</button>';tree.appendChild(ctl);
  COURSE.forEach(function(m){var d=document.createElement('div');d.className='mod'+(PS.open[m.id]?' open':'');

@@ -12,7 +12,9 @@ Linux → Git → Bash → Python → Ansible → Docker → AWS → Terraform �
 - **Practice**: 64 questions across 12 modules, explained answers, links back to the lesson, best scores saved
 - **Cheatsheets**: every command from every lesson (577), searchable, one-click copy, jump to the step that explains it
 - **Search** (`Ctrl K` / `⌘K` / `/`): lessons, steps and commands in one place
-- **Home**: progress, continue where you left off, module overview
+- **Home**: progress, study streak, continue where you left off, module overview
+- **Spaced review**: questions you miss come back after 1, 3, 7, 14 and 30 days
+- **Focus mode** (`F`): hide the course tree and give the lesson the whole width
 - Light and dark theme, works on desktop, tablet and phone
 - **Installable app**: add it to your phone or computer home screen; it keeps working offline
 - **Move your progress**: export a code or file on one device and import it on another (Home page or the Progress card)

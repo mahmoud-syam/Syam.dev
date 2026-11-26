@@ -9,6 +9,10 @@ function syncMerge(inc){var a=PS,b=inc.ps,n0=Object.keys(a.done||{}).length,pq0=
  a.done=a.done||{};Object.keys(b.done||{}).forEach(function(k){if(LESSONS[k])a.done[k]=1});
  a.open=a.open||{};Object.keys(b.open||{}).forEach(function(k){a.open[k]=1});
  a.pq=a.pq||{};Object.keys(b.pq||{}).forEach(function(m){var x=b.pq[m],y=a.pq[m];if(x&&x.t&&(!y||x.r/x.t>y.r/y.t))a.pq[m]={r:x.r,t:x.t}});
+ a.days=a.days||{};Object.keys(b.days||{}).forEach(function(d){a.days[d]=Math.max(a.days[d]||0,b.days[d]||0)});
+ a.doneAt=a.doneAt||{};Object.keys(b.doneAt||{}).forEach(function(k){if(!a.doneAt[k]||b.doneAt[k]<a.doneAt[k])a.doneAt[k]=b.doneAt[k]});
+ a.rv=a.rv||{};Object.keys(b.rv||{}).forEach(function(k){var x=b.rv[k],y=a.rv[k];if(!y||x.box>y.box||(x.box==y.box&&x.due>y.due))a.rv[k]=x});
+ if(!a.name&&b.name)a.name=b.name;
  if(b.last&&LESSONS[b.last.k]&&(!a.last||(b.lastAt||0)>(a.lastAt||0))){a.last={k:b.last.k,s:b.last.s};a.lastAt=b.lastAt||Date.now()}
  try{var r=kRecent();(inc.recent||[]).forEach(function(q){if(r.indexOf(q)<0)r.push(q)});localStorage.setItem('syam:recent',JSON.stringify(r.slice(0,5)))}catch(e){}
  save();renderTree();if(VIEW=='home')renderHome();if(VIEW=='practice'){pqChips();pqStats()}

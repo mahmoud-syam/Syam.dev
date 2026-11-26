@@ -20,14 +20,14 @@ function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()
 // ---------- Practice ----------
 var PQ=null;if(!PS.pq)PS.pq={};
 function pqMods(){var seen={},out=[];PQB.forEach(function(q){if(!seen[q.m]){seen[q.m]=1;out.push(q.m)}});return COURSE.map(function(c){return c.id}).filter(function(id){return seen[id]})}
-function pqStart(mod){var pool=[];PQB.forEach(function(q,i){if(mod=='mix'||q.m==mod)pool.push(i)});if(!pool.length){mod='mix';PQB.forEach(function(q,i){pool.push(i)})}
+function pqStart(mod){var pool=[];if(mod=='review')pool=rvDue();else PQB.forEach(function(q,i){if(mod=='mix'||q.m==mod)pool.push(i)});if(!pool.length&&mod=='review'){PQ=null;$('pcard').innerHTML='<div class="pmeta"><span>Review</span></div><h2>Nothing to review right now.</h2><p>Questions you get wrong come back here after a day, then after 3, 7, 14 and 30 days until you know them.</p><div class="pnav"><a class="pbtn" href="#practice">Mixed 10</a></div>';pqChips();pqStats();return}if(!pool.length){mod='mix';PQB.forEach(function(q,i){pool.push(i)})}
  shuffle(pool);if(mod=='mix')pool=pool.slice(0,10);
  PQ={mod:mod,list:pool,ord:pool.map(function(i){return shuffle(PQB[i].o.map(function(_,k){return k}))}),i:0,pick:null,right:0,wrong:[],done:false};pqRender();pqChips();pqStats()}
-function pqChips(){var c=$('pchips');c.innerHTML='';var items=[['mix','Mixed · 10']].concat(pqMods().map(function(id){return [id,modShort(id)]}));
+function pqChips(){var c=$('pchips');c.innerHTML='';var nd=rvDue().length,items=(nd?[['review','Review · '+nd+' due']]:[]).concat([['mix','Mixed · 10']]).concat(pqMods().map(function(id){return [id,modShort(id)]}));
  items.forEach(function(it){var b=document.createElement('button');b.className='pchip'+(PQ&&PQ.mod==it[0]?' on':'');var best=PS.pq[it[0]];
-  b.innerHTML=(it[0]=='mix'?'':'<i style="background:'+modColor(it[0])+'"></i>')+esc(it[1])+(best?'<small>'+best.r+'/'+best.t+'</small>':'');
+  b.innerHTML=(it[0]=='mix'||it[0]=='review'?'':'<i style="background:'+modColor(it[0])+'"></i>')+esc(it[1])+(best?'<small>'+best.r+'/'+best.t+'</small>':'');
   b.onclick=function(){location.hash=it[0]=='mix'?'practice':'practice-'+it[0]};c.appendChild(b)})}
-function pqRender(){var c=$('pcard');if(!PQ)return;var n=PQ.list.length,title=PQ.mod=='mix'?'Mixed':modName(PQ.mod);
+function pqRender(){var c=$('pcard');if(!PQ)return;var n=PQ.list.length,title=PQ.mod=='mix'?'Mixed':PQ.mod=='review'?'Review':modName(PQ.mod);
  if(PQ.done){var pct=Math.round(PQ.right/n*100),msg=pct==100?'Perfect. You know this module.':pct>=70?'Good. Review the ones you missed below.':'Worth another pass: review the lessons below, then try again.';
   c.innerHTML='<div class="pmeta"><span>'+esc(title)+' · result</span><span>'+pct+'%</span></div><div class="pbar"><i style="width:'+pct+'%"></i></div><div class="pscore">'+PQ.right+' / '+n+'</div><p>'+msg+'</p>'+
    (PQ.wrong.length?'<ul class="pwrong">'+PQ.wrong.map(function(i){var q=PQB[i],L=LESSONS[q.l];return '<li><b>'+esc(q.q)+'</b><br>Answer: '+esc(q.o[q.a])+'<br><a href="'+lessonLink(q.l)+'">Review: '+esc(L?L.title:q.l)+'</a></li>'}).join('')+'</ul>':'')+
@@ -41,8 +41,8 @@ function pqRender(){var c=$('pcard');if(!PQ)return;var n=PQ.list.length,title=PQ
  c.innerHTML=h;
  c.querySelectorAll('.popt').forEach(function(b){b.onclick=function(){pqPick(+b.dataset.k)}});
  if($('pnext'))$('pnext').onclick=pqNext}
-function pqPick(k){if(!PQ||PQ.pick!=null||PQ.done)return;var qi=PQ.list[PQ.i];PQ.pick=k;if(k==PQB[qi].a)PQ.right++;else PQ.wrong.push(qi);pqRender();var nb=$('pnext');if(nb)nb.focus({preventScroll:true})}
-function pqNext(){if(!PQ||PQ.pick==null)return;if(PQ.i<PQ.list.length-1){PQ.i++;PQ.pick=null}else{PQ.done=true;var b=PS.pq[PQ.mod];if(!b||PQ.right/PQ.list.length>=b.r/b.t)PS.pq[PQ.mod]={r:PQ.right,t:PQ.list.length};save();pqChips();pqStats()}pqRender();$('pcard').scrollIntoView({block:'nearest'})}
+function pqPick(k){if(!PQ||PQ.pick!=null||PQ.done)return;var qi=PQ.list[PQ.i];PQ.pick=k;rvUpdate(qi,k==PQB[qi].a,PQ.mod=='review');if(k==PQB[qi].a)PQ.right++;else PQ.wrong.push(qi);pqRender();var nb=$('pnext');if(nb)nb.focus({preventScroll:true})}
+function pqNext(){if(!PQ||PQ.pick==null)return;if(PQ.i<PQ.list.length-1){PQ.i++;PQ.pick=null}else{PQ.done=true;var b=PS.pq[PQ.mod];if(PQ.mod=='review'){}else if(!b||PQ.right/PQ.list.length>=b.r/b.t)PS.pq[PQ.mod]={r:PQ.right,t:PQ.list.length};save();pqChips();pqStats()}pqRender();$('pcard').scrollIntoView({block:'nearest'})}
 function pqStats(){var s=$('pstats'),mods=pqMods(),done=mods.filter(function(m){return PS.pq[m]}).length;
  var h='<h3>Your best scores</h3>';mods.forEach(function(m){var b=PS.pq[m],p=b?Math.round(b.r/b.t*100):0;h+='<div class="prow"><span>'+esc(modName(m))+'</span><span>'+(b?b.r+'/'+b.t:'—')+'</span><u><i style="width:'+p+'%;background:'+(p>=70?'var(--green)':'var(--amber)')+'"></i></u></div>'});
  h+='<div class="ptip">'+done+' of '+mods.length+' modules practised. Keys: 1-4 to answer, Enter for next.</div>';s.innerHTML=h}
