@@ -1,7 +1,17 @@
-# Cloudflare Worker: serves the course on learn.mahmoud-syam.me (files from GitHub Pages) and stores progress per account.
+# Cloudflare Worker: serves the academy on learn.mahmoud-syam.me and stores progress per account.
+# Cloudflare builds this on every push to main: build command "sh tools/public.sh", deploy command "npx wrangler deploy".
 name = "syam-course"
 main = "worker/index.js"
 compatibility_date = "2026-11-01"
+
+[observability]
+enabled = true
+
+[assets]
+directory = "public"
+binding = "ASSETS"
+run_worker_first = ["/api/*"]
+not_found_handling = "single-page-application"
 
 [[d1_databases]]
 binding = "DB"

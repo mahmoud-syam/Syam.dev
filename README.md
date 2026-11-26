@@ -29,7 +29,10 @@ Open `index.html` in a browser. That's it.
 ## Project layout
 
 ```
-index.html          the built site (served by GitHub Pages)
+index.html          the built site
+worker/index.js     Cloudflare Worker: account API (/api/*) and static files
+wrangler.toml       Worker settings: D1 database, Access, custom domain
+tools/public.sh     copies the served files into public/ for the Cloudflare build
 manifest.webmanifest, sw.js, icon-*.png   install-as-app + offline support
 src/
   head.html body.html tail.html   page shell
@@ -56,3 +59,13 @@ The tools need Python Playwright with Chromium.
 LES=docker/images VPS=1280x720,1440x900 python3 tools/layout.py
 python3 tools/ctlchk.py
 ```
+
+## Hosting
+
+The academy runs on Cloudflare at learn.mahmoud-syam.me, behind Cloudflare Access (only
+approved e-mails can sign in). Cloudflare builds and deploys on every push to main:
+
+- Build command: `sh tools/public.sh`
+- Deploy command: `npx wrangler deploy`
+
+Progress for each account is stored in the D1 database `syam-course`.

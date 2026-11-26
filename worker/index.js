@@ -1,5 +1,6 @@
 // SYAM.DEV course on learn.mahmoud-syam.me.
-// - Site files come from GitHub Pages (ORIGIN), so every git push updates the site.
+// - Site files are deployed with the Worker as static assets (Cloudflare builds from GitHub on
+//   every push). If no ASSETS binding exists, they are fetched from ORIGIN instead.
 // - /api/* is protected by Cloudflare Access (e-mail code login); this Worker verifies the
 //   Access token and reads/writes one progress row per user in D1.
 const json = (data, status = 200) => new Response(JSON.stringify(data), {
@@ -35,6 +36,7 @@ async function userFromAccess(req, env) {
 }
 
 async function site(req, env, url) {
+  if (env.ASSETS) return env.ASSETS.fetch(req);
   if (req.method !== 'GET' && req.method !== 'HEAD') return new Response('Method not allowed', { status: 405 });
   const path = url.pathname === '/' ? '/index.html' : url.pathname;
   const r = await fetch(env.ORIGIN + path, { cf: { cacheTtl: 120, cacheEverything: true } });
