@@ -1,0 +1,66 @@
+// SYAM.DEV course API. Login is handled by Cloudflare Access (Google or e-mail code);
+// this Worker only verifies the Access token and reads/writes one progress row per user.
+const json = (data, status = 200) => new Response(JSON.stringify(data), {
+  status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' }
+});
+
+let certCache = { at: 0, keys: null };
+async function accessKeys(team) {
+  if (certCache.keys && Date.now() - certCache.at < 3600e3) return certCache.keys;
+  const r = await fetch(`https://${team}/cdn-cgi/access/certs`);
+  const { keys } = await r.json();
+  certCache = { at: Date.now(), keys };
+  return keys;
+}
+const b64url = s => Uint8Array.from(atob(s.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((s.length + 3) % 4)), c => c.charCodeAt(0));
+
+// Returns the signed-in user's e-mail, or null.
+async function userFromAccess(req, env) {
+  const token = req.headers.get('cf-access-jwt-assertion');
+  if (!token || !env.ACCESS_TEAM_DOMAIN || !env.ACCESS_AUD) return null;
+  const [h, p, sig] = token.split('.');
+  if (!sig) return null;
+  const header = JSON.parse(new TextDecoder().decode(b64url(h)));
+  const payload = JSON.parse(new TextDecoder().decode(b64url(p)));
+  const jwk = (await accessKeys(env.ACCESS_TEAM_DOMAIN)).find(k => k.kid === header.kid);
+  if (!jwk) return null;
+  const key = await crypto.subtle.importKey('jwk', jwk, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['verify']);
+  const ok = await crypto.subtle.verify('RSASSA-PKCS1-v1_5', key, b64url(sig), new TextEncoder().encode(`${h}.${p}`));
+  const aud = Array.isArray(payload.aud) ? payload.aud : [payload.aud];
+  if (!ok || !aud.includes(env.ACCESS_AUD) || payload.exp * 1000 < Date.now() || payload.iss !== `https://${env.ACCESS_TEAM_DOMAIN}`) return null;
+  return (payload.email || '').toLowerCase() || null;
+}
+
+export default {
+  async fetch(req, env) {
+    const url = new URL(req.url);
+    if (!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(req);
+
+    const email = await userFromAccess(req, env);
+    if (url.pathname === '/api/login') return Response.redirect(`${url.origin}/#home`, 302);
+    if (url.pathname === '/api/logout') return Response.redirect(`https://${env.ACCESS_TEAM_DOMAIN}/cdn-cgi/access/logout?returnTo=${encodeURIComponent(url.origin + '/#home')}`, 302);
+    if (!email) return json({ error: 'not signed in' }, 401);
+
+    const now = Date.now();
+    await env.DB.prepare('INSERT INTO users (email, created_at, last_seen) VALUES (?1, ?2, ?2) ON CONFLICT(email) DO UPDATE SET last_seen = ?2').bind(email, now).run();
+
+    if (url.pathname === '/api/me') return json({ email });
+
+    if (url.pathname === '/api/progress') {
+      if (req.method === 'GET') {
+        const row = await env.DB.prepare('SELECT data, updated_at FROM progress WHERE email = ?1').bind(email).first();
+        return json(row ? { data: JSON.parse(row.data), updated_at: row.updated_at } : { data: null });
+      }
+      if (req.method === 'PUT') {
+        const body = await req.text();
+        if (body.length > 200000) return json({ error: 'too large' }, 413);
+        let data; try { data = JSON.parse(body); } catch { return json({ error: 'bad json' }, 400); }
+        if (!data || typeof data !== 'object' || typeof data.done !== 'object') return json({ error: 'bad progress' }, 400);
+        await env.DB.prepare('INSERT INTO progress (email, data, updated_at) VALUES (?1, ?2, ?3) ON CONFLICT(email) DO UPDATE SET data = ?2, updated_at = ?3').bind(email, JSON.stringify(data), now).run();
+        return json({ ok: true, updated_at: now });
+      }
+      return json({ error: 'method not allowed' }, 405);
+    }
+    return json({ error: 'not found' }, 404);
+  }
+};

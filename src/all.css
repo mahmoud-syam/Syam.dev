@@ -430,3 +430,4 @@ a.pbtn{text-decoration:none;display:inline-flex;align-items:center}
 .hgrid28 i{aspect-ratio:1;border-radius:4px;background:var(--line)}
 .hgrid28 i.l1{background:color-mix(in srgb,var(--green) 55%,var(--line))}.hgrid28 i.l2{background:var(--green)}.hgrid28 i.l3{background:#7fae55}
 
+.hok.warn{color:var(--warn,#b45309)}

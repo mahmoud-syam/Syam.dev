@@ -20,7 +20,7 @@ function syncMerge(inc){var a=PS,b=inc.ps,n0=Object.keys(a.done||{}).length,pq0=
 function mdlOpen(title,html){$('mdlt').textContent=title;$('mbody').innerHTML=html;$('mdl').hidden=false}
 function mdlClose(){$('mdl').hidden=true}
 function syncExport(){var code=syncCode(),n=Object.keys(PS.done||{}).length;
- mdlOpen('Export your progress','<p>Send this code to your other device (WhatsApp, Telegram or email), then open the course there and choose <b>Import</b>. It holds '+n+' finished lesson'+(n==1?'':'s')+', your practice scores and where you stopped.</p><textarea id="scode" readonly>'+esc(code)+'</textarea><div class="hbtns"><button class="pbtn" id="scopy">Copy code</button>'+(/github\.io$|localhost/.test(location.hostname)||location.protocol=='file:'?'<button class="pbtn alt" id="sfile">Download file</button>':'')+'</div>');
+ mdlOpen('Export your progress','<p>Send this code to your other device (WhatsApp, Telegram or email), then open the course there and choose <b>Import</b>. It holds '+n+' finished lesson'+(n==1?'':'s')+', your practice scores and where you stopped.</p><textarea id="scode" readonly>'+esc(code)+'</textarea><div class="hbtns"><button class="pbtn" id="scopy">Copy code</button>'+(/github\.io$|localhost|^learn\.mahmoud-syam\.me$/.test(location.hostname)||location.protocol=='file:'?'<button class="pbtn alt" id="sfile">Download file</button>':'')+'</div>');
  $('scode').onclick=function(){this.select()};
  $('scopy').onclick=function(){copyText(code,this);var b=this;setTimeout(function(){b.textContent='Copy code'},1300)};
  if($('sfile'))$('sfile').onclick=function(){var blob=new Blob([JSON.stringify(syncData(),null,1)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='syam-progress-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)}}
@@ -32,7 +32,7 @@ function renderSync(){var el=$('hsync');if(!el)return;var ios=/iPhone|iPad|iPod/
  if(isStandalone())inst='<span class="hok">✓ Installed. You are using the app.</span>';
  else if(INSTALL_EVT)inst='<div class="hbtns"><button class="pbtn" id="sinst">Install app</button></div>';
  else if(ios)inst='<p>On iPhone or iPad: open this site in Safari, tap <b>Share</b>, then <b>Add to Home Screen</b>.</p>';
- else if(location.protocol!=='https:'||!/github\.io$|localhost/.test(location.hostname))inst='<p>Open the live site to install it:<br><b>mahmoud-syam.github.io/Syam.dev</b></p>';
+ else if(location.protocol!=='https:'||!/github\.io$|localhost|^learn\.mahmoud-syam\.me$/.test(location.hostname))inst='<p>Open the live site to install it:<br><b>learn.mahmoud-syam.me</b></p>';
  else inst='<p>In Chrome or Edge: open the browser menu and choose <b>Install app</b> or <b>Add to Home screen</b>.</p>';
  el.innerHTML='<div class="hcard"><b>Move your progress</b><p>Progress is saved in this browser only. Export it here and import it on your phone or another computer.</p><div class="hbtns"><button class="pbtn" id="sexp">Export</button><button class="pbtn alt" id="simp">Import</button></div></div><div class="hcard"><b>Install as an app</b><p>Open the course from your home screen, full screen, and keep studying when you are offline.</p>'+inst+'</div>';
  $('sexp').onclick=syncExport;$('simp').onclick=syncImport;
@@ -42,4 +42,4 @@ addEventListener('appinstalled',function(){INSTALL_EVT=null;renderSync()});
 $('mdlx').onclick=mdlClose;$('pexp').onclick=syncExport;$('pimp').onclick=syncImport;$('mdl').addEventListener('mousedown',function(e){if(e.target===$('mdl'))mdlClose()});
 document.addEventListener('keydown',function(e){if(e.key=='Escape'&&!$('mdl').hidden)mdlClose()});
 (function(){var _rh=renderHome;renderHome=function(){_rh();renderSync()}})();
-if('serviceWorker' in navigator&&location.protocol==='https:'&&/github\.io$/.test(location.hostname)){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}
+if('serviceWorker' in navigator&&location.protocol==='https:'&&/github\.io$|^learn\.mahmoud-syam\.me$/.test(location.hostname)){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}
