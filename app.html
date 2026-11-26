@@ -470,6 +470,102 @@ a.pbtn{text-decoration:none;display:inline-flex;align-items:center}
 .pmlinks a:hover,.pmlinks button:hover{background:var(--card)}
 .pmout{color:var(--redink)!important}
 @media (max-width:700px){.prof{margin-left:2px}.pmenu{position:fixed;right:12px;top:60px}}
+/* ===== Academy (courses) ===== */
+.body.v-courses .sheet,.body.v-courses .rail2,.body.v-admin .sheet,.body.v-admin .rail2{display:none}
+.view a{color:inherit}.crumb a{color:inherit;text-decoration:none;border-bottom:1px dashed var(--strong)}.crumb a:hover{border-color:var(--ink)}
+.achead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}.achead h1{margin:4px 0 0;min-width:0;overflow-wrap:anywhere}.achead .pbtn{flex:none;margin-top:6px;padding:7px 13px;font-size:12.5px}
+.acmuted{color:var(--mut);font-size:12.5px;margin:0}
+.acbar2{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.acchips{display:flex;gap:8px;flex-wrap:wrap;flex:1;min-width:0}
+.acq{height:34px;box-sizing:border-box;border:1.3px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;font-size:12.5px;padding:0 12px;width:220px;max-width:100%}.acq:focus{outline:none;border-color:var(--ink)}
+.acsec{display:flex;flex-direction:column;gap:12px}
+.acsh{display:flex;gap:10px;align-items:flex-start}.acsh>i{width:12px;height:12px;border-radius:4px;margin-top:5px;flex:none;border:1px solid rgba(0,0,0,.25)}.acsh h3{margin:0;font-size:15px}.acsh p{margin:2px 0 0;color:var(--mut);font-size:12.5px}
+.acgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.accard{position:relative;display:flex;flex-direction:column;gap:7px;padding:16px 16px 14px;background:var(--card);border:1.3px solid var(--line);border-radius:14px;text-decoration:none;color:var(--ink);overflow:hidden;transition:border-color .15s,transform .15s,box-shadow .15s;min-width:0}
+.accard:hover{border-color:var(--ink);transform:translateY(-2px);box-shadow:2px 3px 0 var(--drop)}
+.acband{position:absolute;left:0;top:0;right:0;height:4px;background:var(--tc)}
+.accard.star{background:linear-gradient(160deg,var(--card),var(--tile))}
+.acprov{font-size:11px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}.acprov b{color:var(--redink)}
+.act{font-size:15px;line-height:1.3;overflow-wrap:anywhere}
+.acd{font-size:12.5px;color:var(--mut);line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.acfoot{display:flex;justify-content:space-between;font-size:12px;color:var(--ink2);margin-top:auto;padding-top:4px}
+.acbar{display:block;height:6px;border-radius:4px;background:var(--line);overflow:hidden;text-decoration:none}.acbar i{display:block;height:100%;background:var(--green2);border-radius:4px;min-width:0;transition:width .4s}.acbar.big{height:9px}
+.acempty{padding:16px;border:1.3px dashed var(--strong);border-radius:12px;color:var(--mut);font-size:13px}.acempty.big{padding:24px;text-align:center}.acempty a{color:var(--ink);font-weight:700}
+.acskel{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}.acskel i{height:140px;border-radius:14px;background:linear-gradient(90deg,var(--card),var(--line),var(--card));background-size:200% 100%;animation:acsk 1.2s infinite}
+@keyframes acsk{to{background-position:-200% 0}}
+.acstat{display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:16px 18px;border:1.3px solid var(--line);border-left:5px solid var(--tc);border-radius:14px;background:var(--card)}
+.acsl{flex:1 1 320px;display:flex;flex-direction:column;gap:8px;min-width:0}.acnums{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.acnums b{font-size:24px}.acnums span{color:var(--mut);font-size:12.5px}
+.acmeta{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.acchip{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 9px;border:1.2px solid var(--line);border-radius:999px;font-size:11.5px;font-weight:600;color:var(--ink2);background:var(--card);white-space:nowrap}.acchip.warn{background:var(--amber);border-color:var(--strong)}
+.acmods{display:flex;flex-direction:column;gap:10px}
+.acmod{border:1.3px solid var(--line);border-radius:13px;background:var(--card);overflow:hidden}
+.acmod summary{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;list-style:none}.acmod summary::-webkit-details-marker{display:none}
+.acmod summary b{flex:1;min-width:0;font-size:14px}.acmod[open] summary{border-bottom:1px solid var(--line)}
+.acmn{font-size:11px;font-weight:700;color:var(--mut);border:1.2px solid var(--line);border-radius:7px;padding:3px 6px;flex:none}
+.acmc{font-size:12px;color:var(--mut);white-space:nowrap}
+.acmod ul{list-style:none;margin:0;padding:4px 6px 6px}
+.acmod li a,.acnext a{display:flex;align-items:center;gap:10px;padding:9px 8px;border-radius:9px;text-decoration:none;color:var(--ink);font-size:13px}
+.acmod li a:hover,.acnext a:hover{background:var(--sheet)}
+.acck{width:18px;height:18px;flex:none;border-radius:50%;border:1.3px solid var(--strong);display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--ink)}
+a.done .acck{background:var(--green2);border-color:var(--ink)}a.done .aclt{color:var(--mut)}
+.aci{flex:none;color:var(--ink2)}
+.aclt{flex:1;min-width:0;overflow-wrap:anywhere}.aclt em{font-style:normal;font-size:10.5px;font-weight:700;color:var(--redink);margin-left:4px}
+.acsv{color:#c58a10}.acnt{color:var(--mut)}.acmin{font-size:11.5px;color:var(--mut);white-space:nowrap}
+.acvideo{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#111;border:1.5px solid var(--ink);box-shadow:2px 3px 0 var(--drop)}
+.acvideo iframe,.acvideo #acplayer,.acframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.acext{display:flex;gap:14px;align-items:center;padding:18px;border:1.5px solid var(--ink);border-radius:14px;background:var(--tile);text-decoration:none;color:var(--ink);box-shadow:2px 3px 0 var(--drop);transition:transform .15s}
+.acext:hover{transform:translateY(-2px)}.acext b{display:block;font-size:14.5px;overflow-wrap:anywhere}.acext small{display:block;color:var(--ink2);font-size:12.5px;margin-top:3px}
+.acexi{width:42px;height:42px;flex:none;border-radius:12px;background:var(--card);border:1.3px solid var(--ink);display:grid;place-items:center}.acexi .aci{width:20px;height:20px}
+.acact{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.acact .pbtn{padding:8px 14px;font-size:13px}.acsp{flex:1}
+.acdone{background:var(--green2)!important}
+.acbody{font-size:13.5px;line-height:1.65;color:var(--ink2);max-width:860px}.acbody h3,.acbody h4,.acbody h5{color:var(--ink);margin:16px 0 6px}.acbody p{margin:0 0 10px}.acbody ul,.acbody ol{margin:0 0 10px;padding-left:22px}
+.acbody code{background:var(--card);border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:12.5px}
+.acbody pre{background:#1d1a16;color:#efe6d6;border-radius:10px;padding:12px 14px;overflow:auto;font-size:12.5px}.acbody pre code{background:none;border:0;padding:0;color:inherit}
+.acbody blockquote{margin:0 0 10px;padding:8px 12px;border-left:3px solid var(--strong);background:var(--card);border-radius:0 8px 8px 0}
+.acbody a{color:var(--ink);font-weight:600}
+.aclinks h3,.acnotes h3,.acnext h3{margin:0 0 8px;font-size:12.5px;text-transform:uppercase}
+.aclinks{display:flex;flex-direction:column;gap:6px}.aclinks a{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1.2px solid var(--line);border-radius:10px;background:var(--card);text-decoration:none;font-size:13px}.aclinks a:hover{border-color:var(--ink)}.aclinks a span{flex:1;min-width:0;overflow-wrap:anywhere}.aclinks small{color:var(--mut)}
+.acnotes{display:flex;flex-direction:column;gap:6px;padding:14px 16px;border:1.3px solid var(--line);border-radius:14px;background:var(--card)}
+.acnh{display:flex;justify-content:space-between;align-items:center}.acnh h3{margin:0}.acnh span{font-size:12px;color:var(--mut)}.acnh span.ok{color:var(--ink2)}.acnh span.warn{color:var(--redink)}
+.acnotes textarea{width:100%;box-sizing:border-box;min-height:130px;resize:vertical;border:1.3px solid var(--line);border-radius:10px;background:var(--sheet);color:var(--ink);font:inherit;font-size:13px;line-height:1.55;padding:10px 12px}.acnotes textarea:focus{outline:none;border-color:var(--ink)}
+.acnotes small{color:var(--mut);font-size:11.5px}
+.acnext{display:flex;flex-direction:column}
+.acsaved{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px}.acsaved small{color:var(--mut);font-weight:700;font-size:11.5px;text-transform:uppercase;margin-right:4px}
+.acsaved a{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1.2px solid var(--line);border-radius:999px;background:var(--card);font-size:12px;text-decoration:none;max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.actoast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:10px;font-size:13px;font-weight:700;z-index:80;transition:opacity .2s,transform .2s;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.actoast.on{opacity:1;transform:translate(-50%,0)}.actoast.bad{background:var(--redink)}
+/* ===== Admin ===== */
+.adtabs{display:flex;gap:4px;border-bottom:1.3px solid var(--line);overflow-x:auto;scrollbar-width:none}.adtabs a{padding:9px 14px;font-weight:700;font-size:13px;text-decoration:none;color:var(--mut);border-bottom:2.5px solid transparent;margin-bottom:-1.3px;white-space:nowrap}.adtabs a.on{color:var(--ink);border-color:var(--ink)}
+.adtool{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.adtool .pbtn{padding:8px 14px;font-size:13px}
+.adtool input{flex:1 1 240px;height:38px;box-sizing:border-box;border:1.3px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;font-size:13px;padding:0 12px}
+.adtrack,.admod,.adcourse{border:1.3px solid var(--line);border-radius:14px;background:var(--card);overflow:hidden}
+.adth,.admh,.adch{display:flex;align-items:center;gap:10px;padding:12px 14px;flex-wrap:wrap}.adth>i{width:12px;height:12px;border-radius:4px;flex:none}
+.adtt{flex:1;min-width:160px}.adtt b{display:block;font-size:14.5px}.adtt small{color:var(--mut);font-size:12px}
+.adch{border-left:5px solid var(--tc)}.adch>div:first-child{flex:1;min-width:200px;display:flex;flex-direction:column;gap:2px}.adch small{color:var(--mut);font-size:11.5px;font-weight:700;text-transform:uppercase}.adch b{font-size:16px}
+.adacts{display:flex;gap:5px;align-items:center;flex-wrap:wrap;margin-left:auto}
+.adb{height:28px;box-sizing:border-box;padding:0 10px;border:1.2px solid var(--line);border-radius:8px;background:var(--sheet);color:var(--ink);font:inherit;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;text-decoration:none;white-space:nowrap}
+.adb:hover{border-color:var(--ink)}.adb.pri{background:var(--green);border-color:var(--ink)}.adb.danger{color:var(--redink)}.adb.danger:hover{background:var(--red)}
+.adlist{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}.adlist li{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap}.adlist li:last-child{border-bottom:0}
+.adname{flex:1;min-width:180px;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:2px;text-align:left}.adname.as{background:none;border:0;padding:0;font:inherit;cursor:pointer}.adname b{font-size:13.5px;overflow-wrap:anywhere}.adname small{color:var(--mut);font-size:11.5px;overflow-wrap:anywhere}.adname:hover b{text-decoration:underline}
+.adnone{padding:10px 14px 14px;color:var(--mut);font-size:12.5px;border-top:1px solid var(--line)}
+.admt{flex:1;min-width:160px;height:34px;box-sizing:border-box;border:1.2px solid transparent;border-radius:8px;background:transparent;color:var(--ink);font:inherit;font-weight:700;font-size:14px;padding:0 8px}.admt:hover{border-color:var(--line)}.admt:focus{outline:none;border-color:var(--ink);background:var(--sheet)}
+.adform{display:flex;flex-direction:column;gap:12px}.adform label{display:flex;flex-direction:column;gap:5px;font-weight:700;font-size:12.5px;color:var(--ink2);min-width:0}
+.adform input:not([type=checkbox]):not([type=radio]):not([type=color]),.adform select{height:38px;box-sizing:border-box;border:1.3px solid var(--strong);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;font-size:13px;font-weight:500;padding:0 11px;width:100%}
+.adform textarea{font-size:12.5px!important;word-break:normal!important;min-height:70px!important;font-weight:500}
+.adform input:focus,.adform select:focus,.adform textarea:focus{outline:none;border-color:var(--ink)}
+.adform small{font-weight:500;color:var(--mut);font-size:11.5px}
+.adinl{display:flex;gap:8px}.adinl input{flex:1}.adinl .pbtn{flex:none;padding:0 12px;font-size:12px;height:38px}
+.adcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.adrow{flex-direction:row!important;align-items:center;gap:8px!important;font-weight:600!important}
+.adtabs2{display:flex;gap:4px}.adtabs2 button{border:1.2px solid var(--line);background:var(--card);border-radius:7px;padding:3px 9px;font:inherit;font-size:11.5px;cursor:pointer;color:var(--mut)}.adtabs2 button.on{color:var(--ink);border-color:var(--ink)}
+.adprev{border:1.3px dashed var(--strong);border-radius:10px;padding:10px 12px;min-height:70px;font-weight:400}
+.addanger{background:var(--red)!important}
+.adsrc{display:flex;gap:16px;flex-wrap:wrap}
+.adimp{max-width:820px}
+.adpvm{border:1.2px solid var(--line);border-radius:10px;padding:10px 14px;background:var(--card);margin-top:8px}.adpvm b{font-size:13px}.adpvm ol{margin:6px 0 0;padding-left:22px;font-size:12.5px;color:var(--ink2)}.adpvm small{color:var(--mut)}
+.adtbl{overflow-x:auto;border:1.3px solid var(--line);border-radius:12px}.adtbl table{width:100%;border-collapse:collapse;font-size:12.5px}.adtbl th,.adtbl td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}.adtbl th{font-size:11px;text-transform:uppercase;color:var(--mut);background:var(--card)}.adtbl td small{display:block;color:var(--mut)}.adtbl tr:last-child td{border-bottom:0}
+.mpanel:has(.adform){width:min(680px,100%)}
+@media (max-width:700px){.acgrid,.acskel{grid-template-columns:minmax(0,1fr)}.acq{width:100%}.acact .acsp{display:none}.acact .pbtn{flex:1 1 auto;justify-content:center;text-align:center}.adacts{margin-left:0;width:100%}.adch .adacts{width:auto}.achead .pbtn{margin-top:2px}}
+#adbody{display:flex;flex-direction:column;gap:12px}
 </style>
 </head>
 <body>
@@ -5076,7 +5172,7 @@ addEventListener('appinstalled',function(){INSTALL_EVT=null;renderSync()});
 $('mdlx').onclick=mdlClose;$('pexp').onclick=syncExport;$('pimp').onclick=syncImport;$('mdl').addEventListener('mousedown',function(e){if(e.target===$('mdl'))mdlClose()});
 document.addEventListener('keydown',function(e){if(e.key=='Escape'&&!$('mdl').hidden)mdlClose()});
 (function(){var _rh=renderHome;renderHome=function(){_rh();renderSync()}})();
-if('serviceWorker' in navigator&&location.protocol==='https:'&&/github\.io$|^learn\.mahmoud-syam\.me$/.test(location.hostname)){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}
+if('serviceWorker' in navigator&&location.protocol==='https:'&&/^learn\.mahmoud-syam\.me$/.test(location.hostname)){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}
 // ---------- Study streak, spaced review, focus mode ----------
 if(!PS.days)PS.days={};if(!PS.rv)PS.rv={};if(!PS.doneAt)PS.doneAt={};
 function dayKey(d){d=d||new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
@@ -5104,7 +5200,7 @@ function renderExtras(){var st=$('hstats');if(!st)return;var s=streak(),due=rvDu
  document.addEventListener('keydown',function(e){if(VIEW!='learn'||/INPUT|TEXTAREA/.test(e.target.tagName)||e.ctrlKey||e.metaKey||e.altKey)return;if((e.key||'').toLowerCase()=='f'){e.preventDefault();setFocus(!PS.focus)}})})();
 // ---------- Account sync (Cloudflare Access + Worker API on learn.mahmoud-syam.me) ----------
 // Works only where the API exists; on GitHub Pages or a local file the course stays local-only.
-var ACCT={on:/^learn\.mahmoud-syam\.me$/.test(location.hostname),email:null,state:'idle',at:0,t:null};
+var ACCT={on:/^learn\.mahmoud-syam\.me$/.test(location.hostname)||(/^(localhost|127\.0\.0\.1)$/.test(location.hostname)&&location.port=='8787'),email:null,state:'idle',at:0,t:null};
 function acctPush(){if(!ACCT.email)return;clearTimeout(ACCT.t);ACCT.t=setTimeout(function(){ACCT.state='saving';acctPaint();
  fetch('/api/progress',{method:'PUT',credentials:'same-origin',redirect:'manual',headers:{'content-type':'application/json'},body:JSON.stringify(PS)})
  .then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){ACCT.state='saved';ACCT.at=j.updated_at||Date.now();acctPaint()})
@@ -5141,7 +5237,7 @@ function profPaint(){profPaintAvatar();var m=$('pmenu');if(!m||m.hidden)return;
   +'<div class="pmsec"><div class="pmrow"><span>Lessons</span><b>'+done+' / '+ks.length+'</b></div><div class="pmbar"><i style="width:'+pct+'%"></i></div>'
   +'<div class="pmrow"><span>Study streak</span><b>'+(s?s+' day'+(s==1?'':'s'):'—')+'</b></div><div class="pmrow"><span>Review due</span><b>'+(due||'none')+'</b></div>'
   +(ACCT.email?'<div class="pmrow"><span>Cloud save</span><b class="'+(ACCT.state=='offline'?'warn':'ok')+'">'+st+'</b></div>':'')+'</div>'
-  +'<div class="pmsec pmlinks"><a href="#home" data-pm>My progress</a><a href="#practice'+(due?'-review':'')+'" data-pm>'+(due?'Review now':'Practice')+'</a><button id="pmexp" data-pm>Export progress</button></div>'
+  +'<div class="pmsec pmlinks"><a href="#home" data-pm>My progress</a><a href="#courses" data-pm>Courses</a>'+(typeof ACAD!='undefined'&&ACAD.admin?'<a href="#admin" data-pm>Admin dashboard</a>':'')+'<a href="#practice'+(due?'-review':'')+'" data-pm>'+(due?'Review now':'Practice')+'</a><button id="pmexp" data-pm>Export progress</button></div>'
   +'<div class="pmsec pmlinks">'+(ACCT.email?'<a href="/api/logout" class="pmout">Sign out</a>':ACCT.on?'<a href="/api/login">Sign in</a>':'<a href="https://learn.mahmoud-syam.me" target="_blank" rel="noopener">Open the academy ↗</a>')+'</div>';
  m.innerHTML=h;
  $('pmedit').onclick=function(e){e.stopPropagation();var n=$('pmname');n.innerHTML='<input id="pmin" maxlength="40" placeholder="Your name" value="'+esc(PS.name||'')+'">';var i=$('pmin');i.focus();i.select();
@@ -5160,6 +5256,302 @@ function profClose(){var m=$('pmenu');if(!m||m.hidden)return;m.hidden=true;$('pa
  var _ap=acctPaint;acctPaint=function(){_ap();profPaint()};
  var _sv=save;save=function(){_sv();profPaintAvatar()};
  profPaint()})();
+// ---------- Academy: tracks → courses → modules → lessons (video, reading, lab, link) ----------
+// Content comes from the Worker API (/api/catalog), per-user state from /api/my.
+var ACAD={ok:ACCT.on,cat:null,my:{},admin:false,T:{},C:{},M:{},L:{},CM:{},ML:{},CL:{},loading:null,err:''};
+var AC_TYPES={video:'Video',reading:'Reading',lab:'Lab',link:'Link',quiz:'Quiz'};
+var AC_PROV={youtube:'YouTube',udemy:'Udemy','microsoft-learn':'Microsoft Learn',coursera:'Coursera','aws-skill-builder':'AWS Skill Builder',book:'Book',other:'Other'};
+var AC_ICON={video:'<path d="M3 3.5h10v9H3z"/><path d="M7 6l3 2-3 2z" fill="currentColor"/>',reading:'<path d="M3 3h4.5c.8 0 1.5.7 1.5 1.5V13c0-.6-.5-1-1-1H3zM13 3H8.5C7.7 3 7 3.7 7 4.5V13c0-.6.5-1 1-1h5z"/>',lab:'<path d="M6 2.5v4L3 12.5c-.3.6.1 1 .7 1h8.6c.6 0 1-.4.7-1L10 6.5v-4M5 2.5h6"/>',link:'<path d="M7 9a2.5 2.5 0 003.5 0l2-2A2.5 2.5 0 009 3.5l-.7.7M9 7a2.5 2.5 0 00-3.5 0l-2 2A2.5 2.5 0 007 12.5l.7-.7"/>',quiz:'<circle cx="8" cy="8" r="5.5"/><path d="M6.6 6.4a1.5 1.5 0 112.1 1.4c-.5.2-.7.6-.7 1.1M8 11h0"/>'};
+function acIcon(t){return '<svg class="aci" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">'+(AC_ICON[t]||AC_ICON.link)+'</svg>'}
+function acApi(method,path,body){return fetch(path,{method:method,credentials:'same-origin',redirect:'manual',headers:body!==undefined?{'content-type':'application/json'}:{},body:body!==undefined?JSON.stringify(body):undefined})
+ .then(function(r){if(r.type=='opaqueredirect'||r.status==0)throw new Error('Your session ended. Reload the page to sign in again.');return r.json().catch(function(){return {}}).then(function(j){if(!r.ok)throw new Error(j.error||('Request failed ('+r.status+')'));return j})})}
+function acToast(msg,bad){var t=$('actoast');if(!t){t=document.createElement('div');t.id='actoast';t.className='actoast';document.body.appendChild(t)}t.textContent=msg;t.className='actoast on'+(bad?' bad':'');clearTimeout(t._h);t._h=setTimeout(function(){t.className='actoast'},2600)}
+function acMins(m){m=Math.round(m||0);if(!m)return '';var h=Math.floor(m/60),r=m%60;return h?(h+'h'+(r?' '+r+'m':'')):r+'m'}
+function acLocal(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+// ---------- Data ----------
+function acIndex(cat){ACAD.cat=cat;var T={},C={},M={},L={},CM={},ML={},CL={};
+ cat.tracks.forEach(function(t){T[t.id]=t});cat.courses.forEach(function(c){C[c.id]=c;CM[c.id]=[];CL[c.id]=[]});
+ cat.modules.forEach(function(m){if(!C[m.course_id])return;M[m.id]=m;ML[m.id]=[];CM[m.course_id].push(m)});
+ cat.lessons.forEach(function(l){var m=M[l.module_id];if(!m)return;L[l.id]=l;ML[m.id].push(l)});
+ Object.keys(CM).forEach(function(cid){CM[cid].forEach(function(m){ML[m.id].forEach(function(l){CL[cid].push(l)})})});
+ ACAD.T=T;ACAD.C=C;ACAD.M=M;ACAD.L=L;ACAD.CM=CM;ACAD.ML=ML;ACAD.CL=CL;if(typeof KX!='undefined')KX=null}
+function acCourseOf(lid){var l=ACAD.L[lid];return l&&ACAD.M[l.module_id]?ACAD.C[ACAD.M[l.module_id].course_id]:null}
+function acStats(cid){var ls=ACAD.CL[cid]||[],d=0,min=0;ls.forEach(function(l){min+=l.minutes||0;if(ACAD.my[l.id]&&ACAD.my[l.id].done)d++});return {n:ls.length,done:d,min:min,pct:ls.length?Math.round(d/ls.length*100):0}}
+function acNextLesson(cid){var ls=ACAD.CL[cid]||[];for(var i=0;i<ls.length;i++)if(!(ACAD.my[ls[i].id]&&ACAD.my[ls[i].id].done))return ls[i];return ls[0]||null}
+function acLoad(force){if(!ACAD.ok)return Promise.resolve();if(ACAD.loading&&!force)return ACAD.loading;
+ if(!ACAD.cat){var c=acLocal('syam:acad');if(c&&c.cat){acIndex(c.cat);ACAD.my=c.my||{};ACAD.admin=!!c.admin}}
+ ACAD.loading=Promise.all([acApi('GET','/api/catalog'),acApi('GET','/api/my'),acApi('GET','/api/me')]).then(function(r){
+  acIndex(r[0]);var my={};(r[1].lessons||[]).forEach(function(x){my[x.lesson_id]=x});
+  var q=acLocal('syam:acadq')||{};Object.keys(q).forEach(function(id){my[id]=Object.assign(my[id]||{},q[id])});
+  ACAD.my=my;ACAD.admin=!!r[2].admin;ACAD.err='';acLocal('syam:acad',{cat:r[0],my:my,admin:ACAD.admin});acFlush();acAfterLoad()})
+ .catch(function(e){ACAD.err=e.message;acAfterLoad()});return ACAD.loading}
+function acAfterLoad(){if(VIEW=='courses')acRender(ACAD.view);if(VIEW=='home')renderHome();if(typeof profPaint=='function')profPaint();if(typeof adAfterLoad=='function')adAfterLoad()}
+function acSaveLocal(){acLocal('syam:acad',{cat:ACAD.cat,my:ACAD.my,admin:ACAD.admin})}
+function acPut(id,patch){var cur=ACAD.my[id]||{lesson_id:id,done:0,note:'',saved:0,position:0};Object.keys(patch).forEach(function(k){cur[k]=typeof patch[k]=='boolean'?(patch[k]?1:0):patch[k]});ACAD.my[id]=cur;acSaveLocal();
+ var q=acLocal('syam:acadq')||{};q[id]=Object.assign(q[id]||{},patch);acLocal('syam:acadq',q);return acFlush()}
+var AC_FLUSH=null;
+function acFlush(){if(AC_FLUSH)return AC_FLUSH;var q=acLocal('syam:acadq')||{},ids=Object.keys(q);if(!ids.length||!ACAD.ok)return Promise.resolve(true);
+ AC_FLUSH=ids.reduce(function(p,id){return p.then(function(){var body=q[id];return acApi('PUT','/api/my/lessons/'+id,body).then(function(){var cur=acLocal('syam:acadq')||{};if(JSON.stringify(cur[id])==JSON.stringify(body)){delete cur[id];acLocal('syam:acadq',cur)}},function(e){if(/not found/i.test(e.message)){var cur=acLocal('syam:acadq')||{};delete cur[id];acLocal('syam:acadq',cur);return}throw e})})},Promise.resolve())
+  .then(function(){AC_FLUSH=null;return true},function(){AC_FLUSH=null;return false});return AC_FLUSH}
+addEventListener('online',function(){acFlush()});
+// ---------- Tiny, safe Markdown ----------
+function acInline(s){s=esc(s);
+ s=s.replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>').replace(/(^|[^*])\*([^*\s][^*]*)\*/g,'$1<i>$2</i>');
+ s=s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+ s=s.replace(/(^|[\s(])(https?:\/\/[^\s<)]+)/g,'$1<a href="$2" target="_blank" rel="noopener">$2</a>');return s}
+function acMd(src){var out=[],lines=String(src||'').replace(/\r/g,'').split('\n'),i=0,list=null,para=[];
+ function flushP(){if(para.length){out.push('<p>'+acInline(para.join(' '))+'</p>');para=[]}}
+ function flushL(){if(list){out.push('</'+list+'>');list=null}}
+ while(i<lines.length){var ln=lines[i],m;
+  if(/^```/.test(ln)){flushP();flushL();var code=[];i++;while(i<lines.length&&!/^```/.test(lines[i])){code.push(lines[i]);i++}out.push('<pre><code>'+esc(code.join('\n'))+'</code></pre>');i++;continue}
+  if((m=ln.match(/^(#{1,3})\s+(.*)/))){flushP();flushL();var h=m[1].length+2;out.push('<h'+h+'>'+acInline(m[2])+'</h'+h+'>');i++;continue}
+  if((m=ln.match(/^\s*[-*]\s+(.*)/))){flushP();if(list!='ul'){flushL();out.push('<ul>');list='ul'}out.push('<li>'+acInline(m[1])+'</li>');i++;continue}
+  if((m=ln.match(/^\s*\d+[.)]\s+(.*)/))){flushP();if(list!='ol'){flushL();out.push('<ol>');list='ol'}out.push('<li>'+acInline(m[1])+'</li>');i++;continue}
+  if((m=ln.match(/^>\s?(.*)/))){flushP();flushL();out.push('<blockquote>'+acInline(m[1])+'</blockquote>');i++;continue}
+  if(!ln.trim()){flushP();flushL();i++;continue}
+  flushL();para.push(ln.trim());i++}
+ flushP();flushL();return out.join('')}
+// ---------- YouTube ----------
+function acYtId(u){if(!u)return null;var m=u.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{11})/);return m?m[1]:null}
+var AC_YT={api:null,player:null,timer:null};
+function acYtApi(){if(AC_YT.api)return AC_YT.api;AC_YT.api=new Promise(function(res,rej){if(window.YT&&YT.Player)return res();var prev=window.onYouTubeIframeAPIReady;window.onYouTubeIframeAPIReady=function(){if(prev)prev();res()};
+ var s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';s.onerror=function(){AC_YT.api=null;rej()};document.head.appendChild(s);setTimeout(function(){rej()},8000)});return AC_YT.api}
+function acYtStop(){clearInterval(AC_YT.timer);AC_YT.timer=null;if(AC_YT.player&&AC_YT.player.destroy){try{AC_YT.player.destroy()}catch(e){}}AC_YT.player=null}
+function acYtMount(lesson){var vid=acYtId(lesson.url),box=$('acplayer');if(!vid||!box)return;var st=ACAD.my[lesson.id],start=st&&st.position>10?st.position:0;
+ acYtApi().then(function(){if(!$('acplayer')||ACAD.view.id!==lesson.id)return;var lastSaved=start;
+  AC_YT.player=new YT.Player('acplayer',{videoId:vid,host:'https://www.youtube-nocookie.com',playerVars:{start:Math.floor(start),rel:0,modestbranding:1,playsinline:1},events:{onStateChange:function(e){
+   clearInterval(AC_YT.timer);if(e.data===1){AC_YT.timer=setInterval(function(){var p=AC_YT.player;if(!p||!p.getCurrentTime)return;var t=p.getCurrentTime(),d=p.getDuration()||0;
+    if(Math.abs(t-lastSaved)>=15){lastSaved=t;acPut(lesson.id,{position:Math.floor(t)})}
+    if(d>60&&t/d>0.92&&!(ACAD.my[lesson.id]&&ACAD.my[lesson.id].done)){acPut(lesson.id,{done:true,position:0});acToast('Marked as done');acPaintLessonState(lesson)}},4000)}
+   if(e.data===0&&!(ACAD.my[lesson.id]&&ACAD.my[lesson.id].done)){acPut(lesson.id,{done:true,position:0});acToast('Marked as done');acPaintLessonState(lesson)}}}})
+ }).catch(function(){if(!$('acplayer'))return;$('acplayer').outerHTML='<iframe class="acframe" src="https://www.youtube-nocookie.com/embed/'+vid+(start?'?start='+Math.floor(start):'')+'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="'+esc(lesson.title)+'"></iframe>'})}
+// ---------- Views ----------
+function acSection(){var s=$('vcourses');if(s)return s;s=document.createElement('section');s.className='view acv';s.id='vcourses';s.hidden=true;$('vcheat').after(s);return s}
+function acSetLast(cid,lid){var m=acLocal('syam:acadlast')||{};m[cid]={l:lid,at:Date.now()};acLocal('syam:acadlast',m)}
+function acRender(arg){ACAD.view=arg||{page:'catalog'};var s=acSection();acYtStop();
+ if(!ACAD.ok){s.innerHTML='<div class="vhead"><div class="crumb">Courses</div><h1>Courses</h1><p class="sub">Your video courses, readings and labs live on the academy site. Open <b>learn.mahmoud-syam.me</b> to see them.</p></div><div class="hbtns"><a class="pbtn" href="https://learn.mahmoud-syam.me/#courses">Open the academy</a></div>';return}
+ if(!ACAD.cat){s.innerHTML='<div class="vhead"><div class="crumb">Courses</div><h1>Courses</h1><p class="sub">'+(ACAD.err?esc(ACAD.err):'Loading your courses…')+'</p></div>'+(ACAD.err?'<div class="hbtns"><button class="pbtn" onclick="acLoad(true)">Try again</button></div>':'<div class="acskel"><i></i><i></i><i></i></div>');acLoad();return}
+ var p=ACAD.view.page;if(p=='course')return acCourse(ACAD.view.id);if(p=='lesson')return acLesson(ACAD.view.id);acCatalog()}
+function acBuiltin(){var tot=0,dn=0;COURSE.forEach(function(m){m.l.forEach(function(l){if(LESSONS[m.id+'/'+l[0]]){tot++;if(PS.done[m.id+'/'+l[0]])dn++}})});return {n:tot,done:dn,pct:tot?Math.round(dn/tot*100):0}}
+function acCard(c){var st=acStats(c.id),t=ACAD.T[c.track_id]||{},col=t.color||'#2f86ce';
+ return '<a class="accard" href="#course:'+c.id+'" style="--tc:'+esc(col)+'"><span class="acband"></span><span class="acprov">'+esc(AC_PROV[c.provider]||'Other')+(c.level?' · '+esc(c.level):'')+(c.published?'':' · <b>Hidden</b>')+'</span><b class="act">'+esc(c.title)+'</b>'+(c.description?'<span class="acd">'+esc(c.description)+'</span>':'')+
+  '<span class="acfoot"><span>'+st.n+' lesson'+(st.n==1?'':'s')+(st.min?' · '+acMins(st.min):'')+'</span><span>'+(st.done?st.pct+'%':'')+'</span></span><u class="acbar"><i style="width:'+st.pct+'%"></i></u></a>'}
+function acCatalog(){var s=acSection(),cat=ACAD.cat,f=ACAD.filter||'all',q=(ACAD.q||'').toLowerCase();document.title='SYAM.DEV — Courses';
+ var h='<div class="vhead"><div class="crumb">Courses</div><div class="achead"><h1>Courses</h1>'+(ACAD.admin?'<a class="pbtn alt" href="#admin">Manage courses</a>':'')+'</div><p class="sub">Your learning library: interactive lessons, video courses, readings and labs, with your progress and notes saved to your account.</p></div>';
+ h+='<div class="acbar2"><div class="acchips"><button class="pchip'+(f=='all'?' on':'')+'" data-f="all">All</button>'+cat.tracks.map(function(t){return '<button class="pchip'+(f==t.id?' on':'')+'" data-f="'+t.id+'"><i style="background:'+esc(t.color)+'"></i>'+esc(t.title)+'</button>'}).join('')+'</div><input class="acq" id="acq" type="search" placeholder="Filter courses…" value="'+esc(ACAD.q||'')+'"></div>';
+ var any=false;
+ cat.tracks.forEach(function(t){if(f!='all'&&f!=t.id)return;
+  var cs=cat.courses.filter(function(c){return c.track_id==t.id&&(!q||(c.title+' '+c.description+' '+(AC_PROV[c.provider]||'')).toLowerCase().indexOf(q)>=0)});
+  var builtin=t.id=='devops'&&(!q||'devops interactive linux git docker kubernetes terraform aws'.indexOf(q)>=0);
+  if(!cs.length&&!builtin&&q)return;any=true;
+  h+='<div class="acsec"><div class="acsh"><i style="background:'+esc(t.color)+'"></i><div><h3>'+esc(t.title)+'</h3>'+(t.description?'<p>'+esc(t.description)+'</p>':'')+'</div></div><div class="acgrid">';
+  if(builtin){var b=acBuiltin();h+='<a class="accard star" href="#" data-learn="1" style="--tc:'+esc(t.color)+'"><span class="acband"></span><span class="acprov">Interactive · built in</span><b class="act">DevOps interactive course</b><span class="acd">Animated, hands-on lessons from Linux to Kubernetes, CI/CD, observability and SRE, with projects and interview prep.</span><span class="acfoot"><span>'+b.n+' lessons</span><span>'+(b.done?b.pct+'%':'')+'</span></span><u class="acbar"><i style="width:'+b.pct+'%"></i></u></a>'}
+  h+=cs.map(acCard).join('');
+  if(!cs.length&&!builtin)h+='<div class="acempty">No courses in this track yet.'+(ACAD.admin?' <a href="#admin">Add one</a>.':'')+'</div>';
+  h+='</div></div>'});
+ if(!any)h+='<div class="acempty big">No courses match “'+esc(ACAD.q)+'”.</div>';
+ s.innerHTML=h;
+ s.querySelectorAll('[data-f]').forEach(function(b){b.onclick=function(){ACAD.filter=b.dataset.f;acCatalog()}});
+ var qi=$('acq');qi.oninput=function(){ACAD.q=qi.value;var pos=qi.selectionStart;acCatalog();var n=$('acq');n.focus();n.setSelectionRange(pos,pos)};
+ s.querySelectorAll('[data-learn]').forEach(function(a){a.onclick=function(e){e.preventDefault();goView('learn')}})}
+function acCourse(cid){var s=acSection(),c=ACAD.C[cid];if(!c){s.innerHTML='<div class="vhead"><div class="crumb"><a href="#courses">Courses</a></div><h1>Course not found</h1><p class="sub">It may have been removed or hidden.</p></div>';return}
+ var t=ACAD.T[c.track_id]||{},st=acStats(cid),nx=acNextLesson(cid),started=st.done>0||((acLocal('syam:acadlast')||{})[cid]);document.title='SYAM.DEV — '+c.title;
+ var h='<div class="vhead"><div class="crumb"><a href="#courses">Courses</a><i>/</i>'+esc(t.title||'')+'</div><div class="achead"><h1>'+esc(c.title)+'</h1>'+(ACAD.admin?'<a class="pbtn alt" href="#admin:course:'+cid+'">Edit</a>':'')+'</div>'+(c.description?'<p class="sub">'+esc(c.description)+'</p>':'')+'</div>';
+ h+='<div class="acstat" style="--tc:'+esc(t.color||'#2f86ce')+'"><div class="acsl"><div class="acnums"><b>'+st.pct+'%</b><span>'+st.done+' of '+st.n+' lessons done'+(st.min?' · '+acMins(st.min)+' in total':'')+'</span></div><u class="acbar big"><i style="width:'+st.pct+'%"></i></u><div class="acmeta"><span class="acchip">'+esc(AC_PROV[c.provider]||'Other')+'</span>'+(c.level?'<span class="acchip">'+esc(c.level)+'</span>':'')+(c.published?'':'<span class="acchip warn">Hidden from learners</span>')+'</div></div><div class="hbtns">'+(nx?'<a class="pbtn" href="#lesson:'+nx.id+'">'+(st.done==st.n&&st.n?'Review':started?'Continue':'Start')+' →</a>':'')+(c.url?'<a class="pbtn alt" href="'+esc(c.url)+'" target="_blank" rel="noopener">Open on '+esc(AC_PROV[c.provider]||'site')+' ↗</a>':'')+'</div></div>';
+ var mods=ACAD.CM[cid]||[];if(!mods.length)h+='<div class="acempty big">This course has no lessons yet.'+(ACAD.admin?' <a href="#admin:course:'+cid+'">Add the first lesson</a>.':'')+'</div>';
+ h+='<div class="acmods">'+mods.map(function(m,mi){var ls=ACAD.ML[m.id],d=ls.filter(function(l){return ACAD.my[l.id]&&ACAD.my[l.id].done}).length,min=ls.reduce(function(a,l){return a+(l.minutes||0)},0);
+  return '<details class="acmod"'+(d<ls.length||mods.length<4?' open':'')+'><summary><span class="acmn">'+(mi+1<10?'0':'')+(mi+1)+'</span><b>'+esc(m.title)+'</b><span class="acmc">'+d+'/'+ls.length+(min?' · '+acMins(min):'')+'</span></summary><ul>'+
+   ls.map(function(l){var u=ACAD.my[l.id]||{};return '<li><a href="#lesson:'+l.id+'" class="'+(u.done?'done':'')+'"><span class="acck">'+(u.done?'✓':'')+'</span>'+acIcon(l.type)+'<span class="aclt">'+esc(l.title)+(l.published?'':' <em>hidden</em>')+'</span>'+(u.saved?'<span class="acsv" title="Saved">★</span>':'')+(u.note?'<span class="acnt" title="Has notes">✎</span>':'')+'<span class="acmin">'+acMins(l.minutes)+'</span></a></li>'}).join('')+'</ul></details>'}).join('')+'</div>';
+ s.innerHTML=h}
+function acLesson(lid){var s=acSection(),l=ACAD.L[lid],c=acCourseOf(lid);if(!l||!c){s.innerHTML='<div class="vhead"><div class="crumb"><a href="#courses">Courses</a></div><h1>Lesson not found</h1><p class="sub">It may have been removed or hidden.</p></div>';return}
+ var m=ACAD.M[l.module_id],ls=ACAD.CL[c.id],i=ls.indexOf(l),prev=ls[i-1],next=ls[i+1],mi=(ACAD.CM[c.id]||[]).indexOf(m),u=ACAD.my[lid]||{},vid=l.type=='video'&&acYtId(l.url),host='';
+ try{host=l.url?new URL(l.url).hostname.replace(/^www\./,''):''}catch(e){}
+ document.title='SYAM.DEV — '+l.title;acSetLast(c.id,lid);
+ var h='<div class="vhead"><div class="crumb"><a href="#courses">Courses</a><i>/</i><a href="#course:'+c.id+'">'+esc(c.title)+'</a><i>/</i>'+esc(m.title)+'</div><div class="achead"><h1>'+esc(l.title)+'</h1>'+(ACAD.admin?'<button class="pbtn alt" id="acedit">Edit</button>':'')+'</div>'+
+  '<div class="acmeta"><span class="acchip">'+acIcon(l.type)+esc(AC_TYPES[l.type]||'Lesson')+'</span>'+(l.minutes?'<span class="acchip">'+acMins(l.minutes)+'</span>':'')+'<span class="acchip">Section '+(mi+1)+' · lesson '+(i+1)+' of '+ls.length+'</span>'+(l.published?'':'<span class="acchip warn">Hidden from learners</span>')+'</div></div>';
+ if(vid)h+='<div class="acvideo"><div id="acplayer"></div></div>';
+ else if(l.url)h+='<a class="acext" href="'+esc(l.url)+'" target="_blank" rel="noopener"><span class="acexi">'+acIcon(l.type)+'</span><span><b>Open '+(l.type=='video'?'the video':'this lesson')+' on '+esc(host)+' ↗</b><small>It opens in a new tab. Come back here to mark it done and keep your notes.</small></span></a>';
+ h+='<div class="acact" id="acact"></div>';
+ if(l.body)h+='<div class="acbody">'+acMd(l.body)+'</div>';
+ if(l.links&&l.links.length)h+='<div class="aclinks"><h3>Links</h3>'+l.links.map(function(x){var hs='';try{hs=new URL(x.url).hostname.replace(/^www\./,'')}catch(e){}return '<a href="'+esc(x.url)+'" target="_blank" rel="noopener">'+acIcon('link')+'<span>'+esc(x.title||x.url)+'</span><small>'+esc(hs)+'</small></a>'}).join('')+'</div>';
+ h+='<div class="acnotes"><div class="acnh"><h3>My notes</h3><span id="acns"></span></div><textarea id="acnote" placeholder="Write what you learned, commands to remember, questions to look up…">'+esc(u.note||'')+'</textarea><small>Saved to your account automatically. Only you can see your notes.</small></div>';
+ var rest=ACAD.ML[m.id].slice(ACAD.ML[m.id].indexOf(l)+1,ACAD.ML[m.id].indexOf(l)+6);
+ if(rest.length)h+='<div class="acnext"><h3>Up next in this section</h3>'+rest.map(function(x){var ux=ACAD.my[x.id]||{};return '<a href="#lesson:'+x.id+'" class="'+(ux.done?'done':'')+'"><span class="acck">'+(ux.done?'✓':'')+'</span>'+acIcon(x.type)+'<span class="aclt">'+esc(x.title)+'</span><span class="acmin">'+acMins(x.minutes)+'</span></a>'}).join('')+'</div>';
+ s.innerHTML=h;s.scrollTop=0;acPaintLessonState(l,prev,next);
+ if($('acedit'))$('acedit').onclick=function(){if(typeof adEditLesson=='function')adEditLesson(l.id,function(){acRender(ACAD.view)})};
+ var ta=$('acnote'),ns=$('acns'),tm=null;ta.oninput=function(){ns.textContent='Saving…';ns.className='';clearTimeout(tm);tm=setTimeout(function(){acPut(lid,{note:ta.value}).then(function(ok){ns.textContent=ok?'Saved':'Offline · kept on this device';ns.className=ok?'ok':'warn'})},900)};
+ if(vid)acYtMount(l)}
+function acPaintLessonState(l,prev,next){var a=$('acact');if(!a||ACAD.view.id!==l.id)return;var u=ACAD.my[l.id]||{};
+ if(prev===undefined){var ls=ACAD.CL[(acCourseOf(l.id)||{}).id]||[],i=ls.indexOf(l);prev=ls[i-1];next=ls[i+1]}
+ a.innerHTML='<button class="pbtn'+(u.done?' alt acdone':'')+'" id="acdn">'+(u.done?'✓ Done':'Mark as done')+'</button><button class="pbtn alt" id="acsv" aria-pressed="'+(!!u.saved)+'">'+(u.saved?'★ Saved':'☆ Save for later')+'</button><span class="acsp"></span>'+(prev?'<a class="pbtn alt" href="#lesson:'+prev.id+'" title="'+esc(prev.title)+'">← Previous</a>':'')+(next?'<a class="pbtn" href="#lesson:'+next.id+'" title="'+esc(next.title)+'">Next →</a>':'<a class="pbtn" href="#course:'+(acCourseOf(l.id)||{}).id+'">Back to course</a>');
+ $('acdn').onclick=function(){var d=!(ACAD.my[l.id]&&ACAD.my[l.id].done);acPut(l.id,{done:d});trackDay();save();acPaintLessonState(l,prev,next);if(d){acToast('Nice, lesson done');if(next&&AC_YT.player==null){}}};
+ $('acsv').onclick=function(){var v=!(ACAD.my[l.id]&&ACAD.my[l.id].saved);acPut(l.id,{saved:v});acPaintLessonState(l,prev,next);acToast(v?'Saved for later':'Removed from saved')}}
+// ---------- Home: continue your courses ----------
+function acHome(){var el=$('hacad');if(!el){var mods=$('hmods');if(!mods)return;var sec=document.createElement('div');sec.className='hsec';sec.innerHTML='<h3>Your courses</h3><div id="hacad"></div>';mods.closest('.hsec').before(sec);el=$('hacad')}
+ if(!ACAD.ok){el.closest('.hsec').hidden=true;return}
+ if(!ACAD.cat){el.innerHTML='<p class="acmuted">Loading your courses…</p>';acLoad();return}
+ var last=acLocal('syam:acadlast')||{},ids=ACAD.cat.courses.map(function(c){return c.id}).filter(function(id){return last[id]||acStats(id).done}).sort(function(a,b){return ((last[b]||{}).at||0)-((last[a]||{}).at||0)}).slice(0,4);
+ var saved=Object.keys(ACAD.my).filter(function(id){return ACAD.my[id].saved&&ACAD.L[id]}).slice(0,6);
+ var h='';if(ids.length)h+='<div class="acgrid">'+ids.map(function(id){var c=ACAD.C[id],st=acStats(id),nx=acNextLesson(id),t=ACAD.T[c.track_id]||{};
+  return '<a class="accard" href="#lesson:'+(last[id]&&ACAD.L[last[id].l]&&!(ACAD.my[last[id].l]&&ACAD.my[last[id].l].done)?last[id].l:(nx||{}).id||'')+'" style="--tc:'+esc(t.color||'#2f86ce')+'"><span class="acband"></span><span class="acprov">'+esc(t.title||'')+' · '+st.pct+'%</span><b class="act">'+esc(c.title)+'</b><span class="acd">Next: '+esc(nx?nx.title:'all done')+'</span><u class="acbar"><i style="width:'+st.pct+'%"></i></u></a>'}).join('')+'</div>';
+ else h+='<div class="acempty">'+(ACAD.cat.courses.length?'You have not started a course yet. <a href="#courses">Browse '+ACAD.cat.courses.length+' course'+(ACAD.cat.courses.length==1?'':'s')+'</a>.':'No courses yet.'+(ACAD.admin?' <a href="#admin">Add your first course</a>.':''))+'</div>';
+ if(saved.length)h+='<div class="acsaved"><small>Saved for later</small>'+saved.map(function(id){var l=ACAD.L[id];return '<a href="#lesson:'+id+'">'+acIcon(l.type)+esc(l.title)+'</a>'}).join('')+'</div>';
+ el.innerHTML=h}
+// ---------- Wiring ----------
+(function(){
+ var nav=$('nav'),dnav=$('dnav');
+ if(nav&&!nav.querySelector('[data-v=courses]')){var sp=document.createElement('span');sp.dataset.v='courses';sp.setAttribute('role','button');sp.tabIndex=0;sp.textContent='Courses';nav.children[0].after(sp);sp.onclick=function(){goView('courses')};sp.onkeydown=function(e){if(e.key=='Enter'||e.key==' '){e.preventDefault();goView('courses')}}}
+ if(dnav&&!dnav.querySelector('[data-v=courses]')){var b=document.createElement('button');b.dataset.v='courses';b.textContent='Courses';dnav.querySelector('[data-v=learn]').after(b);b.onclick=function(){goView('courses')}}
+ acSection();
+ var _sv=setView;setView=function(v,arg){if(v!=='courses')acYtStop();_sv(v,arg);var bd=document.querySelector('.body');bd.classList.toggle('v-courses',v=='courses');$('vcourses').hidden=v!='courses';if(v=='courses'){acRender(arg);$('vcourses').scrollTop=0}};
+ var _gv=goView;goView=function(v){if(v=='courses'){location.hash='courses';return}_gv(v)};
+ var _rv=routeView;routeView=function(h){var m;if(h=='courses'){setView('courses',{page:'catalog'});renderTree();return true}
+  if((m=h.match(/^(course|lesson):([\w-]+)$/))){setView('courses',{page:m[1],id:m[2]});renderTree();return true}return _rv(h)};
+ var _rh=renderHome;renderHome=function(){_rh();acHome()};
+ if(typeof kIndex=='function'){var _ki=kIndex;kIndex=function(){var fresh=!KX,r=_ki();if(fresh&&ACAD.cat){ACAD.cat.courses.forEach(function(c){r.push({t:'page',title:c.title,sub:'Course · '+(AC_PROV[c.provider]||'')+' · '+(ACAD.CL[c.id]||[]).length+' lessons',hay:(c.title+' '+c.description+' course').toLowerCase(),href:'course:'+c.id})});
+   ACAD.cat.lessons.forEach(function(l){var c=acCourseOf(l.id);if(!c)return;r.push({t:'lesson',title:l.title,sub:c.title+' · '+(AC_TYPES[l.type]||''),hay:(l.title+' '+c.title+' '+(l.body||'').slice(0,400)+' '+((ACAD.my[l.id]||{}).note||'')).toLowerCase(),href:'lesson:'+l.id})})}return r}}
+ if(ACAD.ok&&ACCT.on)acLoad();
+})();
+// ---------- Admin dashboard: manage tracks, courses, sections and lessons ----------
+var AD={view:{tab:'content'},busy:false};
+function adSection(){var s=$('vadmin');if(s)return s;s=document.createElement('section');s.className='view adv';s.id='vadmin';s.hidden=true;$('vcourses').after(s);return s}
+function adErr(e){acToast(e&&e.message?e.message:'Something went wrong',true)}
+function adReload(){return acLoad(true)}
+function adAfterLoad(){if(VIEW=='admin')adRender(AD.view)}
+function adSel(name,opts,val){return '<select id="'+name+'">'+opts.map(function(o){return '<option value="'+esc(o[0])+'"'+(o[0]==val?' selected':'')+'>'+esc(o[1])+'</option>'}).join('')+'</select>'}
+function adProvOpts(){return Object.keys(AC_PROV).map(function(k){return [k,AC_PROV[k]]})}
+function adTypeOpts(){return Object.keys(AC_TYPES).map(function(k){return [k,AC_TYPES[k]]})}
+function adBtn(act,id,label,cls,title){return '<button class="adb'+(cls?' '+cls:'')+'" data-a="'+act+'" data-id="'+id+'"'+(title?' title="'+esc(title)+'" aria-label="'+esc(title)+'"':'')+'>'+label+'</button>'}
+function adRender(arg){AD.view=arg||{tab:'content'};var s=adSection();document.title='SYAM.DEV — Admin';
+ if(!ACAD.ok){s.innerHTML='<div class="vhead"><div class="crumb">Admin</div><h1>Admin dashboard</h1><p class="sub">Open the academy site to manage courses.</p></div>';return}
+ if(!ACAD.cat){s.innerHTML='<div class="vhead"><div class="crumb">Admin</div><h1>Admin dashboard</h1><p class="sub">'+(ACAD.err?esc(ACAD.err):'Loading…')+'</p></div>';acLoad();return}
+ if(!ACAD.admin){s.innerHTML='<div class="vhead"><div class="crumb">Admin</div><h1>Admins only</h1><p class="sub">Your account can study every course, but only admins can change them.</p></div><div class="hbtns"><a class="pbtn" href="#courses">Go to courses</a></div>';return}
+ var tab=AD.view.tab,tabs=[['content','Content'],['learners','Learners'],['import','Import'],['backup','Backup']];
+ var h='<div class="vhead"><div class="crumb"><a href="#admin">Admin</a>'+(tab=='course'?'<i>/</i>Course editor':'')+'</div><div class="achead"><h1>'+(tab=='course'?'Edit course':'Admin dashboard')+'</h1><a class="pbtn alt" href="#courses">View as learner</a></div>'+(tab=='course'?'':'<p class="sub">Add and arrange tracks, courses, sections and lessons. Changes are live for every learner right away.</p>')+'</div>';
+ if(tab!='course')h+='<div class="adtabs">'+tabs.map(function(t){return '<a href="#admin'+(t[0]=='content'?'':':'+t[0])+'" class="'+(tab==t[0]?'on':'')+'">'+t[1]+'</a>'}).join('')+'</div>';
+ h+='<div id="adbody"></div>';s.innerHTML=h;
+ if(tab=='course')adCourse(AD.view.id);else if(tab=='learners')adLearners();else if(tab=='import')adImport(AD.view.id);else if(tab=='backup')adBackup();else adContent()}
+// ---------- Content overview ----------
+function adContent(){var b=$('adbody'),cat=ACAD.cat;
+ var h='<div class="adtool"><button class="pbtn" id="adnt">+ New track</button><button class="pbtn alt" id="adnc">+ New course</button><span class="acmuted">'+cat.tracks.length+' tracks · '+cat.courses.length+' courses · '+cat.lessons.length+' lessons</span></div>';
+ if(!cat.tracks.length)h+='<div class="acempty big">Start by creating a track, for example <b>Cloud</b> or <b>DevOps</b>.</div>';
+ h+=cat.tracks.map(function(t,ti){var cs=cat.courses.filter(function(c){return c.track_id==t.id});
+  return '<div class="adtrack"><div class="adth"><i style="background:'+esc(t.color)+'"></i><div class="adtt"><b>'+esc(t.title)+'</b>'+(t.description?'<small>'+esc(t.description)+'</small>':'')+'</div><div class="adacts">'+adBtn('tup',t.id,'↑','','Move up')+adBtn('tdown',t.id,'↓','','Move down')+adBtn('tedit',t.id,'Edit')+adBtn('tdel',t.id,'Delete','danger')+adBtn('cnew',t.id,'+ Course','pri')+'</div></div>'+
+   (cs.length?'<ul class="adlist">'+cs.map(function(c){var st=acStats(c.id);return '<li><a class="adname" href="#admin:course:'+c.id+'"><b>'+esc(c.title)+'</b><small>'+esc(AC_PROV[c.provider]||'')+' · '+(ACAD.CM[c.id]||[]).length+' sections · '+st.n+' lessons'+(st.min?' · '+acMins(st.min):'')+'</small></a>'+(c.published?'':'<span class="acchip warn">Hidden</span>')+'<div class="adacts">'+adBtn('cup',c.id,'↑','','Move up')+adBtn('cdown',c.id,'↓','','Move down')+'<a class="adb pri" href="#admin:course:'+c.id+'">Open</a>'+adBtn('cdel',c.id,'Delete','danger')+'</div></li>'}).join('')+'</ul>':'<div class="adnone">No courses yet.</div>')+'</div>'}).join('');
+ b.innerHTML=h;
+ $('adnt').onclick=function(){adTrackForm()};$('adnc').onclick=function(){if(!cat.tracks.length){acToast('Create a track first',true);return}adCourseForm(null,cat.tracks[0].id)};
+ b.querySelectorAll('[data-a]').forEach(function(x){x.onclick=function(){adAct(x.dataset.a,x.dataset.id)}})}
+function adMove(kind,list,id,dir){var ids=list.map(function(x){return x.id}),i=ids.indexOf(id),j=i+dir;if(i<0||j<0||j>=ids.length)return;var t=ids[i];ids[i]=ids[j];ids[j]=t;
+ ids.forEach(function(x,k){var r=ACAD.cat[kind].filter(function(y){return y.id==x})[0];if(r)r.sort=k});ACAD.cat[kind].sort(function(a,b){return a.sort-b.sort});acIndex(ACAD.cat);adRender(AD.view);
+ acApi('POST','/api/admin/reorder',{kind:kind,ids:ids}).then(adReload,adErr)}
+function adConfirm(msg,yes){mdlOpen('Are you sure?','<p>'+msg+'</p><div class="hbtns"><button class="pbtn addanger" id="adyes">Delete</button><button class="pbtn alt" id="adno">Cancel</button></div>');$('adno').onclick=mdlClose;$('adyes').onclick=function(){mdlClose();yes()}}
+function adDel(kind,id,what){acApi('DELETE','/api/admin/'+kind+'/'+id).then(function(){acToast(what+' deleted');return adReload()},adErr)}
+function adAct(a,id){var cat=ACAD.cat,c,t,m;
+ if(a=='tup'||a=='tdown')return adMove('tracks',cat.tracks,id,a=='tup'?-1:1);
+ if(a=='tedit')return adTrackForm(ACAD.T[id]);
+ if(a=='tdel'){t=ACAD.T[id];var n=cat.courses.filter(function(x){return x.track_id==id}).length;return adConfirm('Delete the track <b>'+esc(t.title)+'</b>'+(n?' and its '+n+' course'+(n==1?'':'s')+' with all their lessons and learner notes':'')+'? This cannot be undone.',function(){adDel('tracks',id,'Track')})}
+ if(a=='cnew')return adCourseForm(null,id);
+ if(a=='cup'||a=='cdown'){c=ACAD.C[id];return adMove('courses',cat.courses.filter(function(x){return x.track_id==c.track_id}),id,a=='cup'?-1:1)}
+ if(a=='cdel'){c=ACAD.C[id];return adConfirm('Delete the course <b>'+esc(c.title)+'</b> with its '+(ACAD.CL[id]||[]).length+' lessons and all learner notes on them? This cannot be undone.',function(){adDel('courses',id,'Course');if(AD.view.tab=='course')location.hash='admin'})}
+ if(a=='mup'||a=='mdown'){m=ACAD.M[id];return adMove('modules',ACAD.CM[m.course_id],id,a=='mup'?-1:1)}
+ if(a=='mdel'){m=ACAD.M[id];return adConfirm('Delete the section <b>'+esc(m.title)+'</b> and its '+ACAD.ML[id].length+' lessons?',function(){adDel('modules',id,'Section')})}
+ if(a=='lnew')return adLessonForm(null,id);
+ if(a=='ledit')return adEditLesson(id);
+ if(a=='lup'||a=='ldown'){var l=ACAD.L[id];return adMove('lessons',ACAD.ML[l.module_id],id,a=='lup'?-1:1)}
+ if(a=='ldel'){return adConfirm('Delete the lesson <b>'+esc(ACAD.L[id].title)+'</b>?',function(){adDel('lessons',id,'Lesson')})}}
+// ---------- Forms ----------
+function adTrackForm(t){mdlOpen(t?'Edit track':'New track','<div class="adform"><label>Title<input id="ftt" maxlength="120" value="'+esc(t?t.title:'')+'" placeholder="Cloud"></label><label>Description<textarea id="ftd" rows="2" maxlength="600" placeholder="What this track covers">'+esc(t?t.description:'')+'</textarea></label><label class="adrow">Color<input type="color" id="ftc" value="'+esc(t?t.color:'#2f86ce')+'"></label><div class="hbtns"><button class="pbtn" id="fts">'+(t?'Save':'Create track')+'</button></div><div id="fterr" class="mmsg"></div></div>');
+ $('ftt').focus();$('fts').onclick=function(){var body={title:$('ftt').value,description:$('ftd').value,color:$('ftc').value};
+  (t?acApi('PUT','/api/admin/tracks/'+t.id,body):acApi('POST','/api/admin/tracks',body)).then(function(){mdlClose();acToast(t?'Track saved':'Track created');return adReload()},function(e){$('fterr').className='mmsg bad';$('fterr').textContent=e.message})}}
+function adLinkInfo(inp,titleInp,extra){var u=$(inp).value.trim();if(!u){acToast('Paste a link first',true);return}var b=event&&event.target;if(b)b.disabled=true;
+ acApi('GET','/api/admin/link-info?url='+encodeURIComponent(u)).then(function(j){if(j.title&&$(titleInp))$(titleInp).value=j.title;if(extra)extra(j);acToast(j.title?'Title filled in':'No title found on that page')},adErr).then(function(){if(b)b.disabled=false})}
+function adCourseForm(c,trackId){var cat=ACAD.cat;mdlOpen(c?'Edit course':'New course','<div class="adform"><label>Title<input id="fct" maxlength="160" value="'+esc(c?c.title:'')+'" placeholder="AZ-104: Azure Administrator"></label>'+
+ '<label>Course link (optional)<span class="adinl"><input id="fcu" value="'+esc(c?c.url:'')+'" placeholder="https://www.udemy.com/course/…"><button class="pbtn alt" type="button" id="fcg">Get title</button></span></label>'+
+ '<div class="adcols"><label>Track'+adSel('fctr',cat.tracks.map(function(t){return [t.id,t.title]}),c?c.track_id:trackId)+'</label><label>Platform'+adSel('fcp',adProvOpts(),c?c.provider:'other')+'</label><label>Level<input id="fcl" maxlength="40" value="'+esc(c?c.level:'')+'" placeholder="Beginner"></label></div>'+
+ '<label>Description<textarea id="fcd" rows="3" maxlength="2000">'+esc(c?c.description:'')+'</textarea></label><label class="adrow"><input type="checkbox" id="fcpub"'+(!c||c.published?' checked':'')+'> Visible to learners</label>'+
+ '<div class="hbtns"><button class="pbtn" id="fcs">'+(c?'Save':'Create course')+'</button></div><div id="fcerr" class="mmsg"></div></div>');
+ $('fct').focus();$('fcg').onclick=function(){adLinkInfo('fcu','fct',function(j){if(j.provider)$('fcp').value=j.provider})};
+ $('fcs').onclick=function(){var body={title:$('fct').value,url:$('fcu').value,track_id:$('fctr').value,provider:$('fcp').value,level:$('fcl').value,description:$('fcd').value,published:$('fcpub').checked};
+  (c?acApi('PUT','/api/admin/courses/'+c.id,body):acApi('POST','/api/admin/courses',body)).then(function(r){mdlClose();acToast(c?'Course saved':'Course created');return adReload().then(function(){if(!c)location.hash='admin:course:'+r.id})},function(e){$('fcerr').className='mmsg bad';$('fcerr').textContent=e.message})}}
+function adLinksText(ls){return (ls||[]).map(function(x){return (x.title?x.title+' | ':'')+x.url}).join('\n')}
+function adParseLinks(t){return t.split('\n').map(function(s){s=s.trim();if(!s)return null;var p=s.split('|');var url=p.pop().trim(),title=p.join('|').trim();return {title:title,url:url}}).filter(Boolean)}
+function adEditLesson(id,cb){adLessonForm(ACAD.L[id],ACAD.L[id].module_id,cb)}
+function adLessonForm(l,moduleId,cb){var m=ACAD.M[moduleId],c=ACAD.C[m.course_id];
+ mdlOpen(l?'Edit lesson':'New lesson','<div class="adform"><label>Title<input id="flt" maxlength="200" value="'+esc(l?l.title:'')+'"></label>'+
+ '<label>Link (YouTube, Udemy, docs…)<span class="adinl"><input id="flu" value="'+esc(l?l.url:(c&&c.provider=='udemy'&&c.url)||'')+'" placeholder="https://www.youtube.com/watch?v=…"><button class="pbtn alt" type="button" id="flg">Get title</button></span><small>YouTube videos play inside the site and remember where you stopped. Other links open in a new tab.</small></label>'+
+ '<div class="adcols"><label>Type'+adSel('fly',adTypeOpts(),l?l.type:'video')+'</label><label>Minutes<input id="flm" type="number" min="0" max="1000" value="'+(l?l.minutes||'':'')+'"></label><label>Section'+adSel('flmod',(ACAD.CM[c.id]||[]).map(function(x){return [x.id,x.title]}),moduleId)+'</label></div>'+
+ '<label>Notes for the lesson (Markdown)<span class="adtabs2"><button type="button" class="on" id="flw">Write</button><button type="button" id="flp">Preview</button></span><textarea id="flb" rows="7" maxlength="60000" placeholder="Key points, commands, steps of a lab…">'+esc(l?l.body:'')+'</textarea><div id="flpv" class="acbody adprev" hidden></div></label>'+
+ '<label>Extra links<textarea id="fll" rows="3" placeholder="One per line:  Title | https://…">'+esc(adLinksText(l&&l.links))+'</textarea></label><label class="adrow"><input type="checkbox" id="flpub"'+(!l||l.published?' checked':'')+'> Visible to learners</label>'+
+ '<div class="hbtns"><button class="pbtn" id="fls">'+(l?'Save':'Add lesson')+'</button>'+(l?'':'<button class="pbtn alt" id="flsa">Add and add another</button>')+'</div><div id="flerr" class="mmsg"></div></div>');
+ $('flt').focus();
+ $('flg').onclick=function(){adLinkInfo('flu','flt',function(j){if(j.type)$('fly').value=j.type})};
+ $('flw').onclick=function(){$('flb').hidden=false;$('flpv').hidden=true;this.className='on';$('flp').className=''};
+ $('flp').onclick=function(){$('flpv').innerHTML=acMd($('flb').value)||'<p class="acmuted">Nothing to preview.</p>';$('flb').hidden=true;$('flpv').hidden=false;this.className='on';$('flw').className=''};
+ function go(again){var body={title:$('flt').value,url:$('flu').value,type:$('fly').value,minutes:$('flm').value,module_id:$('flmod').value,body:$('flb').value,links:adParseLinks($('fll').value),published:$('flpub').checked};
+  (l?acApi('PUT','/api/admin/lessons/'+l.id,body):acApi('POST','/api/admin/lessons',body)).then(function(){acToast(l?'Lesson saved':'Lesson added');return adReload().then(function(){if(again)adLessonForm(null,body.module_id,cb);else{mdlClose();if(cb)cb()}})},function(e){$('flerr').className='mmsg bad';$('flerr').textContent=e.message})}
+ $('fls').onclick=function(){go(false)};if($('flsa'))$('flsa').onclick=function(){go(true)}}
+// ---------- Course editor ----------
+function adCourse(cid){var b=$('adbody'),c=ACAD.C[cid];if(!c){b.innerHTML='<div class="acempty big">Course not found. <a href="#admin">Back to the dashboard</a>.</div>';return}
+ var t=ACAD.T[c.track_id]||{},mods=ACAD.CM[cid]||[],st=acStats(cid);
+ var h='<div class="adcourse" style="--tc:'+esc(t.color||'#2f86ce')+'"><div class="adch"><div><small>'+esc(t.title||'')+' · '+esc(AC_PROV[c.provider]||'')+(c.level?' · '+esc(c.level):'')+'</small><b>'+esc(c.title)+'</b><span class="acmuted">'+mods.length+' sections · '+st.n+' lessons'+(st.min?' · '+acMins(st.min):'')+'</span></div><div class="adacts">'+(c.published?'':'<span class="acchip warn">Hidden</span>')+'<button class="adb" id="adce">Edit details</button><a class="adb" href="#admin:import:'+cid+'">Import lessons</a><a class="adb" href="#course:'+cid+'">View</a>'+adBtn('cdel',cid,'Delete','danger')+'</div></div></div>';
+ h+=mods.map(function(m,mi){var ls=ACAD.ML[m.id];return '<div class="admod"><div class="admh"><span class="acmn">'+(mi+1<10?'0':'')+(mi+1)+'</span><input class="admt" data-m="'+m.id+'" value="'+esc(m.title)+'" maxlength="160" aria-label="Section title"><div class="adacts">'+adBtn('mup',m.id,'↑','','Move up')+adBtn('mdown',m.id,'↓','','Move down')+adBtn('mdel',m.id,'Delete','danger')+adBtn('lnew',m.id,'+ Lesson','pri')+'</div></div>'+
+  (ls.length?'<ul class="adlist">'+ls.map(function(l){return '<li>'+acIcon(l.type)+'<button class="adname as" data-a="ledit" data-id="'+l.id+'"><b>'+esc(l.title)+'</b><small>'+esc(AC_TYPES[l.type]||'')+(l.minutes?' · '+acMins(l.minutes):'')+(l.url?' · '+esc((l.url.match(/^https?:\/\/(?:www\.)?([^/]+)/)||[])[1]||''):' · no link')+'</small></button>'+(l.published?'':'<span class="acchip warn">Hidden</span>')+'<div class="adacts">'+adBtn('lup',l.id,'↑','','Move up')+adBtn('ldown',l.id,'↓','','Move down')+adBtn('ledit',l.id,'Edit')+adBtn('ldel',l.id,'Delete','danger')+'</div></li>'}).join('')+'</ul>':'<div class="adnone">No lessons in this section yet.</div>')+'</div>'}).join('');
+ h+='<div class="adtool"><input id="adnm" maxlength="160" placeholder="New section title, e.g. Networking"><button class="pbtn" id="adnmb">+ Add section</button></div>';
+ b.innerHTML=h;
+ $('adce').onclick=function(){adCourseForm(c)};
+ b.querySelectorAll('[data-a]').forEach(function(x){x.onclick=function(){adAct(x.dataset.a,x.dataset.id)}});
+ b.querySelectorAll('.admt').forEach(function(inp){var orig=inp.value;function sv(){var v=inp.value.trim();if(!v){inp.value=orig;return}if(v==orig)return;orig=v;acApi('PUT','/api/admin/modules/'+inp.dataset.m,{title:v}).then(function(){acToast('Section renamed');return adReload()},adErr)}
+  inp.onblur=sv;inp.onkeydown=function(e){if(e.key=='Enter'){e.preventDefault();inp.blur()}if(e.key=='Escape'){inp.value=orig;inp.blur()}}});
+ function addMod(){var v=$('adnm').value.trim();if(!v){$('adnm').focus();return}acApi('POST','/api/admin/modules',{course_id:cid,title:v}).then(function(){acToast('Section added');return adReload()},adErr)}
+ $('adnmb').onclick=addMod;$('adnm').onkeydown=function(e){if(e.key=='Enter')addMod()}}
+// ---------- Import ----------
+function adParseCurriculum(text,url){var lines=text.replace(/\r/g,'').split('\n').map(function(s){return s.replace(/\t/g,' ').trim()}).filter(Boolean),mods=[],cur=null,last=null;
+ var dur=/^(\d{1,2}:\d{2}(?::\d{2})?|\d+\s*(?:min|mins|m)|\d+\s*hr?s?(?:\s*\d+\s*min)?)$/i,meta=/(\d+\s*(lectures?|lessons?)\s*[•·|]|^\d+\s*\/\s*\d+\s*\|?|^\d+\s*(lectures?|lessons?)$|^preview$|^(resources?|start|play)$)/i;
+ function mins(s){var m;if((m=s.match(/^(\d+):(\d{2}):(\d{2})$/)))return +m[1]*60+ +m[2]+(+m[3]>=30?1:0);if((m=s.match(/^(\d+):(\d{2})$/)))return Math.max(1,+m[1]+(+m[2]>=30?1:0));if((m=s.match(/(\d+)\s*hr?s?/i))){var x=+m[1]*60,n=s.match(/(\d+)\s*min/i);return x+(n?+n[1]:0)}if((m=s.match(/(\d+)/)))return +m[1];return 0}
+ function mod(t){cur={title:t.replace(/\s*\d+\s*\/\s*\d+.*$/,'').replace(/\s*[•·|]\s*\d.*$/,'').trim()||'Section',lessons:[]};mods.push(cur);last=null}
+ for(var i=0;i<lines.length;i++){var ln=lines[i],m;
+  if((m=ln.match(/^section\s+\d+\s*[:.\-–]\s*(.+)$/i))){mod(m[1]);continue}
+  if(dur.test(ln)){if(last&&!last.minutes)last.minutes=mins(ln);continue}
+  if(meta.test(ln))continue;
+  if(lines[i+1]&&/\d+\s*(lectures?|lessons?)/i.test(lines[i+1])){mod(ln);continue}
+  var title=ln,mm=null;if((m=ln.match(/^(.*?)\s+(\d{1,2}:\d{2}(?::\d{2})?|\d+\s*min)$/i))){title=m[1];mm=mins(m[2])}
+  title=title.replace(/^\d+\.\s*/,'').replace(/\s*Preview$/i,'').trim();if(!title)continue;
+  if(!cur)mod('Section 1');last={title:title,type:'video',url:url||'',minutes:mm||0};cur.lessons.push(last)}
+ return mods.filter(function(x){return x.lessons.length})}
+function adImport(cid){var b=$('adbody'),cat=ACAD.cat;var copts=cat.courses.map(function(c){return [c.id,c.title]});
+ var h='<div class="adform adimp"><label>Import into'+adSel('fic',[['new','+ A new course']].concat(copts),cid||'new')+'</label><div id="finew" class="adcols"><label>New course title<input id="fint" maxlength="160" placeholder="AZ-104 on Udemy"></label><label>Track'+adSel('fitr',cat.tracks.map(function(t){return [t.id,t.title]}),'')+'</label></div>'+
+ '<div class="adsrc"><label class="adrow"><input type="radio" name="fis" value="udemy" checked> Udemy curriculum</label><label class="adrow"><input type="radio" name="fis" value="yt"> YouTube playlist</label><label class="adrow"><input type="radio" name="fis" value="links"> List of links</label></div>'+
+ '<div id="fip-udemy"><label>Course link on Udemy<input id="fiu" placeholder="https://www.udemy.com/course/…"></label><label>Curriculum<textarea id="fitx" rows="10" placeholder="On the Udemy course page, open Course content, expand all sections, select the whole list and paste it here.\n\nSection 1: Introduction\nWelcome  02:15\nHow to use this course  03:40\nSection 2: Azure basics\n…"></textarea></label></div>'+
+ '<div id="fip-yt" hidden><label>Playlist link<input id="fiy" placeholder="https://www.youtube.com/playlist?list=…"></label></div>'+
+ '<div id="fip-links" hidden><label>Links (one per line, title optional)<textarea id="fil" rows="8" placeholder="Install Azure CLI | https://learn.microsoft.com/…\nhttps://www.youtube.com/watch?v=…"></textarea></label></div>'+
+ '<div class="hbtns"><button class="pbtn alt" id="fiprev">Preview</button><button class="pbtn" id="figo" disabled>Import</button></div><div id="fimsg" class="mmsg"></div><div id="fipv"></div></div>';
+ b.innerHTML=h;var parsed=null;
+ function src(){return document.querySelector('[name=fis]:checked').value}
+ function sync(){$('finew').hidden=$('fic').value!='new';['udemy','yt','links'].forEach(function(k){$('fip-'+k).hidden=src()!=k});parsed=null;$('figo').disabled=true;$('fipv').innerHTML=''}
+ $('fic').onchange=sync;document.querySelectorAll('[name=fis]').forEach(function(r){r.onchange=sync});sync();
+ function show(mods){parsed=mods;var n=mods.reduce(function(a,m){return a+m.lessons.length},0),mn=mods.reduce(function(a,m){return a+m.lessons.reduce(function(x,l){return x+(l.minutes||0)},0)},0);
+  $('fimsg').className='mmsg '+(n?'good':'bad');$('fimsg').textContent=n?'Found '+mods.length+' section'+(mods.length==1?'':'s')+' and '+n+' lesson'+(n==1?'':'s')+(mn?' ('+acMins(mn)+')':'')+'. Check them, then press Import.':'Nothing to import was found.';$('figo').disabled=!n;
+  $('fipv').innerHTML=mods.map(function(m){return '<div class="adpvm"><b>'+esc(m.title)+'</b><ol>'+m.lessons.slice(0,60).map(function(l){return '<li>'+esc(l.title)+(l.minutes?' <small>'+acMins(l.minutes)+'</small>':'')+'</li>'}).join('')+(m.lessons.length>60?'<li>…and '+(m.lessons.length-60)+' more</li>':'')+'</ol></div>'}).join('')}
+ $('fiprev').onclick=function(){var s=src();$('fimsg').className='mmsg';$('fimsg').textContent='Reading…';
+  if(s=='udemy')show(adParseCurriculum($('fitx').value,$('fiu').value.trim()));
+  else if(s=='links')show([{title:'Links',lessons:adParseLinks($('fil').value).map(function(x){var yt=acYtId(x.url);return {title:x.title||(x.url.replace(/^https?:\/\/(www\.)?/,'').slice(0,80)),url:x.url,type:yt?'video':'link',minutes:0}})}]);
+  else acApi('GET','/api/admin/playlist?url='+encodeURIComponent($('fiy').value.trim())).then(function(j){if($('fic').value=='new'&&!$('fint').value&&j.title)$('fint').value=j.title;show([{title:j.title||'Playlist',lessons:j.lessons}])},function(e){$('fimsg').className='mmsg bad';$('fimsg').textContent=e.message})};
+ $('figo').onclick=function(){if(!parsed)return;var btn=this;btn.disabled=true;$('fimsg').className='mmsg';$('fimsg').textContent='Importing…';
+  var target=$('fic').value,p=target!='new'?Promise.resolve({id:target}):acApi('POST','/api/admin/courses',{title:$('fint').value||'Imported course',track_id:$('fitr').value,provider:src()=='udemy'?'udemy':src()=='yt'?'youtube':'other',url:src()=='udemy'?$('fiu').value.trim():src()=='yt'?$('fiy').value.trim():''});
+  p.then(function(c){return acApi('POST','/api/admin/bulk',{course_id:c.id,modules:parsed}).then(function(r){acToast('Imported '+r.lessons+' lessons');return adReload().then(function(){location.hash='admin:course:'+c.id})})}).catch(function(e){btn.disabled=false;$('fimsg').className='mmsg bad';$('fimsg').textContent=e.message})}}
+// ---------- Learners & backup ----------
+function adAgo(t){if(!t)return '—';var s=(Date.now()-t)/1000;return s<90?'just now':s<3600?Math.round(s/60)+' min ago':s<86400?Math.round(s/3600)+' h ago':Math.round(s/86400)+' days ago'}
+function adLearners(){var b=$('adbody');b.innerHTML='<p class="acmuted">Loading learners…</p>';
+ acApi('GET','/api/admin/learners').then(function(j){var ls=j.learners||[];
+  b.innerHTML='<p class="acmuted">'+ls.length+' account'+(ls.length==1?'':'s')+'. Only e-mails you approve can sign in; ask Claude to add or remove one.</p><div class="adtbl"><table><thead><tr><th>Learner</th><th>Interactive lessons</th><th>Course lessons</th><th>Last seen</th><th>Joined</th></tr></thead><tbody>'+
+   ls.map(function(x){return '<tr><td><b>'+esc(x.name||x.email.split('@')[0])+'</b><small>'+esc(x.email)+'</small></td><td>'+x.interactive_done+'</td><td>'+x.course_done+'</td><td>'+adAgo(x.last_seen)+'</td><td>'+(x.created_at?new Date(x.created_at).toLocaleDateString():'—')+'</td></tr>'}).join('')+'</tbody></table></div>'},function(e){b.innerHTML='<div class="acempty">'+esc(e.message)+'</div>'})}
+function adBackup(){var b=$('adbody'),cat=ACAD.cat;b.innerHTML='<div class="hcard"><b>Download a backup</b><p>A JSON file with every track, course, section and lesson ('+cat.courses.length+' courses, '+cat.lessons.length+' lessons). Learner progress and notes are not included.</p><div class="hbtns"><button class="pbtn" id="adbk">Download backup</button></div></div>';
+ $('adbk').onclick=function(){acApi('GET','/api/admin/export').then(function(j){var blob=new Blob([JSON.stringify(j,null,1)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='syam-academy-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)},adErr)}}
+// ---------- Wiring ----------
+(function(){adSection();
+ var _sv=setView;setView=function(v,arg){_sv(v,arg);document.querySelector('.body').classList.toggle('v-admin',v=='admin');$('vadmin').hidden=v!='admin';if(v=='admin'){adRender(arg);$('vadmin').scrollTop=0}};
+ var _rv=routeView;routeView=function(h){var m=h.match(/^admin(?::(content|learners|import|backup|course))?(?::([\w-]+))?$/);if(m){setView('admin',{tab:m[1]||'content',id:m[2]});renderTree();return true}return _rv(h)};
+ var _gv=goView;goView=function(v){if(v=='admin'){location.hash='admin';return}_gv(v)}})();
 boot();
 </script>
 </body>

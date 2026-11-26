@@ -69,3 +69,16 @@ approved e-mails can sign in). Cloudflare builds and deploys on every push to ma
 - Deploy command: `npx wrangler deploy`
 
 Progress for each account is stored in the D1 database `syam-course`.
+
+## Academy (courses from the database)
+
+Besides the built-in interactive course, the site has a **Courses** section and an **Admin
+dashboard** (`#admin`, admins only). Content lives in D1 (`worker/schema.sql`):
+
+- tracks → courses → sections (modules) → lessons (video, reading, lab, link, quiz)
+- per-learner state in `user_lessons`: done, notes, saved for later, video position
+- admins have `role = 'admin'` in the `users` table
+- `tools/seed.py` writes `worker/seed.sql` (starting tracks and the Azure courses)
+
+YouTube lessons play inside the site and resume where you stopped; other links open in a new tab.
+The dashboard can import a Udemy curriculum (paste), a YouTube playlist or a list of links.

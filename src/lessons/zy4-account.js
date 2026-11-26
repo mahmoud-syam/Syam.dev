@@ -1,6 +1,6 @@
 // ---------- Account sync (Cloudflare Access + Worker API on learn.mahmoud-syam.me) ----------
 // Works only where the API exists; on GitHub Pages or a local file the course stays local-only.
-var ACCT={on:/^learn\.mahmoud-syam\.me$/.test(location.hostname),email:null,state:'idle',at:0,t:null};
+var ACCT={on:/^learn\.mahmoud-syam\.me$/.test(location.hostname)||(/^(localhost|127\.0\.0\.1)$/.test(location.hostname)&&location.port=='8787'),email:null,state:'idle',at:0,t:null};
 function acctPush(){if(!ACCT.email)return;clearTimeout(ACCT.t);ACCT.t=setTimeout(function(){ACCT.state='saving';acctPaint();
  fetch('/api/progress',{method:'PUT',credentials:'same-origin',redirect:'manual',headers:{'content-type':'application/json'},body:JSON.stringify(PS)})
  .then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){ACCT.state='saved';ACCT.at=j.updated_at||Date.now();acctPaint()})
@@ -37,7 +37,7 @@ function profPaint(){profPaintAvatar();var m=$('pmenu');if(!m||m.hidden)return;
   +'<div class="pmsec"><div class="pmrow"><span>Lessons</span><b>'+done+' / '+ks.length+'</b></div><div class="pmbar"><i style="width:'+pct+'%"></i></div>'
   +'<div class="pmrow"><span>Study streak</span><b>'+(s?s+' day'+(s==1?'':'s'):'—')+'</b></div><div class="pmrow"><span>Review due</span><b>'+(due||'none')+'</b></div>'
   +(ACCT.email?'<div class="pmrow"><span>Cloud save</span><b class="'+(ACCT.state=='offline'?'warn':'ok')+'">'+st+'</b></div>':'')+'</div>'
-  +'<div class="pmsec pmlinks"><a href="#home" data-pm>My progress</a><a href="#practice'+(due?'-review':'')+'" data-pm>'+(due?'Review now':'Practice')+'</a><button id="pmexp" data-pm>Export progress</button></div>'
+  +'<div class="pmsec pmlinks"><a href="#home" data-pm>My progress</a><a href="#courses" data-pm>Courses</a>'+(typeof ACAD!='undefined'&&ACAD.admin?'<a href="#admin" data-pm>Admin dashboard</a>':'')+'<a href="#practice'+(due?'-review':'')+'" data-pm>'+(due?'Review now':'Practice')+'</a><button id="pmexp" data-pm>Export progress</button></div>'
   +'<div class="pmsec pmlinks">'+(ACCT.email?'<a href="/api/logout" class="pmout">Sign out</a>':ACCT.on?'<a href="/api/login">Sign in</a>':'<a href="https://learn.mahmoud-syam.me" target="_blank" rel="noopener">Open the academy ↗</a>')+'</div>';
  m.innerHTML=h;
  $('pmedit').onclick=function(e){e.stopPropagation();var n=$('pmname');n.innerHTML='<input id="pmin" maxlength="40" placeholder="Your name" value="'+esc(PS.name||'')+'">';var i=$('pmin');i.focus();i.select();

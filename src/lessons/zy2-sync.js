@@ -42,4 +42,4 @@ addEventListener('appinstalled',function(){INSTALL_EVT=null;renderSync()});
 $('mdlx').onclick=mdlClose;$('pexp').onclick=syncExport;$('pimp').onclick=syncImport;$('mdl').addEventListener('mousedown',function(e){if(e.target===$('mdl'))mdlClose()});
 document.addEventListener('keydown',function(e){if(e.key=='Escape'&&!$('mdl').hidden)mdlClose()});
 (function(){var _rh=renderHome;renderHome=function(){_rh();renderSync()}})();
-if('serviceWorker' in navigator&&location.protocol==='https:'&&/github\.io$|^learn\.mahmoud-syam\.me$/.test(location.hostname)){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}
+if('serviceWorker' in navigator&&location.protocol==='https:'&&/^learn\.mahmoud-syam\.me$/.test(location.hostname)){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}
