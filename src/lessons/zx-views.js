@@ -77,7 +77,7 @@ function csFilter(mod){CSM=mod||'all';var q=$('cq').value.trim().toLowerCase(),n
 function firstOpen(m){for(var i=0;i<m.l.length;i++){var k=m.id+'/'+m.l[i][0];if(LESSONS[k]&&!PS.done[k])return k}return m.id+'/'+m.l[0][0]}
 function renderHome(){var tot=0,dn=0,mdone=0;COURSE.forEach(function(m){var d=0;m.l.forEach(function(l){tot++;if(PS.done[m.id+'/'+l[0]]){dn++;d++}});if(d==m.l.length)mdone++});
  var last=PS.last&&LESSONS[PS.last.k]?PS.last:null,started=dn>0||!!last;
- $('hhi').textContent=started?'Welcome back, Mahmoud':'Welcome, Mahmoud';
+ $('hhi').textContent=(started?'Welcome back':'Welcome')+(PS.name?', '+PS.name:'');
  $('hsub').textContent=dn+' of '+tot+' lessons done · '+mdone+' of '+COURSE.length+' modules complete. '+(started?'Pick up where you left off.':'Start with Linux, or jump to any module below.');
  var h='';
  if(last){var L=LESSONS[last.k],m=modOf(last.k),n=L.steps.length,s=Math.min(last.s,n-1),pct=Math.round((s+1)/n*100),fin=PS.done[last.k];
