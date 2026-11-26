@@ -187,6 +187,15 @@ async function playlist(u) {
       const title = (v.title && (v.title.simpleText || (v.title.runs || []).map(x => x.text).join(''))) || 'Video';
       out.push({ title, url: 'https://www.youtube.com/watch?v=' + v.videoId, minutes: Math.max(1, Math.round(int(v.lengthSeconds) / 60)), type: 'video' });
     }
+    const lv = o.lockupViewModel; // newer YouTube layout
+    if (lv && lv.contentId && /VIDEO/.test(lv.contentType || '') && !seen.has(lv.contentId)) {
+      seen.add(lv.contentId);
+      const t = lv.metadata && lv.metadata.lockupMetadataViewModel && lv.metadata.lockupMetadataViewModel.title;
+      const badge = JSON.stringify(lv.contentImage || {}).match(/"text":"(\d+(?::\d{2}){1,2})"/);
+      let minutes = 0;
+      if (badge) { const n = badge[1].split(':').map(Number); const sec = n.length === 3 ? n[0] * 3600 + n[1] * 60 + n[2] : n[0] * 60 + n[1]; minutes = Math.max(1, Math.round(sec / 60)); }
+      out.push({ title: (t && t.content) || 'Video', url: 'https://www.youtube.com/watch?v=' + lv.contentId, minutes, type: 'video' });
+    }
     for (const k in o) walk(o[k]);
   })(data);
   const titleM = html.match(/<meta property="og:title" content="([^"]+)"/);
