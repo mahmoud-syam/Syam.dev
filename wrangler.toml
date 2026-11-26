@@ -1,13 +1,7 @@
-# Cloudflare Worker: serves the course on learn.mahmoud-syam.me and stores progress per account.
+# Cloudflare Worker: serves the course on learn.mahmoud-syam.me (files from GitHub Pages) and stores progress per account.
 name = "syam-course"
 main = "worker/index.js"
 compatibility_date = "2026-11-01"
-
-[assets]
-directory = "."
-binding = "ASSETS"
-run_worker_first = ["/api/*"]
-not_found_handling = "single-page-application"
 
 [[d1_databases]]
 binding = "DB"
@@ -19,6 +13,6 @@ pattern = "learn.mahmoud-syam.me"
 custom_domain = true
 
 [vars]
-# Filled in after the Cloudflare Access application is created.
-ACCESS_TEAM_DOMAIN = ""
-ACCESS_AUD = ""
+ORIGIN = "https://mahmoud-syam.github.io/Syam.dev"
+ACCESS_TEAM_DOMAIN = "mahmoudsyam664.cloudflareaccess.com"
+ACCESS_AUD = "1ad94844b786834a90e4ee575d6f0abac330ec5e1001d098ad0fab28c23ababb"

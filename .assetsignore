@@ -1,9 +1,0 @@
-src
-tools
-worker
-wrangler.toml
-README.md
-.gitignore
-.nojekyll
-.git
-.assetsignore

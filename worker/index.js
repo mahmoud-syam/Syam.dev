@@ -1,5 +1,7 @@
-// SYAM.DEV course API. Login is handled by Cloudflare Access (Google or e-mail code);
-// this Worker only verifies the Access token and reads/writes one progress row per user.
+// SYAM.DEV course on learn.mahmoud-syam.me.
+// - Site files come from GitHub Pages (ORIGIN), so every git push updates the site.
+// - /api/* is protected by Cloudflare Access (e-mail code login); this Worker verifies the
+//   Access token and reads/writes one progress row per user in D1.
 const json = (data, status = 200) => new Response(JSON.stringify(data), {
   status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' }
 });
@@ -16,7 +18,8 @@ const b64url = s => Uint8Array.from(atob(s.replace(/-/g, '+').replace(/_/g, '/')
 
 // Returns the signed-in user's e-mail, or null.
 async function userFromAccess(req, env) {
-  const token = req.headers.get('cf-access-jwt-assertion');
+  const cookie = (req.headers.get('cookie') || '').match(/(?:^|;\s*)CF_Authorization=([^;]+)/);
+  const token = req.headers.get('cf-access-jwt-assertion') || (cookie && cookie[1]);
   if (!token || !env.ACCESS_TEAM_DOMAIN || !env.ACCESS_AUD) return null;
   const [h, p, sig] = token.split('.');
   if (!sig) return null;
@@ -31,14 +34,26 @@ async function userFromAccess(req, env) {
   return (payload.email || '').toLowerCase() || null;
 }
 
+async function site(req, env, url) {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return new Response('Method not allowed', { status: 405 });
+  const path = url.pathname === '/' ? '/index.html' : url.pathname;
+  const r = await fetch(env.ORIGIN + path, { cf: { cacheTtl: 120, cacheEverything: true } });
+  const res = new Response(r.status === 404 ? 'Not found' : r.body, r);
+  res.headers.set('x-content-type-options', 'nosniff');
+  res.headers.set('referrer-policy', 'strict-origin-when-cross-origin');
+  res.headers.set('cache-control', path.endsWith('.html') || path === '/sw.js' ? 'no-cache' : 'public, max-age=3600');
+  ['x-github-request-id', 'x-fastly-request-id', 'x-served-by', 'x-cache', 'x-cache-hits', 'x-timer', 'via', 'access-control-allow-origin'].forEach(h => res.headers.delete(h));
+  return res;
+}
+
 export default {
   async fetch(req, env) {
     const url = new URL(req.url);
-    if (!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(req);
+    if (!url.pathname.startsWith('/api/')) return site(req, env, url);
 
     const email = await userFromAccess(req, env);
     if (url.pathname === '/api/login') return Response.redirect(`${url.origin}/#home`, 302);
-    if (url.pathname === '/api/logout') return Response.redirect(`https://${env.ACCESS_TEAM_DOMAIN}/cdn-cgi/access/logout?returnTo=${encodeURIComponent(url.origin + '/#home')}`, 302);
+    if (url.pathname === '/api/logout') return Response.redirect(`${url.origin}/cdn-cgi/access/logout`, 302);
     if (!email) return json({ error: 'not signed in' }, 401);
 
     const now = Date.now();
