@@ -38,7 +38,8 @@ async function userFromAccess(req, env) {
 async function site(req, env, url) {
   if (env.ASSETS) return env.ASSETS.fetch(req);
   if (req.method !== 'GET' && req.method !== 'HEAD') return new Response('Method not allowed', { status: 405 });
-  const path = url.pathname === '/' ? '/index.html' : url.pathname;
+  // On GitHub Pages index.html only redirects here; the real page is app.html.
+  const path = url.pathname === '/' || url.pathname === '/index.html' ? '/app.html' : url.pathname;
   const r = await fetch(env.ORIGIN + path, { cf: { cacheTtl: 120, cacheEverything: true } });
   const res = new Response(r.status === 404 ? 'Not found' : r.body, r);
   res.headers.set('x-content-type-options', 'nosniff');

@@ -7,7 +7,7 @@ async def main():
         for vw,vh in [(390,844),(820,1180)]:
             pg=await b.new_page(viewport={'width':vw,'height':vh})
             for les in LES:
-                await pg.goto(''+__import__('os').environ.get('SITE','file://'+__import__('os').path.abspath('index.html'))+'#'+les); await pg.wait_for_timeout(400)
+                await pg.goto(''+__import__('os').environ.get('SITE','file://'+__import__('os').path.abspath('app.html'))+'#'+les); await pg.wait_for_timeout(400)
                 n=await pg.evaluate('LES.steps.length')
                 ty=[i for i in range(n) if await pg.evaluate(f'!!LES.steps[{i}].goal')]
                 await pg.evaluate(f'go({ty[0] if ty else 2})'); await pg.wait_for_timeout(2500)

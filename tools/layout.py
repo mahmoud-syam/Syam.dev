@@ -27,7 +27,7 @@ async def main():
         for vw,vh in VPS:
             pg=await b.new_page(viewport={'width':vw,'height':vh})
             for les in LES:
-                await pg.goto(''+__import__('os').environ.get('SITE','file://'+__import__('os').path.abspath('index.html'))+'#'+les); await pg.wait_for_timeout(500)
+                await pg.goto(''+__import__('os').environ.get('SITE','file://'+__import__('os').path.abspath('app.html'))+'#'+les); await pg.wait_for_timeout(500)
                 n=await pg.evaluate('LES.steps.length'); agg={}
                 for i in range(n):
                     await pg.evaluate(f'go({i})'); await pg.wait_for_timeout(2600)

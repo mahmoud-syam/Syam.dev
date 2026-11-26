@@ -18,18 +18,18 @@ Linux → Git → Bash → Python → Ansible → Docker → AWS → Terraform �
 - Light and dark theme, works on desktop, tablet and phone
 - **Installable app**: add it to your phone or computer home screen; it keeps working offline
 - **Move your progress**: export a code or file on one device and import it on another (Home page or the Progress card)
-- No framework: the whole course is one self-contained `index.html` plus a small service worker
+- No framework: the whole course is one self-contained `app.html` plus a small service worker
 
 Progress is saved in your browser (localStorage). Use Export / Import to carry it to another device.
 
 ## Run locally
 
-Open `index.html` in a browser. That's it.
+Open `app.html` in a browser. That's it.
 
 ## Project layout
 
 ```
-index.html          the built site
+app.html            the built site (index.html only redirects GitHub Pages visitors to learn.mahmoud-syam.me)
 worker/index.js     Cloudflare Worker: account API (/api/*) and static files
 wrangler.toml       Worker settings: D1 database, Access, custom domain
 tools/public.sh     copies the served files into public/ for the Cloudflare build
@@ -48,7 +48,7 @@ tools/              Playwright checks used while building (layout, mobile, behav
 
 ```bash
 cd src
-python3 build.py ../index.html
+python3 build.py ../app.html
 ```
 
 ## Checks (optional)
