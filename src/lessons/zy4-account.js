@@ -19,7 +19,8 @@ function acctPaint(){var el=$('hacct');if(!el)return;var h;
   h='<b>Your account</b><p>Signed in as <b>'+esc(ACCT.email)+'</b></p><span class="hok'+(ACCT.state=='offline'?' warn':'')+'">'+st+'</span><div class="hbtns"><a class="pbtn alt" href="/api/logout">Sign out</a></div>'}
  el.innerHTML=h}
 (function(){var _save=save;save=function(){_save();acctPush()};
- var _rs=renderSync;renderSync=function(){_rs();var el=$('hsync');if(el&&!$('hacct')){var c=document.createElement('div');c.className='hcard';c.id='hacct';el.insertBefore(c,el.firstChild)}acctPaint()};
+ // The account (sign in, sync state, sign out) lives in the profile menu in the top bar.
+ var _ap0=acctPaint;acctPaint=function(){_ap0();if(VIEW=='home'&&typeof renderSync=='function'&&$('hsync')&&ACCT._shown!==ACCT.email){ACCT._shown=ACCT.email;renderSync()}};
  addEventListener('online',acctPush);
  document.addEventListener('visibilitychange',function(){if(document.visibilityState=='visible'&&ACCT.email)acctPull().catch(function(){})});
  acctStart()})();

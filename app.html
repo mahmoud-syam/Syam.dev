@@ -5388,7 +5388,7 @@ function renderSync(){var el=$('hsync');if(!el)return;var ios=/iPhone|iPad|iPod/
  else if(ios)inst='<p>On iPhone or iPad: open this site in Safari, tap <b>Share</b>, then <b>Add to Home Screen</b>.</p>';
  else if(location.protocol!=='https:'||!/github\.io$|localhost|^learn\.mahmoud-syam\.me$/.test(location.hostname))inst='<p>Open the live site to install it:<br><b>learn.mahmoud-syam.me</b></p>';
  else inst='<p>In Chrome or Edge: open the browser menu and choose <b>Install app</b> or <b>Add to Home screen</b>.</p>';
- el.innerHTML='<div class="hcard"><b>Move your progress</b><p>Progress is saved in this browser only. Export it here and import it on your phone or another computer.</p><div class="hbtns"><button class="pbtn" id="sexp">Export</button><button class="pbtn alt" id="simp">Import</button></div></div><div class="hcard"><b>Install as an app</b><p>Open the course from your home screen, full screen, and keep studying when you are offline.</p>'+inst+'</div>';
+ el.innerHTML='<div class="hcard"><b>Move your progress</b><p>'+(typeof ACCT!='undefined'&&ACCT.email?'Your progress is saved to your account. You can also export it as a backup code.':'Progress is saved in this browser. Sign in from your profile to sync it, or export it here and import it on another device.')+'</p><div class="hbtns"><button class="pbtn" id="sexp">Export</button><button class="pbtn alt" id="simp">Import</button></div></div><div class="hcard"><b>Install as an app</b><p>Open the course from your home screen, full screen, and keep studying when you are offline.</p>'+inst+'</div>';
  $('sexp').onclick=syncExport;$('simp').onclick=syncImport;
  if($('sinst'))$('sinst').onclick=function(){var e=INSTALL_EVT;if(!e)return;e.prompt();e.userChoice.then(function(){INSTALL_EVT=null;renderSync()})}}
 addEventListener('beforeinstallprompt',function(e){e.preventDefault();INSTALL_EVT=e;renderSync()});
@@ -5443,7 +5443,8 @@ function acctPaint(){var el=$('hacct');if(!el)return;var h;
   h='<b>Your account</b><p>Signed in as <b>'+esc(ACCT.email)+'</b></p><span class="hok'+(ACCT.state=='offline'?' warn':'')+'">'+st+'</span><div class="hbtns"><a class="pbtn alt" href="/api/logout">Sign out</a></div>'}
  el.innerHTML=h}
 (function(){var _save=save;save=function(){_save();acctPush()};
- var _rs=renderSync;renderSync=function(){_rs();var el=$('hsync');if(el&&!$('hacct')){var c=document.createElement('div');c.className='hcard';c.id='hacct';el.insertBefore(c,el.firstChild)}acctPaint()};
+ // The account (sign in, sync state, sign out) lives in the profile menu in the top bar.
+ var _ap0=acctPaint;acctPaint=function(){_ap0();if(VIEW=='home'&&typeof renderSync=='function'&&$('hsync')&&ACCT._shown!==ACCT.email){ACCT._shown=ACCT.email;renderSync()}};
  addEventListener('online',acctPush);
  document.addEventListener('visibilitychange',function(){if(document.visibilityState=='visible'&&ACCT.email)acctPull().catch(function(){})});
  acctStart()})();
