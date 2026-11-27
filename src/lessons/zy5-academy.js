@@ -22,17 +22,22 @@ function acStats(cid){var ls=ACAD.CL[cid]||[],d=0,min=0;ls.forEach(function(l){m
 function acNextLesson(cid){var ls=ACAD.CL[cid]||[];for(var i=0;i<ls.length;i++)if(!(ACAD.my[ls[i].id]&&ACAD.my[ls[i].id].done))return ls[i];return ls[0]||null}
 function acLoad(force){if(!ACAD.ok)return Promise.resolve();if(ACAD.loading&&!force)return ACAD.loading;
  if(!ACAD.cat){var c=acLocal('syam:acad');if(c&&c.cat){acIndex(c.cat);ACAD.my=c.my||{};ACAD.admin=!!c.admin}}
- ACAD.loading=Promise.all([acApi('GET','/api/catalog'),acApi('GET','/api/my'),acApi('GET','/api/me')]).then(function(r){
-  acIndex(r[0]);var my={};(r[1].lessons||[]).forEach(function(x){my[x.lesson_id]=x});
-  var q=acLocal('syam:acadq')||{};Object.keys(q).forEach(function(id){my[id]=Object.assign(my[id]||{},q[id])});
-  ACAD.my=my;ACAD.admin=!!r[2].admin;ACAD.err='';acLocal('syam:acad',{cat:r[0],my:my,admin:ACAD.admin});acFlush();acAfterLoad()})
+ // The catalog is public. Signing in only adds saving progress and notes to an account.
+ ACAD.loading=Promise.all([acApi('GET','/api/catalog'),acApi('GET','/api/me').catch(function(){return null})]).then(function(r){
+  acIndex(r[0]);ACAD.signed=!!(r[1]&&r[1].email);ACAD.admin=!!(r[1]&&r[1].admin);ACAD.err='';
+  var q=acLocal('syam:acadq')||{};
+  if(!ACAD.signed){var my=Object.assign({},ACAD.my);acLocal('syam:acad',{cat:r[0],my:my,admin:false});acAfterLoad();return}
+  return acApi('GET','/api/my').then(function(m){var my={};(m.lessons||[]).forEach(function(x){my[x.lesson_id]=x});
+   Object.keys(q).forEach(function(id){my[id]=Object.assign(my[id]||{lesson_id:id},q[id])});
+   ACAD.my=my;acLocal('syam:acad',{cat:r[0],my:my,admin:ACAD.admin});acFlush();acAfterLoad()})})
  .catch(function(e){ACAD.err=e.message;acAfterLoad()});return ACAD.loading}
+function acLoginHref(){return '/api/login?to='+encodeURIComponent(location.hash||'#home')}
 function acAfterLoad(){if(VIEW=='courses')acRender(ACAD.view);if(VIEW=='home')renderHome();if(typeof profPaint=='function')profPaint();if(typeof adAfterLoad=='function')adAfterLoad()}
 function acSaveLocal(){acLocal('syam:acad',{cat:ACAD.cat,my:ACAD.my,admin:ACAD.admin})}
 function acPut(id,patch){var cur=ACAD.my[id]||{lesson_id:id,done:0,note:'',saved:0,position:0};Object.keys(patch).forEach(function(k){cur[k]=typeof patch[k]=='boolean'?(patch[k]?1:0):patch[k]});ACAD.my[id]=cur;acSaveLocal();
  var q=acLocal('syam:acadq')||{};q[id]=Object.assign(q[id]||{},patch);acLocal('syam:acadq',q);return acFlush()}
 var AC_FLUSH=null;
-function acFlush(){if(AC_FLUSH)return AC_FLUSH;var q=acLocal('syam:acadq')||{},ids=Object.keys(q);if(!ids.length||!ACAD.ok)return Promise.resolve(true);
+function acFlush(){if(AC_FLUSH)return AC_FLUSH;var q=acLocal('syam:acadq')||{},ids=Object.keys(q);if(!ids.length)return Promise.resolve(true);if(!ACAD.ok||!ACAD.signed)return Promise.resolve(false);
  AC_FLUSH=ids.reduce(function(p,id){return p.then(function(){var body=q[id];return acApi('PUT','/api/my/lessons/'+id,body).then(function(){var cur=acLocal('syam:acadq')||{};if(JSON.stringify(cur[id])==JSON.stringify(body)){delete cur[id];acLocal('syam:acadq',cur)}},function(e){if(/not found/i.test(e.message)){var cur=acLocal('syam:acadq')||{};delete cur[id];acLocal('syam:acadq',cur);return}throw e})})},Promise.resolve())
   .then(function(){AC_FLUSH=null;return true},function(){AC_FLUSH=null;return false});return AC_FLUSH}
 addEventListener('online',function(){acFlush()});
@@ -116,12 +121,12 @@ function acLesson(lid){var s=acSection(),l=ACAD.L[lid],c=acCourseOf(lid);if(!l||
  h+='<div class="acact" id="acact"></div>';
  if(l.body)h+='<div class="acbody">'+acMd(l.body)+'</div>';
  if(l.links&&l.links.length)h+='<div class="aclinks"><h3>Links</h3>'+l.links.map(function(x){var hs='';try{hs=new URL(x.url).hostname.replace(/^www\./,'')}catch(e){}return '<a href="'+esc(x.url)+'" target="_blank" rel="noopener">'+acIcon('link')+'<span>'+esc(x.title||x.url)+'</span><small>'+esc(hs)+'</small></a>'}).join('')+'</div>';
- h+='<div class="acnotes"><div class="acnh"><h3>My notes</h3><span id="acns"></span></div><textarea id="acnote" placeholder="Write what you learned, commands to remember, questions to look up…">'+esc(u.note||'')+'</textarea><small>Saved to your account automatically. Only you can see your notes.</small></div>';
+ h+='<div class="acnotes"><div class="acnh"><h3>My notes</h3><span id="acns"></span></div><textarea id="acnote" placeholder="Write what you learned, commands to remember, questions to look up…">'+esc(u.note||'')+'</textarea><small>'+(ACAD.signed?'Saved to your account automatically. Only you can see your notes.':'Saved in this browser only. <a href="'+acLoginHref()+'">Sign in</a> to keep your notes and progress on every device.')+'</small></div>';
  var rest=ACAD.ML[m.id].slice(ACAD.ML[m.id].indexOf(l)+1,ACAD.ML[m.id].indexOf(l)+6);
  if(rest.length)h+='<div class="acnext"><h3>Up next in this section</h3>'+rest.map(function(x){var ux=ACAD.my[x.id]||{};return '<a href="#lesson:'+x.id+'" class="'+(ux.done?'done':'')+'"><span class="acck">'+(ux.done?'✓':'')+'</span>'+acIcon(x.type)+'<span class="aclt">'+esc(x.title)+'</span><span class="acmin">'+acMins(x.minutes)+'</span></a>'}).join('')+'</div>';
  s.innerHTML=h;s.scrollTop=0;acPaintLessonState(l,prev,next);
  if($('acedit'))$('acedit').onclick=function(){if(typeof adEditLesson=='function')adEditLesson(l.id,function(){acRender(ACAD.view)})};
- var ta=$('acnote'),ns=$('acns'),tm=null;ta.oninput=function(){ns.textContent='Saving…';ns.className='';clearTimeout(tm);tm=setTimeout(function(){acPut(lid,{note:ta.value}).then(function(ok){ns.textContent=ok?'Saved':'Offline · kept on this device';ns.className=ok?'ok':'warn'})},900)};
+ var ta=$('acnote'),ns=$('acns'),tm=null;ta.oninput=function(){ns.textContent='Saving…';ns.className='';clearTimeout(tm);tm=setTimeout(function(){acPut(lid,{note:ta.value}).then(function(ok){ns.textContent=ok?'Saved':ACAD.signed?'Offline · kept on this device':'Saved in this browser';ns.className=ok||!ACAD.signed?'ok':'warn'})},900)};
  if(vid)acYtMount(l)}
 function acPaintLessonState(l,prev,next){var a=$('acact');if(!a||ACAD.view.id!==l.id)return;var u=ACAD.my[l.id]||{};
  if(prev===undefined){var ls=ACAD.CL[(acCourseOf(l.id)||{}).id]||[],i=ls.indexOf(l);prev=ls[i-1];next=ls[i+1]}

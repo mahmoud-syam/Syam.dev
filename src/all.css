@@ -549,3 +549,4 @@ a.done .acck{background:var(--green2);border-color:var(--ink)}a.done .aclt{color
 .mpanel:has(.adform){width:min(680px,100%)}
 @media (max-width:700px){.acgrid,.acskel{grid-template-columns:minmax(0,1fr)}.acq{width:100%}.acact .acsp{display:none}.acact .pbtn{flex:1 1 auto;justify-content:center;text-align:center}.adacts{margin-left:0;width:100%}.adch .adacts{width:auto}.achead .pbtn{margin-top:2px}}
 #adbody{display:flex;flex-direction:column;gap:12px}
+.pmlinks a.pmin{background:var(--green);border:1.3px solid var(--ink);margin:2px 0}

@@ -14,7 +14,7 @@ function acctStart(){if(!ACCT.on)return;
 function acctAgo(t){var s=Math.round((Date.now()-t)/1000);return s<60?'just now':s<3600?Math.round(s/60)+' min ago':Math.round(s/3600)+' h ago'}
 function acctPaint(){var el=$('hacct');if(!el)return;var h;
  if(!ACCT.on)h='<b>Your account</b><p>Accounts work on <b>learn.mahmoud-syam.me</b>. Sign in there and your progress follows you to every device.</p>';
- else if(!ACCT.email)h='<b>Your account</b><p>Sign in to save your progress online and keep it in sync on your phone and computer.</p><div class="hbtns"><a class="pbtn" href="/api/login">Sign in</a></div>';
+ else if(!ACCT.email)h='<b>Your account</b><p>Sign in to save your progress online and keep it in sync on your phone and computer.</p><div class="hbtns"><a class="pbtn" href="/api/login?to=%23home">Sign in</a></div>';
  else{var st={syncing:'Syncing…',saving:'Saving…',saved:'✓ Saved '+acctAgo(ACCT.at),offline:'Offline. Will save when you are back.'}[ACCT.state]||'';
   h='<b>Your account</b><p>Signed in as <b>'+esc(ACCT.email)+'</b></p><span class="hok'+(ACCT.state=='offline'?' warn':'')+'">'+st+'</span><div class="hbtns"><a class="pbtn alt" href="/api/logout">Sign out</a></div>'}
  el.innerHTML=h}
@@ -38,7 +38,7 @@ function profPaint(){profPaintAvatar();var m=$('pmenu');if(!m||m.hidden)return;
   +'<div class="pmrow"><span>Study streak</span><b>'+(s?s+' day'+(s==1?'':'s'):'—')+'</b></div><div class="pmrow"><span>Review due</span><b>'+(due||'none')+'</b></div>'
   +(ACCT.email?'<div class="pmrow"><span>Cloud save</span><b class="'+(ACCT.state=='offline'?'warn':'ok')+'">'+st+'</b></div>':'')+'</div>'
   +'<div class="pmsec pmlinks"><a href="#home" data-pm>My progress</a><a href="#courses" data-pm>Courses</a>'+(typeof ACAD!='undefined'&&ACAD.admin?'<a href="#admin" data-pm>Admin dashboard</a>':'')+'<a href="#practice'+(due?'-review':'')+'" data-pm>'+(due?'Review now':'Practice')+'</a><button id="pmexp" data-pm>Export progress</button></div>'
-  +'<div class="pmsec pmlinks">'+(ACCT.email?'<a href="/api/logout" class="pmout">Sign out</a>':ACCT.on?'<a href="/api/login">Sign in</a>':'<a href="https://learn.mahmoud-syam.me" target="_blank" rel="noopener">Open the academy ↗</a>')+'</div>';
+  +'<div class="pmsec pmlinks">'+(ACCT.email?'<a href="/api/logout" class="pmout">Sign out</a>':ACCT.on?'<a href="/api/login?to='+encodeURIComponent(location.hash||'#home')+'" class="pmin">Sign in to save your progress</a>':'<a href="https://learn.mahmoud-syam.me" target="_blank" rel="noopener">Open the academy ↗</a>')+'</div>';
  m.innerHTML=h;
  $('pmedit').onclick=function(e){e.stopPropagation();var n=$('pmname');n.innerHTML='<input id="pmin" maxlength="40" placeholder="Your name" value="'+esc(PS.name||'')+'">';var i=$('pmin');i.focus();i.select();
   var fin=0;function done(ok){if(fin)return;fin=1;if(ok){PS.name=i.value.trim();PS.nameAt=Date.now();save();if(VIEW=='home')renderHome()}profPaint()}

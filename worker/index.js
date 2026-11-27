@@ -1,6 +1,7 @@
 // SYAM Academy on learn.mahmoud-syam.me
-// - The whole site is behind Cloudflare Access (e-mail code login). This Worker verifies the
-//   Access token, serves the site files and runs the API below.
+// - The site and catalog are public. Cloudflare Access (e-mail code login) protects only the
+//   account routes (/api/me, /api/my, /api/progress, /api/admin, /api/login, /api/logout).
+//   This Worker verifies the Access token, serves the site files and runs the API below.
 // - Site files: the ASSETS binding when deployed with assets, otherwise fetched from ORIGIN
 //   (GitHub Pages, where index.html only redirects here and the real page is app.html).
 // - Data lives in D1: users, progress (interactive course), tracks, courses, modules, lessons,
@@ -308,10 +309,18 @@ export default {
   async fetch(req, env) {
     const url = new URL(req.url);
     if (!url.pathname.startsWith('/api/')) return site(req, env, url);
-    if (url.pathname === '/api/login') return Response.redirect(`${url.origin}/#home`, 302);
+    if (url.pathname === '/api/login') {
+      // Protected by Access: reaching here means the person just signed in. Send them back.
+      const to = url.searchParams.get('to') || '#home';
+      return Response.redirect(`${url.origin}/${/^#[\w:~-]{0,80}$/.test(to) ? to : '#home'}`, 302);
+    }
     if (url.pathname === '/api/logout') return Response.redirect(`${url.origin}/cdn-cgi/access/logout`, 302);
     const email = await userFromAccess(req, env, url);
-    if (!email) return bad('not signed in', 401);
+    if (!email) {
+      // The site and the course catalog are public; only saving progress needs an account.
+      if (url.pathname === '/api/catalog' && req.method === 'GET') return json(await catalog(env, false));
+      return bad('not signed in', 401);
+    }
     try {
       const now = Date.now();
       const u = await env.DB.prepare('INSERT INTO users (email, created_at, last_seen) VALUES (?1, ?2, ?2) ON CONFLICT(email) DO UPDATE SET last_seen = ?2 RETURNING role').bind(email, now).first();

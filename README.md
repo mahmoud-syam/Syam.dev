@@ -64,8 +64,8 @@ python3 tools/ctlchk.py
 
 ## Hosting
 
-The academy runs on Cloudflare at learn.mahmoud-syam.me, behind Cloudflare Access (only
-approved e-mails can sign in). Cloudflare builds and deploys on every push to main:
+The academy runs on Cloudflare at learn.mahmoud-syam.me. The site is open to everyone; signing in
+(Cloudflare Access, e-mail code) is only needed to save progress and notes to an account. Cloudflare builds and deploys on every push to main:
 
 - Build command: `sh tools/public.sh`
 - Deploy command: `npx wrangler deploy`
