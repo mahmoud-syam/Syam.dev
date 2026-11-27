@@ -290,7 +290,8 @@ var COURSE=[
 {id:'obs',n:'Observability',c:['#e5534b','#8f2a22'],l:[['metrics','Metrics & Prometheus'],['grafana','Grafana dashboards'],['logs','Logs: Loki & ELK'],['traces','Tracing']]},
 {id:'sre',n:'SRE',c:['#64728a','#434e61'],l:[['slo','SLI, SLO & error budgets'],['incident','Incident response'],['postmortem','Postmortems'],['capacity','Capacity & load testing'],['dr','Backup & disaster recovery']]},
 {id:'projects',n:'Real-World Projects',c:['#d5b07a','#a4824e'],l:[['p1','Linux infrastructure'],['p2','Infrastructure automation'],['p3','Containerized application'],['p4','AWS infrastructure'],['p5','Infrastructure as code'],['p6','Kubernetes platform'],['p7','CI/CD pipeline'],['p8','Observability stack'],['p9','SRE incident'],['p10','Python automation']]},
-{id:'interview',n:'Interview Preparation',c:['#d9577a','#a83a58'],l:[['prep','Interview prep']]}];
+{id:'interview',n:'Interview Preparation',c:['#d9577a','#a83a58'],l:[['prep','Interview prep']]},
+{id:'ceh',n:'Security: Ethical Hacking',c:['#3d4f6b','#26334a'],l:[['phases','Ethical hacking & phases'],['recon','Footprinting & recon'],['scanning','Scanning with Nmap']]}];
 window.LESSONS={};window.LESSON=function(mod,id,spec){spec.mod=mod;spec.id=id;LESSONS[mod+'/'+id]=spec};
 
 /* ---------- sidebar tree + progress ---------- */

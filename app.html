@@ -893,7 +893,8 @@ var COURSE=[
 {id:'obs',n:'Observability',c:['#e5534b','#8f2a22'],l:[['metrics','Metrics & Prometheus'],['grafana','Grafana dashboards'],['logs','Logs: Loki & ELK'],['traces','Tracing']]},
 {id:'sre',n:'SRE',c:['#64728a','#434e61'],l:[['slo','SLI, SLO & error budgets'],['incident','Incident response'],['postmortem','Postmortems'],['capacity','Capacity & load testing'],['dr','Backup & disaster recovery']]},
 {id:'projects',n:'Real-World Projects',c:['#d5b07a','#a4824e'],l:[['p1','Linux infrastructure'],['p2','Infrastructure automation'],['p3','Containerized application'],['p4','AWS infrastructure'],['p5','Infrastructure as code'],['p6','Kubernetes platform'],['p7','CI/CD pipeline'],['p8','Observability stack'],['p9','SRE incident'],['p10','Python automation']]},
-{id:'interview',n:'Interview Preparation',c:['#d9577a','#a83a58'],l:[['prep','Interview prep']]}];
+{id:'interview',n:'Interview Preparation',c:['#d9577a','#a83a58'],l:[['prep','Interview prep']]},
+{id:'ceh',n:'Security: Ethical Hacking',c:['#3d4f6b','#26334a'],l:[['phases','Ethical hacking & phases'],['recon','Footprinting & recon'],['scanning','Scanning with Nmap']]}];
 window.LESSONS={};window.LESSON=function(mod,id,spec){spec.mod=mod;spec.id=id;LESSONS[mod+'/'+id]=spec};
 
 /* ---------- sidebar tree + progress ---------- */
@@ -4904,6 +4905,218 @@ function TS(st){var o={};Q.forEach(function(q,i){var ok=st.tt=='Recap',cur=st.tt
 SPEC.steps.forEach(function(st){st.set=Object.assign(TS(st),st.set||{})});
 LESSON('interview','prep',SPEC);
 })();
+(function(){
+// Security track, CEH module: ethical hacking basics and the five phases.
+var PH=[['recon','Recon','phase 1'],['scan','Scan','phase 2'],['gain','Gain','phase 3'],['keep','Keep','phase 4'],['cover','Cover','phase 5']];
+var NAMES=['—','Recon','Scanning','Access','Persist','Report'];
+function phSet(n){var o={};PH.forEach(function(p,i){o[p[0]]={status:i<n-1?'run':i==n-1?'sleep':'none'}});return o}
+var PT=['1 reconnaissance','2 scanning & enumeration','3 gaining access','4 maintaining access','5 report & clean up'];
+var PANEL=['Ethical hacking (in order)',function(S){return {t:(S.perm?'✓':'·')+' 0 written permission',tone:S.perm?'green':'red'}}].concat(PT.map(function(t,i){return function(S){return {t:(S.ph>i?'✓ ':'· ')+t,tone:S.ph>i?'green':S.ph==i&&S.perm?'amber':'slate'}}}));
+function step(S,A,n){
+ if(!S.perm){A.fx('contract','no');A.term('term',['! no signed scope: this would be a crime','# get written permission first']);return}
+ if(n!=S.ph+1){A.fx(PH[Math.min(n,5)-1][0],'no');A.term('term',['! out of order: finish '+NAMES[S.ph+1]+' first']);return}
+ S.ph=n;var o=phSet(Math.min(n,5)+(n==5?1:0));Object.keys(o).forEach(function(k){A.set(k,o[k])});
+ var T=[[],['$ dig +short target.lab','10.10.10.5'],['$ sudo nmap -sS 10.10.10.5','22/tcp open  ssh','80/tcp open  http'],['$ ssh admin@10.10.10.5','# weak password admin123 worked','$ whoami','admin'],['$ cat ~/.ssh/authorized_keys','ssh-ed25519 AAAAC3Nza... pentest@kali','# test key added, logged in the notes'],["$ sed -i '/pentest@kali/d' ~/.ssh/authorized_keys",'# test key removed, report written']];
+ if(n==1)A.send(['you','fw'],{label:'dns',tone:'violet',ok:true});else A.send(['you','fw','target'],{label:n==2?'SYN':n==3?'ssh':'key',tone:n==5?'green':'gold',ok:true});
+ if(n==5){A.set('report',{status:'run',sub:'3 findings'});A.fx('report','ok')}
+ A.term('term',T[n]);A.hud({phase:{v:NAMES[n],lv:n==5?'good':'warn'},access:{v:n>=3&&n<5?'admin':'none',lv:n>=3&&n<5?'bad':'none'},cia:{v:n>=3&&n<5?'C · I':'—',lv:n>=3&&n<5?'bad':'none'}});A.set('ph',{rows:PANEL});A.refresh()}
+LESSON('ceh','phases',{
+ title:'Ethical hacking & the five phases',sub:'Think like an attacker, act with permission: CIA, scope and the hacking methodology.',time:'15 min',level:'Beginner',
+ S:{perm:true,ph:0},
+ legend:[['#3fa456','done'],['#3b82c4','current phase'],['#d23a2e','not allowed']],
+ hud:[{id:'scope',l:'Scope',v:function(S){return S.perm?'signed':'none'},lv:function(S){return S.perm?'good':'bad'}},{id:'phase',l:'Phase',v:'—',lv:'none'},{id:'access',l:'Access',v:'none',lv:'none'},{id:'cia',l:'At risk',v:'—',lv:'none'}],
+ nodes:[
+  {t:'crowd',id:'you',x:66,y:110,tone:'gold',label:'ethical hacker',n:1,w:52,anchor:[120,110]},
+  H.tile('fw',204,110,'firewall','perimeter','amber',{w:104}),
+  H.box('target',326,96,'target','green',{center:true,lock:true}),
+  H.tile('contract',72,262,'scope','signed','violet',{w:112,status:'run'}),
+  H.tile('report',300,262,'report','findings','teal',{w:112,status:'none'}),
+  H.tile('recon',40,380,'Recon','phase 1','blue',{w:72,fs:10.5,status:'none'}),
+  H.tile('scan',115,380,'Scan','phase 2','blue',{w:72,fs:10.5,status:'none'}),
+  H.tile('gain',190,380,'Gain','phase 3','gold',{w:72,fs:10.5,status:'none'}),
+  H.tile('keep',265,380,'Keep','phase 4','gold',{w:72,fs:10.5,status:'none'}),
+  H.tile('cover',340,380,'Cover','phase 5','red',{w:72,fs:10.5,status:'none'}),
+  {t:'panel',id:'ph',x:392,y:14,w:316,h:170,title:'methodology',rows:PANEL,fs:10},
+  {t:'term',id:'term',x:392,y:198,w:316,h:252,title:'kali terminal'}],
+ links:[H.lk('you','fw','gold'),H.lk('fw','target','green'),H.lk('you','contract','violet',{dash:true}),H.lk('target','report','teal',{dash:true}),
+  H.lk('recon','scan','blue'),H.lk('scan','gain','blue'),H.lk('gain','keep','gold'),H.lk('keep','cover','gold')],
+ controls:{title:'Run the engagement',groups:[{items:[
+  {label:'Revoke scope',wide:true,on:function(S){return !S.perm},click:function(S,A){S.perm=false;S.ph=0;A.set('contract',{status:'fail',sub:'missing'});var o=phSet(0);Object.keys(o).forEach(function(k){A.set(k,o[k])});A.set('report',{status:'none',sub:'findings'});A.term('term',['# client has not signed yet'],true);A.hud({phase:{v:'—',lv:'none'},access:{v:'none',lv:'none'}});A.refresh()}},
+  {label:'Sign scope',wide:true,on:function(S){return S.perm},click:function(S,A){S.perm=true;A.set('contract',{status:'run',sub:'signed'});A.fx('contract','ok');A.term('term',['$ cat scope.txt','in:     10.10.10.0/24','out:    10.10.10.1 (gateway)','window: Sat 22:00-02:00']);A.refresh()}},
+  {label:'Recon',wide:true,click:function(S,A){step(S,A,1)}},
+  {label:'Scan',wide:true,click:function(S,A){step(S,A,2)}},
+  {label:'Gain access',wide:true,click:function(S,A){step(S,A,3)}},
+  {label:'Persist',wide:true,click:function(S,A){step(S,A,4)}},
+  {label:'Report & clean up',wide:true,click:function(S,A){step(S,A,5)}}]}]},
+ goal:function(S){var ok=S.perm&&S.ph>=5;return [ok,ok?'Done. Permission first, then the phases in order, and you finished with a report and a clean target.':'Goal: run a legal engagement from start to finish. Sign the scope, then go through the phases in order and end with the report.']},
+ learn:[['Know what makes hacking ethical',0],['Use the CIA triad',1],['Agree scope and rules of engagement',2],['Recon and scanning',3],['Gaining and keeping access',5],['Cover tracks vs report',7]],
+ steps:[
+  {t:'Same tools, different rules',b:'An ethical hacker uses the same tools and tricks as a criminal, but only with written permission, inside an agreed scope, and reports everything to the owner.',k:['idea','Key idea','White hat: authorised. Black hat: criminal. Grey hat: no permission, even with good intent. Only white hat is legal.'],pill:'setup',tt:'Ethics',focus:['you','contract','target'],S:{perm:true,ph:0},
+   set:Object.assign(phSet(0),{contract:{status:'run',sub:'signed'},report:{status:'none',sub:'findings'},ph:{rows:['Who is who',{t:'white hat  authorised tester',tone:'green'},{t:'grey hat   no permission',tone:'amber'},{t:'black hat  criminal',tone:'red'},'','Permission is the only difference','between a pentest and a crime.'],hl:[]}}),
+   hud:{phase:{v:'—',lv:'none'},access:{v:'none',lv:'none'},cia:{v:'—',lv:'none'}},termClear:true,term:{term:['$ # authorised test of target.lab','$ # every command goes in the notes']},
+   fx:[{n:'contract',k:'pulse'}]},
+  {t:'What you protect: CIA',b:'Security protects three things. Confidentiality: only the right people can read the data. Integrity: nobody changed it. Availability: it is there when needed.',k:['tip','Remember','A data leak hits C, a tampered file hits I, a DDoS hits A. Every finding in a report maps to one of them.'],pill:'idea',tt:'CIA',focus:['target'],S:{perm:true,ph:0},
+   set:{ph:{rows:['The CIA triad',{t:'C  confidentiality  leak, sniffing',tone:'violet'},{t:'I  integrity        tampering',tone:'amber'},{t:'A  availability     DDoS, ransomware',tone:'red'},'','Hashes prove integrity:','same file → same hash.'],hl:[1,2,3]}},
+   hud:{cia:{v:'C · I · A',lv:'warn'}},termClear:true,term:{term:['$ md5sum report.pdf','5d41402abc4b2a76b9719d911017c592  report.pdf','$ sha256sum report.pdf | cut -c1-16','2cf24dba5fb0a30e','# changed hash = changed file (I)']},
+   fx:[{n:'target',k:'pulse'}]},
+  {t:'Scope and rules of engagement',b:'Before any packet is sent, the client signs what you may test, what is off limits, when, and who to call if something breaks. Testing outside it is illegal, even by one IP.',k:['problem','Watch out','No signature, no test. Also agree what to do if you find live criminal activity or very sensitive data.'],pill:'problem',tt:'Scope',focus:['you','contract'],S:{perm:true,ph:0},
+   set:{contract:{status:'run',sub:'signed'},ph:{rows:['Rules of engagement',{t:'✓ in scope: 10.10.10.0/24',tone:'green'},{t:'✗ out: gateway, prod database',tone:'red'},'✓ window: Saturday night','✓ emergency contact','✓ no denial of service','✓ data handled and deleted after'],hl:[]}},
+   termClear:true,term:{term:['$ cat scope.txt','in:     10.10.10.0/24','out:    10.10.10.1 (gateway)','window: Sat 22:00-02:00','contact: soc@target.lab']},
+   once:[{path:['you','contract'],label:'sign',tone:'violet'}]},
+  {t:'Phase 1: reconnaissance',b:'Collect as much as you can about the target before touching it: domains, IP ranges, people, technologies. Passive recon uses public sources. Active recon talks to the target.',k:['idea','Key idea','Most of the work is here. Good recon tells you where to look, so the later phases are short and quiet.'],pill:'idea',tt:'Recon',focus:['you','recon'],S:{perm:true,ph:0},
+   set:Object.assign(phSet(1),{ph:{rows:PANEL}}),hud:{phase:{v:'Recon',lv:'warn'},cia:{v:'C',lv:'warn'}},termClear:true,term:{term:['$ dig +short target.lab','10.10.10.5','$ dig +short MX target.lab','10 mail.target.lab.']},
+   flows:[{path:['you','fw'],label:'dns',tone:'violet'}]},
+  {t:'Phase 2: scanning & enumeration',b:'Now you touch the target: which hosts are up, which ports are open, which software and versions run behind them. Enumeration then pulls users, shares and banners.',k:['tip','Remember','Scanning is noisy. A firewall or IDS can log it, which is why the time window was agreed.'],pill:'idea',tt:'Scan',focus:['you','fw','target','scan'],S:{perm:true,ph:1},
+   set:Object.assign(phSet(2),{ph:{rows:PANEL}}),hud:{phase:{v:'Scanning',lv:'warn'}},termClear:true,term:{term:['$ sudo nmap -sS -sV 10.10.10.5','PORT   STATE SERVICE VERSION','22/tcp open  ssh     OpenSSH 8.9p1','80/tcp open  http    Apache httpd 2.4.52']},
+   flows:[{path:['you','fw','target'],label:'SYN',tone:'gold'}]},
+  {t:'Phase 3: gaining access',b:'Use what you found to get in: a weak password, an unpatched service, a misconfiguration or a phishing email. Then escalate from a normal user to admin or root.',k:['problem','Watch out','Prove the risk, then stop. Do not read more data than you need to show the impact.'],pill:'problem',tt:'Access',focus:['you','fw','target','gain'],S:{perm:true,ph:2},
+   set:Object.assign(phSet(3),{ph:{rows:PANEL}}),hud:{phase:{v:'Access',lv:'warn'},access:{v:'admin',lv:'bad'},cia:{v:'C · I',lv:'bad'}},termClear:true,term:{term:['$ ssh admin@10.10.10.5','# weak password admin123 worked','$ whoami','admin','$ sudo -l','    (ALL : ALL) ALL']},
+   once:[{path:['you','fw','target'],label:'ssh',tone:'gold',ok:true}]},
+  {t:'Phase 4: maintaining access',b:'Real attackers plant a way back in: an extra SSH key, a cron job, a new user, a service. Testers show that it is possible, write down exactly what they planted, and remove it later.',k:['tip','Remember','Defenders hunt for exactly these: unknown keys in authorized_keys, odd cron entries, new users.'],pill:'idea',tt:'Persist',focus:['target','keep'],S:{perm:true,ph:3},
+   set:Object.assign(phSet(4),{ph:{rows:PANEL}}),hud:{phase:{v:'Persist',lv:'warn'},access:{v:'admin',lv:'bad'}},termClear:true,term:{term:['$ cat ~/.ssh/authorized_keys','ssh-ed25519 AAAAC3Nza... admin@laptop','ssh-ed25519 AAAAC3Nza... pentest@kali','$ crontab -l','no crontab for admin']},
+   fx:[{n:'target',k:'pulse'}]},
+  {t:'Phase 5: cover tracks vs report',b:'Criminals delete logs to hide. Ethical hackers never do: they remove only their own test files, then write a report with each finding, its risk and how to fix it.',k:['idea','Key idea','Defenders send logs to a central SIEM right away, so an attacker who wipes the local logs is still caught.'],pill:'idea',tt:'Report',focus:['target','cover','report'],S:{perm:true,ph:5},
+   set:Object.assign(phSet(6),{report:{status:'run',sub:'3 findings'},ph:{rows:PANEL}}),hud:{phase:{v:'Report',lv:'good'},access:{v:'none',lv:'none'},cia:{v:'—',lv:'none'}},termClear:true,term:{term:['$ sudo grep Accepted /var/log/auth.log','... Accepted password for admin','    from 10.10.10.99 port 51514 ssh2','# evidence for the report, not deleted']},
+   once:[{path:['target','report'],label:'pdf',tone:'teal'}]},
+  {t:'Try it: run a legal engagement',b:'The client has not signed yet. Get the scope signed, then run the phases in the right order and finish with the report.',k:['tip','Challenge','Click Recon first and see what happens without a signature. Then try skipping a phase.'],pill:'problem',tt:'Try it',S:{perm:false,ph:0},goal:true,focus:['you','contract','recon','scan','gain','keep','cover'],
+   set:Object.assign(phSet(0),{contract:{status:'fail',sub:'missing'},report:{status:'none',sub:'findings'},ph:{rows:PANEL}}),hud:{phase:{v:'—',lv:'none'},access:{v:'none',lv:'none'},cia:{v:'—',lv:'none'}},termClear:true,term:{term:['# client has not signed yet']}},
+  {t:'Recap',b:'Permission and scope first. Then recon, scanning, access, persistence, and a report instead of hidden tracks. Everything you do is written down.',k:['idea','Next up','Footprinting: everything you can learn about a target without sending it a single packet.'],pill:'recap',tt:'Recap',S:{perm:true,ph:5},
+   set:Object.assign(phSet(6),{contract:{status:'run',sub:'signed'},report:{status:'run',sub:'3 findings'},ph:{rows:PANEL}}),hud:{phase:{v:'Report',lv:'good'},access:{v:'none',lv:'none'}},termClear:true,term:{term:['$ # scope → recon → scan → access','$ # → persist → report & clean up']}}
+ ]});
+})();
+(function(){
+// CEH: footprinting and reconnaissance (passive vs active).
+var AS=['www','mail','vpn','dev'];
+function cnt(S){return AS.filter(function(k){return S.f[k]}).length}
+var IP={www:'203.0.113.10',mail:'203.0.113.25',vpn:'203.0.113.20',dev:'203.0.113.30'};
+var PANEL=['Attack surface: acme.example'].concat(AS.map(function(k){return function(S){return S.f[k]?{t:'✓ '+(k+'.acme.example').padEnd(19)+IP[k],tone:k=='dev'?'red':'green'}:{t:'· ?',tone:'slate'}}})).concat(['',function(S){return {t:'Name servers: '+(S.ns?'ns1, ns2':'unknown'),tone:S.ns?'amber':'slate'}}]);
+function show(f){var o={};AS.forEach(function(k){o[k]={show:!!f[k]}});return o}
+function found(S,A,keys){keys.forEach(function(k){if(!S.f[k]){S.f[k]=1;A.set(k,{show:true});A.fx(k,'pulse')}});A.set('surf',{rows:PANEL});A.hud({found:{v:cnt(S)+' / 4',lv:cnt(S)==4?'good':'warn'}});A.refresh()}
+function mode(A,active){A.hud({mode:{v:active?'active':'passive',lv:active?'warn':'good'},touch:{v:active?'yes':'no',lv:active?'warn':'good'}})}
+LESSON('ceh','recon',{
+ title:'Footprinting & reconnaissance',sub:'Map a target from public sources first: whois, DNS, certificate logs and search engines.',time:'15 min',level:'Beginner',
+ S:{f:{},ns:false,axfr:true},
+ legend:[['#5a4aa8','passive source'],['#c8962e','active (touches target)'],['#d23a2e','sensitive find']],
+ hud:[{id:'found',l:'Hosts found',v:'0 / 4',lv:'none'},{id:'mode',l:'Recon',v:'passive',lv:'good'},{id:'touch',l:'Touches target',v:'no',lv:'good'},{id:'last',l:'Source',v:'—',lv:'none'}],
+ nodes:[
+  {t:'crowd',id:'you',x:62,y:200,tone:'gold',label:'you',n:1,w:52,anchor:[114,200]},
+  H.tile('whois',176,40,'whois','registry','violet',{w:104}),
+  H.tile('crt',176,118,'cert logs','crt.sh','violet',{w:104}),
+  H.tile('search',176,196,'search','dorks, OSINT','violet',{w:104}),
+  H.tile('ns',176,330,'ns1','target DNS','amber',{w:104,status:'run'}),
+  H.box('www',322,40,'www','green',{center:true,w:28,h:14,d:24,show:false}),
+  H.box('mail',322,138,'mail','green',{center:true,w:28,h:14,d:24,show:false}),
+  H.box('vpn',322,236,'vpn','green',{center:true,w:28,h:14,d:24,show:false}),
+  H.box('dev',322,334,'dev','red',{center:true,w:28,h:14,d:24,show:false}),
+  {t:'panel',id:'surf',x:392,y:14,w:316,h:170,title:'recon notes',rows:PANEL,fs:10},
+  {t:'term',id:'term',x:392,y:198,w:316,h:252,title:'kali terminal'}],
+ links:[H.lk('you','whois','violet',{dash:true}),H.lk('you','crt','violet',{dash:true}),H.lk('you','search','violet',{dash:true}),H.lk('you','ns','gold')],
+ controls:{title:'Map acme.example',groups:[{items:[
+  {label:'whois',wide:true,click:function(S,A){mode(A,false);A.send(['you','whois'],{label:'?',tone:'violet',ok:true});A.term('term',['$ whois acme.example | grep -i server','Name Server: NS1.ACME.EXAMPLE','Name Server: NS2.ACME.EXAMPLE']);S.ns=true;A.hud({last:{v:'whois',lv:'none'}});A.set('surf',{rows:PANEL});A.refresh()}},
+  {label:'dig MX',wide:true,click:function(S,A){mode(A,false);A.send(['you','search'],{label:'MX',tone:'violet',ok:true});A.term('term',['$ dig +short MX acme.example','10 mail.acme.example.']);A.hud({last:{v:'DNS',lv:'none'}});found(S,A,['mail'])}},
+  {label:'subfinder',wide:true,click:function(S,A){mode(A,false);A.send(['you','crt'],{label:'CT',tone:'violet',ok:true});A.term('term',['$ subfinder -d acme.example -silent','www.acme.example','vpn.acme.example']);A.hud({last:{v:'cert logs',lv:'none'}});found(S,A,['www','vpn'])}},
+  {label:'dig axfr',wide:true,click:function(S,A){mode(A,true);A.hud({last:{v:'zone xfer',lv:'warn'}});
+   if(!S.ns){A.fx('ns','no');A.term('term',['$ dig axfr acme.example @?','! which name server? run whois first']);return}
+   A.send(['you','ns'],{label:'AXFR',tone:'gold',ok:true});A.term('term',['$ dig axfr acme.example @ns1.acme.example','www.acme.example.  300 IN A 203.0.113.10','vpn.acme.example.  300 IN A 203.0.113.20','dev.acme.example.  300 IN A 203.0.113.30','mail.acme.example. 300 IN A 203.0.113.25']);found(S,A,['www','vpn','dev','mail'])}}]}]},
+ goal:function(S){var ok=cnt(S)==4;return [ok,ok?'Done. All four hosts mapped, and the zone transfer leaked dev, a host nobody meant to publish.':'Goal: find all 4 hosts of acme.example. Passive sources give you some. A zone transfer needs the name server, so find that first.']},
+ learn:[['Tell passive from active recon',0],['Read whois data',1],['Pull NS, MX and TXT records',2],['Find subdomains in certificate logs',3],['Use search engines and OSINT',4],['Try a zone transfer',5],['Shrink your own footprint',6]],
+ steps:[
+  {t:'Footprinting: map before you touch',b:'Footprinting builds a picture of the target: domains, hosts, IP ranges, email format, people and technologies. Passive recon reads public sources and never touches the target.',k:['idea','Key idea','Passive is invisible to the target. Active recon (DNS queries to their server, scans) can be logged.'],pill:'setup',tt:'Footprint',focus:['you','whois','crt','search'],S:{f:{},ns:false},
+   set:Object.assign(show({}),{surf:{rows:['Passive  (target cannot see you)',{t:'  whois, public DNS, cert logs',tone:'violet'},{t:'  search engines, job ads, LinkedIn',tone:'violet'},'Active   (target may log you)',{t:'  zone transfer, ping, port scans',tone:'amber'},'','Start passive, go active in scope.'],hl:[]}}),
+   hud:{found:{v:'0 / 4',lv:'none'},mode:{v:'passive',lv:'good'},touch:{v:'no',lv:'good'},last:{v:'—',lv:'none'}},termClear:true,term:{term:['$ # target: acme.example (in scope)','$ mkdir recon && cd recon']},
+   flows:[{path:['you','whois'],label:'?',tone:'violet'},{path:['you','crt'],label:'?',tone:'violet'}]},
+  {t:'whois: who owns the domain',b:'whois asks the domain registry. You get the registrar, dates, name servers and sometimes the owner. Name servers are useful later: they hold the full DNS zone.',k:['tip','Remember','Most owners use privacy protection, so contact details are hidden. Name servers and dates are still public.'],pill:'idea',tt:'whois',focus:['you','whois'],S:{f:{},ns:true},
+   set:Object.assign(show({}),{surf:{rows:PANEL}}),hud:{last:{v:'whois',lv:'none'}},termClear:true,term:{term:['$ whois acme.example','Registrar: Example Registrar, Inc.','Creation Date: 2014-03-02T10:21:00Z','Name Server: NS1.ACME.EXAMPLE','Name Server: NS2.ACME.EXAMPLE','Registrant: REDACTED FOR PRIVACY']},
+   once:[{path:['you','whois'],label:'?',tone:'violet'},{path:['whois','you'],label:'NS',tone:'violet',delay:1200}]},
+  {t:'DNS records tell a story',b:'Public DNS answers anyone. MX shows the mail server, NS the name servers, and TXT often reveals services: an SPF record can tell you which email provider they use.',k:['idea','Key idea','include:_spf.google.com means Google Workspace. Now you know what a phishing login page would imitate.'],pill:'idea',tt:'DNS',focus:['you','search','mail'],S:{f:{mail:1},ns:true},
+   set:Object.assign(show({mail:1}),{surf:{rows:PANEL}}),hud:{found:{v:'1 / 4',lv:'warn'},last:{v:'DNS',lv:'none'}},termClear:true,term:{term:['$ dig +short NS acme.example','ns1.acme.example.','$ dig +short MX acme.example','10 mail.acme.example.','$ dig +short TXT acme.example','"v=spf1 include:_spf.google.com ~all"']},
+   fx:[{n:'mail',k:'pulse'}]},
+  {t:'Subdomains from certificate logs',b:'Every public TLS certificate is written to Certificate Transparency logs. Searching them (crt.sh, or tools like subfinder) lists subdomains the company never linked anywhere.',k:['tip','Remember','vpn. and remote. hosts are gold: they are login pages facing the internet.'],pill:'idea',tt:'CT logs',focus:['you','crt','www','vpn'],S:{f:{mail:1,www:1,vpn:1},ns:true},
+   set:Object.assign(show({mail:1,www:1,vpn:1}),{surf:{rows:PANEL}}),hud:{found:{v:'3 / 4',lv:'warn'},last:{v:'cert logs',lv:'none'}},termClear:true,term:{term:['$ subfinder -d acme.example -silent','www.acme.example','vpn.acme.example','mail.acme.example']},
+   once:[{path:['you','crt'],label:'CT',tone:'violet'}],fx:[{n:'vpn',k:'pulse'}]},
+  {t:'Search engines and OSINT',b:'Search operators find forgotten files and pages. theHarvester collects emails and hosts from public sources. Employee names give you the email format for phishing tests.',k:['problem','Watch out','A PDF on the website can leak user names and software versions in its metadata.'],pill:'idea',tt:'OSINT',focus:['you','search'],S:{f:{mail:1,www:1,vpn:1},ns:true},
+   set:Object.assign(show({mail:1,www:1,vpn:1}),{surf:{rows:['Useful search operators',{t:'site:acme.example filetype:pdf',tone:'violet'},{t:'site:acme.example inurl:login',tone:'violet'},{t:'"@acme.example" -site:acme.example',tone:'violet'},'','Email format found:',{t:'first.last@acme.example',tone:'amber'}],hl:[]}}),
+   hud:{last:{v:'OSINT',lv:'none'}},termClear:true,term:{term:['$ theHarvester -d acme.example -b crtsh','[*] Hosts found: 3','[*] Emails found: 2','sara.ali@acme.example','omar.hassan@acme.example']},
+   flows:[{path:['you','search'],label:'q',tone:'violet'}]},
+  {t:'Active: the zone transfer',b:'A zone transfer (AXFR) copies the whole DNS zone from one server to another. If the name server allows it to anyone, you get every host name in one request.',k:['problem','Watch out','This is active recon: your IP lands in their DNS logs. Only inside the agreed scope.'],pill:'problem',tt:'AXFR',focus:['you','ns','dev'],S:{f:{mail:1,www:1,vpn:1,dev:1},ns:true},
+   set:Object.assign(show({mail:1,www:1,vpn:1,dev:1}),{surf:{rows:PANEL}}),hud:{found:{v:'4 / 4',lv:'good'},mode:{v:'active',lv:'warn'},touch:{v:'yes',lv:'warn'},last:{v:'zone xfer',lv:'warn'}},termClear:true,term:{term:['$ dig axfr acme.example @ns1.acme.example','www.acme.example.  300 IN A 203.0.113.10','vpn.acme.example.  300 IN A 203.0.113.20','dev.acme.example.  300 IN A 203.0.113.30','mail.acme.example. 300 IN A 203.0.113.25']},
+   once:[{path:['you','ns'],label:'AXFR',tone:'gold'},{path:['ns','you'],label:'zone',tone:'red',delay:1300}],fx:[{n:'dev',k:'pulse'}]},
+  {t:'Defend: shrink your footprint',b:'Blue teams do the same recon on themselves. Allow zone transfers only to your own secondary servers, remove old DNS records, watch the cert logs and clean file metadata.',k:['idea','Key idea','Run this recon on your own company every quarter. Anything you find, an attacker finds too.'],pill:'idea',tt:'Defend',focus:['ns'],S:{f:{mail:1,www:1,vpn:1},ns:true},
+   set:Object.assign(show({mail:1,www:1,vpn:1}),{surf:{rows:['Reduce what recon can find',{t:'✓ AXFR only to own secondaries',tone:'green'},{t:'✓ delete stale DNS records',tone:'green'},{t:'✓ alert on new certs (CT monitor)',tone:'green'},{t:'✓ strip PDF/Office metadata',tone:'green'},{t:'✓ whois privacy on',tone:'green'}],hl:[]}}),
+   hud:{found:{v:'3 / 4',lv:'warn'},mode:{v:'active',lv:'warn'},touch:{v:'yes',lv:'warn'},last:{v:'zone xfer',lv:'none'}},termClear:true,term:{term:['$ grep allow-transfer named.conf.options','    allow-transfer { none; };','$ dig axfr acme.example @ns1.acme.example','; Transfer failed.']},
+   fx:[{n:'ns',k:'ok'}]},
+  {t:'Try it: map the attack surface',b:'Find all four hosts of acme.example. Start with passive sources, then use the active technique for what is left.',k:['tip','Challenge','dig axfr needs a name server after the @. Which source tells you the name servers?'],pill:'problem',tt:'Try it',S:{f:{},ns:false,axfr:true},goal:true,focus:['you','whois','crt','search','ns'],
+   set:Object.assign(show({}),{surf:{rows:PANEL}}),hud:{found:{v:'0 / 4',lv:'none'},mode:{v:'passive',lv:'good'},touch:{v:'no',lv:'good'},last:{v:'—',lv:'none'}},termClear:true,term:{term:['$ # map acme.example']}},
+  {t:'Recap',b:'Start passive: whois, DNS, certificate logs, search engines. Go active only in scope. Every host you find is a door to test, and a door the owner must know about.',k:['idea','Next up','Scanning with Nmap: which hosts are up, which ports are open and what runs behind them.'],pill:'recap',tt:'Recap',S:{f:{mail:1,www:1,vpn:1,dev:1},ns:true},
+   set:Object.assign(show({mail:1,www:1,vpn:1,dev:1}),{surf:{rows:PANEL}}),hud:{found:{v:'4 / 4',lv:'good'},mode:{v:'passive',lv:'good'},touch:{v:'no',lv:'good'},last:{v:'—',lv:'none'}},termClear:true,term:{term:['$ whois · dig · subfinder','$ theHarvester · dig axfr']}}
+ ]});
+})();
+(function(){
+// CEH: scanning networks with Nmap (host discovery, port states, versions, OS, NSE).
+var P=[['p21','21/tcp','ftp','vsftpd 2.3.4','open'],['p22','22/tcp','ssh','OpenSSH 8.9p1','open'],['p80','80/tcp','http','Apache 2.4.52','open'],['p3306','3306/tcp','mysql','','filtered']];
+var ST={open:'run',closed:'stop',filtered:'fail'};
+function ports(S){var o={};P.forEach(function(p){o[p[0]]={status:S.ports?ST[p[4]]:'none',sub:!S.ports?'?':S.ver&&p[3]?p[3]:p[4]+' · '+p[2]}});return o}
+function hosts(S){return {h1:{show:!!S.disc},h9:{show:!!S.disc}}}
+var PANEL=['Scan results: 10.10.10.5',function(S){return {t:'hosts up:  '+(S.disc?'.1  .5  .9':'?'),tone:S.disc?'green':'slate'}}].concat(P.map(function(p){return function(S){return S.ports?{t:p[1].padEnd(10)+p[4].padEnd(10)+(S.ver&&p[3]?p[3]:p[2]),tone:p[4]=='open'?(S.ver&&p[0]=='p21'?'red':'green'):'amber'}:{t:p[1]+'  ?',tone:'slate'}}})).concat([function(S){return S.ver?{t:'! vsftpd 2.3.4 has a known backdoor',tone:'red'}:''}]);
+function upd(S,A){var o=Object.assign(ports(S),hosts(S));Object.keys(o).forEach(function(k){A.set(k,o[k])});A.set('res',{rows:PANEL});A.refresh()}
+LESSON('ceh','scanning',{
+ title:'Scanning with Nmap',sub:'Find live hosts, open ports, versions and the OS, and read what each port state means.',time:'18 min',level:'Intermediate',
+ S:{disc:false,ports:false,ver:false},
+ legend:[['#3fa456','open'],['#e8a33a','closed'],['#e5534b','filtered']],
+ hud:[{id:'hosts',l:'Hosts up',v:function(S){return S.disc?'3':'?'},lv:function(S){return S.disc?'good':'none'}},{id:'open',l:'Open ports',v:function(S){return S.ports?'3':'?'},lv:function(S){return S.ports?'warn':'none'}},{id:'scan',l:'Scan type',v:'—',lv:'none'},{id:'risk',l:'Finding',v:function(S){return S.ver?'vsftpd 2.3.4':'—'},lv:function(S){return S.ver?'bad':'none'}}],
+ nodes:[
+  {t:'crowd',id:'you',x:58,y:262,tone:'gold',label:'you',n:1,w:52,anchor:[110,262]},
+  H.tile('fw',178,262,'firewall','filters 3306','amber',{w:100}),
+  H.box('h5',252,40,'.5 target','green',{center:true,w:28,h:14,d:26}),
+  H.box('h1',160,40,'.1','slate',{center:true,w:28,h:14,d:26,show:false}),
+  H.box('h9',338,40,'.9','slate',{center:true,w:28,h:14,d:26,show:false}),
+  H.tile('p21',306,190,'21 ftp','?','teal',{w:120,status:'none'}),
+  H.tile('p22',306,248,'22 ssh','?','teal',{w:120,status:'none'}),
+  H.tile('p80',306,306,'80 http','?','teal',{w:120,status:'none'}),
+  H.tile('p3306',306,364,'3306 mysql','?','teal',{w:120,status:'none'}),
+  {t:'panel',id:'res',x:392,y:14,w:316,h:170,title:'nmap results',rows:PANEL,fs:10},
+  {t:'term',id:'term',x:392,y:198,w:316,h:252,title:'kali terminal'}],
+ links:[H.lk('you','fw','gold'),H.lk('fw','h5','green'),H.lk('h5','p21','teal',{dash:true})],
+ controls:{title:'Scan 10.10.10.0/24',groups:[{items:[
+  {label:'nmap -sn',wide:true,click:function(S,A){S.disc=true;A.hud({scan:{v:'ping sweep',lv:'none'}});A.send(['you','fw','h5'],{label:'ping',tone:'green',ok:true});A.term('term',['$ sudo nmap -sn 10.10.10.0/24','Nmap scan report for 10.10.10.1','Nmap scan report for 10.10.10.5','Nmap scan report for 10.10.10.9','Nmap done: 256 IP addresses (3 hosts up)']);upd(S,A)}},
+  {label:'nmap -sS',wide:true,click:function(S,A){A.hud({scan:{v:'SYN',lv:'none'}});if(!S.disc){A.term('term',['$ sudo nmap -sS ?','! which host? run a ping sweep first']);return}
+   S.ports=true;A.send(['you','fw','h5'],{label:'SYN',tone:'gold',ok:true});A.send(['you','fw'],{label:'3306',tone:'red',ok:false,denyAt:'fw'});A.term('term',['$ sudo nmap -sS 10.10.10.5','PORT     STATE    SERVICE','21/tcp   open     ftp','22/tcp   open     ssh','80/tcp   open     http','3306/tcp filtered mysql']);upd(S,A)}},
+  {label:'nmap -sV',wide:true,click:function(S,A){A.hud({scan:{v:'versions',lv:'none'}});if(!S.ports){A.term('term',['$ sudo nmap -sV ?','! which ports? run a port scan first']);return}
+   S.ver=true;A.send(['you','fw','h5'],{label:'probe',tone:'blue',ok:true});A.fx('p21','no');A.term('term',['$ sudo nmap -sV -p 21,22,80 10.10.10.5','PORT   STATE SERVICE VERSION','21/tcp open  ftp     vsftpd 2.3.4','22/tcp open  ssh     OpenSSH 8.9p1','80/tcp open  http    Apache httpd 2.4.52']);upd(S,A)}},
+  {label:'Reset',wide:true,click:function(S,A){S.disc=S.ports=S.ver=false;A.hud({scan:{v:'—',lv:'none'}});A.term('term',['$ # scan 10.10.10.0/24'],true);upd(S,A)}}]}]},
+ goal:function(S){var ok=S.ver;return [ok,ok?'Done. Sweep, port scan, version scan: vsftpd 2.3.4 is a famous backdoored release. That is the top finding for the report.':'Goal: find the riskiest service on the network. Sweep for hosts, scan the target\'s ports, then ask the open ports for their versions.']},
+ learn:[['Know what scanning looks for',0],['Find live hosts with -sn',1],['Read open, closed and filtered',2],['TCP connect and UDP scans',3],['Detect versions with -sV',4],['OS detection and NSE scripts',5],['Timing and saving output',6]],
+ steps:[
+  {t:'What scanning answers',b:'Recon gave you targets. Scanning asks them directly: which hosts are up, which ports are open, what software and version is behind each port, and which OS runs it.',k:['idea','Key idea','Nmap is the standard tool. Every answer narrows down where an attacker would try to get in.'],pill:'setup',tt:'Scanning',focus:['you','fw','h5'],S:{disc:false,ports:false,ver:false},
+   set:Object.assign(ports({}),hosts({}),{res:{rows:['Four questions, in order',{t:'1 which hosts are up?     -sn',tone:'violet'},{t:'2 which ports are open?   -sS',tone:'violet'},{t:'3 what software/version?  -sV',tone:'violet'},{t:'4 which OS?               -O',tone:'violet'},'','Only scan what the scope allows.'],hl:[]}}),
+   hud:{scan:{v:'—',lv:'none'}},termClear:true,term:{term:['$ nmap --version','Nmap version 7.94 ( https://nmap.org )','$ # scope: 10.10.10.0/24']},
+   fx:[{n:'h5',k:'pulse'}]},
+  {t:'Host discovery: -sn',b:'A ping sweep checks which addresses answer, without scanning ports. On a local network Nmap uses ARP, which even host firewalls cannot hide from.',k:['tip','Remember','-sn = no port scan. Add -Pn later to skip discovery for hosts that block ping but are still up.'],pill:'idea',tt:'-sn',focus:['you','h1','h5','h9'],S:{disc:true,ports:false,ver:false},
+   set:Object.assign(ports({}),hosts({disc:1}),{res:{rows:PANEL}}),hud:{scan:{v:'ping sweep',lv:'none'}},termClear:true,term:{term:['$ sudo nmap -sn 10.10.10.0/24','Nmap scan report for 10.10.10.1','Host is up (0.00041s latency).','Nmap scan report for 10.10.10.5','Nmap scan report for 10.10.10.9','Nmap done: 256 IP addresses (3 hosts up)']},
+   flows:[{path:['you','fw','h5'],label:'ping',tone:'green'}],fx:[{n:'h1',k:'pulse'},{n:'h9',k:'pulse'}]},
+  {t:'SYN scan and port states',b:'-sS sends a SYN to each port. SYN/ACK back means open, RST means closed, and silence means filtered: a firewall dropped it. Nmap never finishes the handshake, so it is fast.',k:['idea','Key idea','open = a program listens. closed = host reachable, nothing listens. filtered = something in between ate the packet.'],pill:'idea',tt:'-sS',focus:['you','fw','p21','p22','p80','p3306'],S:{disc:true,ports:true,ver:false},
+   set:Object.assign(ports({ports:1}),hosts({disc:1}),{res:{rows:PANEL}}),hud:{scan:{v:'SYN',lv:'none'}},termClear:true,term:{term:['$ sudo nmap -sS 10.10.10.5','PORT     STATE    SERVICE','21/tcp   open     ftp','22/tcp   open     ssh','80/tcp   open     http','3306/tcp filtered mysql','Not shown: 996 closed tcp ports (reset)']},
+   once:[{path:['you','fw','h5'],label:'SYN',tone:'gold'},{path:['h5','fw','you'],label:'SYN/ACK',tone:'green',delay:1100},{path:['you','fw'],label:'3306',tone:'red',ok:false,denyAt:'fw',delay:2200}]},
+  {t:'Connect and UDP scans',b:'Without root, Nmap uses -sT: a full TCP handshake, slower and logged by the service. -sU scans UDP (DNS, SNMP), which is slow because closed ports often stay silent.',k:['problem','Watch out','Do not skip UDP. SNMP on 161 with the community string "public" leaks a lot.'],pill:'idea',tt:'-sT -sU',focus:['you','fw','h5'],S:{disc:true,ports:true,ver:false},
+   set:Object.assign(ports({ports:1}),hosts({disc:1}),{res:{rows:['Scan types',{t:'-sS  SYN, half-open    needs root',tone:'green'},{t:'-sT  full connect      no root',tone:'amber'},{t:'-sU  UDP               slow',tone:'violet'},{t:'-p-  all 65535 ports',tone:'slate'},'','Default: top 1000 TCP ports.'],hl:[]}}),
+   hud:{scan:{v:'UDP',lv:'none'}},termClear:true,term:{term:['$ nmap -sT -p 22 10.10.10.5','22/tcp open  ssh','$ sudo nmap -sU -p 53,161 10.10.10.5','PORT    STATE         SERVICE','53/udp  open|filtered domain','161/udp open          snmp']},
+   flows:[{path:['you','fw','h5'],label:'UDP',tone:'violet'}]},
+  {t:'Version detection: -sV',b:'An open port only says something listens. -sV talks to it and reads the banner and replies to name the exact software and version. Versions are what you look up for known CVEs.',k:['tip','Remember','searchsploit vsftpd 2.3.4 checks the local Exploit-DB copy. Old versions are the first thing in a report.'],pill:'idea',tt:'-sV',focus:['p21','p22','p80'],S:{disc:true,ports:true,ver:true},
+   set:Object.assign(ports({ports:1,ver:1}),hosts({disc:1}),{res:{rows:PANEL}}),hud:{scan:{v:'versions',lv:'none'}},termClear:true,term:{term:['$ sudo nmap -sV -p 21,22,80 10.10.10.5','PORT   STATE SERVICE VERSION','21/tcp open  ftp     vsftpd 2.3.4','22/tcp open  ssh     OpenSSH 8.9p1','80/tcp open  http    Apache httpd 2.4.52']},
+   once:[{path:['you','fw','h5'],label:'probe',tone:'blue'}],fx:[{n:'p21',k:'no'}]},
+  {t:'OS detection and scripts',b:'-O guesses the operating system from how the TCP/IP stack answers. The Nmap Scripting Engine (NSE) runs small checks: page titles, SMB info, known vulnerabilities. -A turns on -O, -sV, -sC and traceroute.',k:['idea','Key idea','-sC runs the default safe scripts. --script vuln runs vulnerability checks: louder, use only in scope.'],pill:'idea',tt:'-O NSE',focus:['h5','p80'],S:{disc:true,ports:true,ver:true},
+   set:Object.assign(ports({ports:1,ver:1}),hosts({disc:1}),{res:{rows:PANEL}}),hud:{scan:{v:'OS + NSE',lv:'none'}},termClear:true,term:{term:['$ sudo nmap -O 10.10.10.5','Running: Linux 4.X|5.X','OS details: Linux 4.15 - 5.8','$ nmap --script http-title -p80 10.10.10.5','|_http-title: Acme Intranet Login']},
+   flows:[{path:['you','fw','h5'],label:'probe',tone:'blue'}]},
+  {t:'Timing, noise and output',b:'-T0 to -T5 set the speed: slower is quieter, faster is noisier. -oA saves every format at once, so the results go straight into your notes and report.',k:['problem','Watch out','An IDS such as Snort or Suricata spots fast scans easily. Defenders: alert on one IP touching many ports.'],pill:'idea',tt:'Timing',focus:['you','fw'],S:{disc:true,ports:true,ver:true},
+   set:Object.assign(ports({ports:1,ver:1}),hosts({disc:1}),{res:{rows:['Timing templates',{t:'-T0 -T1  paranoid, sneaky (IDS)',tone:'violet'},{t:'-T2      polite',tone:'violet'},{t:'-T3      normal (default)',tone:'green'},{t:'-T4 -T5  aggressive, insane',tone:'red'},'','-oA lab → lab.nmap .gnmap .xml'],hl:[]}}),
+   hud:{scan:{v:'-T2 -oA',lv:'none'}},termClear:true,term:{term:['$ sudo nmap -sS -T2 -oA lab 10.10.10.0/24','$ ls lab.*','lab.gnmap  lab.nmap  lab.xml']},
+   fx:[{n:'fw',k:'pulse'}]},
+  {t:'Try it: find the riskiest service',b:'You are in scope for 10.10.10.0/24. Use the three scans in a sensible order and find the service that goes first in the report.',k:['tip','Challenge','Hosts first, then ports, then versions. Each step needs the answer from the one before.'],pill:'problem',tt:'Try it',S:{disc:false,ports:false,ver:false},goal:true,focus:['you','fw','h5','p21','p22','p80','p3306'],
+   set:Object.assign(ports({}),hosts({}),{res:{rows:PANEL}}),hud:{scan:{v:'—',lv:'none'}},termClear:true,term:{term:['$ # scan 10.10.10.0/24']}},
+  {t:'Recap',b:'-sn for hosts, -sS for ports, -sV for versions, -O and NSE for detail. Read the states: open, closed, filtered. Save everything with -oA.',k:['idea','Next up','Enumeration: pulling users, shares and service details out of the open ports you just found.'],pill:'recap',tt:'Recap',S:{disc:true,ports:true,ver:true},
+   set:Object.assign(ports({ports:1,ver:1}),hosts({disc:1}),{res:{rows:PANEL}}),hud:{scan:{v:'—',lv:'none'}},termClear:true,term:{term:['$ nmap -sn · -sS · -sV · -O','$ nmap -sC · --script · -oA']}}
+ ]});
+})();
 // Practice question bank: {m: module id, q, o: options, a: index of correct option, e: explanation, l: lesson to review}
 window.PQB=[
  {m:'linux',q:'Which directory holds system-wide configuration files?',o:['/var','/etc','/usr/bin','/home'],a:1,e:'/etc holds configuration. /var holds data that changes, like logs and caches.',l:'linux/tree'},
@@ -4969,7 +5182,17 @@ window.PQB=[
  {m:'sre',q:'80% of the error budget is used and the policy says freeze above 75%. What now?',o:['Ship the new release','Freeze features and work on reliability','Change the SLO to 99%','Ignore it until it reaches 100%'],a:1,e:'The policy was agreed in advance, so the decision is already made: reliability work first.',l:'sre/slo'},
  {m:'sre',q:'What comes first in an incident?',o:['Finding the root cause','Stopping the user impact, for example by rolling back','Writing the postmortem','Blaming the deploy'],a:1,e:'Mitigate first; investigate the root cause after users are fine.',l:'sre/incident'},
  {m:'sre',q:'What does a blameless postmortem focus on?',o:['Who made the mistake','How the system allowed it and what will change','Writing a long document','Closing the ticket fast'],a:1,e:'Ask how, not who, and end with owned, dated action items.',l:'sre/postmortem'},
- {m:'sre',q:'What is RPO?',o:['How long you can be down','How much data you can afford to lose, measured in time','The number of replicas','Recovery Point Owner'],a:1,e:'RPO = data loss, RTO = downtime. Together they decide the backup and DR design.',l:'sre/dr'}
+ {m:'sre',q:'What is RPO?',o:['How long you can be down','How much data you can afford to lose, measured in time','The number of replicas','Recovery Point Owner'],a:1,e:'RPO = data loss, RTO = downtime. Together they decide the backup and DR design.',l:'sre/dr'},
+ {m:'ceh',q:'What separates an ethical hacker from a criminal using the same tools?',o:['Better tools','Written permission and an agreed scope','Working only at night','Using Linux'],a:1,e:'Same techniques, but authorised in writing, inside a scope, with everything reported to the owner.',l:'ceh/phases'},
+ {m:'ceh',q:'A DDoS attack takes a shop offline. Which part of the CIA triad is hit?',o:['Confidentiality','Integrity','Availability','Authentication'],a:2,e:'Leaks hit confidentiality, tampering hits integrity, outages hit availability.',l:'ceh/phases'},
+ {m:'ceh',q:'What does an ethical hacker do instead of covering tracks?',o:['Deletes the auth logs','Removes only their own test artefacts and writes a report','Leaves a backdoor for next year','Disables the firewall'],a:1,e:'Never wipe logs. Clean up what you planted, document it, and report findings with fixes.',l:'ceh/phases'},
+ {m:'ceh',q:'Which recon technique is passive (never touches the target)?',o:['Zone transfer from their name server','Searching certificate transparency logs','A SYN scan','Pinging their web server'],a:1,e:'CT logs, whois and search engines are public sources. AXFR, ping and scans talk to the target.',l:'ceh/recon'},
+ {m:'ceh',q:'dig +short TXT shows "v=spf1 include:_spf.google.com ~all". What did you learn?',o:['The site runs on AWS','The company uses Google for email','DNSSEC is enabled','The domain is expired'],a:1,e:'SPF lists who may send mail for the domain. Google here means Google Workspace.',l:'ceh/recon'},
+ {m:'ceh',q:'A zone transfer returns every host name of the domain. What is the fix?',o:['Turn off DNS','Allow AXFR only to your own secondary name servers','Use a longer TTL','Move to IPv6'],a:1,e:'In BIND: allow-transfer { none; }; or list only your secondaries.',l:'ceh/recon'},
+ {m:'ceh',q:'In an nmap -sS scan, a port gets no reply at all. Nmap reports it as:',o:['open','closed','filtered','unfiltered'],a:2,e:'SYN/ACK = open, RST = closed, silence or ICMP unreachable = filtered (a firewall dropped it).',l:'ceh/scanning'},
+ {m:'ceh',q:'Which Nmap option finds live hosts without scanning ports?',o:['-sV','-sn','-p-','-O'],a:1,e:'-sn is a ping sweep. On a local network it uses ARP.',l:'ceh/scanning'},
+ {m:'ceh',q:'Why run nmap -sV after finding open ports?',o:['To scan faster','To learn the exact software and version, then look up known CVEs','To hide from the IDS','To save the output'],a:1,e:'-sV reads banners and replies, e.g. vsftpd 2.3.4, a release with a known backdoor.',l:'ceh/scanning'},
+ {m:'ceh',q:'You are not root. Which TCP scan does Nmap use?',o:['-sS SYN scan','-sT connect scan','-sU UDP scan','-sn ping sweep'],a:1,e:'SYN scans need raw sockets (root). Without them Nmap completes the full handshake with -sT.',l:'ceh/scanning'}
 ];
 // ---------- Views: Learn / Practice / Cheatsheets, and the app-style drawer ----------
 var VIEW='learn';
@@ -4985,7 +5208,7 @@ function setView(v,arg){VIEW=v;var b=document.querySelector('.body');b.classList
 function goView(v){if(v=='learn'){var l=PS.last&&LESSONS[PS.last.k]?PS.last:null;location.hash=l?l.k.replace('/','-')+'~'+l.s:(KEY||lessonKeys()[0]).replace('/','-')}else location.hash={practice:'practice',cheat:'cheatsheets',home:'home'}[v]}
 function routeView(h){if(h===''||h==='home'){setView('home');renderTree();return true}var m=h.match(/^(practice|cheatsheets)(?:-(\w+))?$/);if(!m)return false;setView(m[1]=='practice'?'practice':'cheat',m[2]);renderTree();return true}
 function modName(id){var m=COURSE.filter(function(c){return c.id==id})[0];return m?m.n:id}
-var SHORTN={bash:'Bash',python:'Python',projects:'Projects',interview:'Interview'};function modShort(id){return SHORTN[id]||modName(id)}
+var SHORTN={bash:'Bash',python:'Python',projects:'Projects',interview:'Interview',ceh:'Hacking'};function modShort(id){return SHORTN[id]||modName(id)}
 function modColor(id){var m=COURSE.filter(function(c){return c.id==id})[0];return m?m.c[0]:'#999'}
 function lessonLink(key,step){return '#'+key.replace('/','-')+(step!=null?'~'+step:'')}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}

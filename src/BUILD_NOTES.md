@@ -34,3 +34,9 @@ Search palette: lessons/zy-search.js. Opens with Ctrl/⌘K, "/", header search o
 Header sizing: all header controls 34px; nav items fixed height; kbd no-wrap; HUD tools vertically centred.
 Home view (#home, also empty hash; brand click): continue card (PS.last = {k,s} saved on every go()), progress ring + stats, module cards (open first unfinished lesson), shortcuts. "Learn" nav resumes PS.last.
 Extras (lessons/zy3-extras.js): study streak (PS.days per local date, counted on every step), spaced review of wrong practice answers (PS.rv, Leitner gaps 1/3/7/14/30 days, "Review · N due" chip, #practice-review), focus mode (F key / Focus button hides the course tree on desktop, PS.focus). Certificates were built and then removed at Mahmoud's request.
+
+## Security track (started 2026-11-27, nightly runs)
+Module 'ceh' (Security: Ethical Hacking) appended to COURSE after interview. Files 61-ceh-phases.js, 62-ceh-recon.js, 63-ceh-scanning.js. Only built lessons are listed in COURSE (home cards/progress count COURSE entries). Practice: m:'ceh' (SHORTN ceh:'Hacking').
+Conventions used: lab network 10.10.10.0/24 (target 10.10.10.5), internal lab domain target.lab, public example domain acme.example with TEST-NET-3 IPs 203.0.113.x. Never real company names/IPs.
+Panel rows: each row is a string/object/fn(S) returning ONE row (a fn returning an array renders nothing).
+Build output is ../app.html (index.html is only the redirect to learn.mahmoud-syam.me). Plan: CEH next = enumeration, vulnerability analysis, system hacking/password attacks, web app attacks, sniffing, social engineering; then module 'soc'.

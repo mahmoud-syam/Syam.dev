@@ -12,7 +12,7 @@ function setView(v,arg){VIEW=v;var b=document.querySelector('.body');b.classList
 function goView(v){if(v=='learn'){var l=PS.last&&LESSONS[PS.last.k]?PS.last:null;location.hash=l?l.k.replace('/','-')+'~'+l.s:(KEY||lessonKeys()[0]).replace('/','-')}else location.hash={practice:'practice',cheat:'cheatsheets',home:'home'}[v]}
 function routeView(h){if(h===''||h==='home'){setView('home');renderTree();return true}var m=h.match(/^(practice|cheatsheets)(?:-(\w+))?$/);if(!m)return false;setView(m[1]=='practice'?'practice':'cheat',m[2]);renderTree();return true}
 function modName(id){var m=COURSE.filter(function(c){return c.id==id})[0];return m?m.n:id}
-var SHORTN={bash:'Bash',python:'Python',projects:'Projects',interview:'Interview'};function modShort(id){return SHORTN[id]||modName(id)}
+var SHORTN={bash:'Bash',python:'Python',projects:'Projects',interview:'Interview',ceh:'Hacking'};function modShort(id){return SHORTN[id]||modName(id)}
 function modColor(id){var m=COURSE.filter(function(c){return c.id==id})[0];return m?m.c[0]:'#999'}
 function lessonLink(key,step){return '#'+key.replace('/','-')+(step!=null?'~'+step:'')}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
