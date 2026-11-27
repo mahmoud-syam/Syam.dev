@@ -574,6 +574,21 @@ a:focus-visible,[role=button]:focus-visible,summary:focus-visible,input:focus-vi
 .hbtns .pbtn{white-space:nowrap}
 @media (max-width:440px){.hcont .hbtns{flex-direction:column;align-items:stretch}.hcont .hbtns .pbtn{justify-content:center}}
 @media (max-width:700px){.hstats{gap:6px 14px;padding:16px}.hring{width:72px;height:72px}.hring svg{width:72px;height:72px}.hring b{font-size:16px}.hnums div span,.hnums div b{white-space:nowrap}.hnums{font-size:12.5px}}
+/* Courses sidebar */
+#acside{display:none}
+.side.acmode #acside{display:flex;flex-direction:column;gap:2px;padding-bottom:12px}
+.side.acmode .sscroll>:not(#acside),.side.acmode .prog{display:none!important}
+.acsh2{display:flex;justify-content:space-between;align-items:baseline;font-weight:800;font-size:15px;margin:2px 0 8px}.acsh2 small{font-size:11px;color:var(--mut);font-weight:600}
+.actk{display:flex;align-items:center;gap:8px;margin:14px 0 4px;font-size:11.5px;font-weight:800;text-transform:uppercase;color:var(--ink2);letter-spacing:.03em}.actk i{width:9px;height:9px;border-radius:3px}
+.acsl2{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:8px;text-decoration:none;color:var(--ink);font-size:13px;font-weight:600}.acsl2:hover{background:var(--card)}.acsl2 i{width:9px;height:9px;border-radius:3px;flex:none}.acsl2 span{flex:1;min-width:0;overflow-wrap:anywhere}.acsl2 em{font-style:normal;font-size:11px;color:var(--mut)}
+.acback{font-size:12px;font-weight:700;color:var(--mut);text-decoration:none;padding:4px 2px;margin-bottom:6px;align-self:flex-start}.acback:hover{color:var(--ink)}
+.acct{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border:1.3px solid var(--line);border-left:4px solid var(--tc);border-radius:11px;background:var(--card);text-decoration:none;color:var(--ink)}.acct small{font-size:10.5px;font-weight:700;color:var(--mut);text-transform:uppercase}.acct b{font-size:14px;line-height:1.3}
+.acsp2{display:flex;align-items:center;gap:10px;margin:8px 2px 6px;font-size:11.5px;color:var(--mut)}.acsp2 .acbar{flex:1}
+.acsm summary{display:flex;align-items:center;gap:8px;padding:8px 4px;cursor:pointer;list-style:none;border-radius:8px;font-size:13px}.acsm summary::-webkit-details-marker{display:none}.acsm summary:hover{background:var(--card)}
+.acsm summary b{flex:1;min-width:0;font-weight:700;overflow-wrap:anywhere}.acsm summary em{font-style:normal;font-size:11px;color:var(--mut)}
+.acsi{display:flex;align-items:center;gap:8px;padding:6px 8px 6px 12px;margin-left:10px;border-left:1px solid var(--strong);font-size:12.5px;color:var(--mut);text-decoration:none;border-radius:0 8px 8px 0}
+.acsi:hover{color:var(--ink);background:var(--card)}.acsi .acck{width:15px;height:15px;font-size:9px}.acsi.done .acck{background:var(--green2);border-color:var(--ink)}
+.acsi.cur{color:var(--ink);font-weight:700;background:var(--card);border-left:3px solid var(--ink)}
 </style>
 </head>
 <body>
@@ -5426,6 +5441,28 @@ function acHome(){var el=$('hacad');if(!el){var mods=$('hmods');if(!mods)return;
    ACAD.cat.lessons.forEach(function(l){var c=acCourseOf(l.id);if(!c)return;r.push({t:'lesson',title:l.title,sub:c.title+' · '+(AC_TYPES[l.type]||''),hay:(l.title+' '+c.title+' '+(l.body||'').slice(0,400)+' '+((ACAD.my[l.id]||{}).note||'')).toLowerCase(),href:'lesson:'+l.id})})}return r}}
  if(ACAD.ok&&ACCT.on)acLoad();
 })();
+// ---------- Sidebar in the Courses view: the open course's sections and lessons ----------
+function acSideEl(){var el=$('acside');if(el)return el;var sc=document.querySelector('.side .sscroll');if(!sc)return null;el=document.createElement('nav');el.id='acside';el.setAttribute('aria-label','Course outline');sc.appendChild(el);return el}
+function acSide(){var el=acSideEl(),side=document.querySelector('.side');if(!el||!side)return;var on=VIEW=='courses';side.classList.toggle('acmode',on);if(!on)return;
+ if(!ACAD.cat){el.innerHTML='<div class="acsh2">Courses</div><p class="acmuted">Loading…</p>';return}
+ var v=ACAD.view||{},cid=v.page=='course'?v.id:v.page=='lesson'?((acCourseOf(v.id)||{}).id):null,c=cid&&ACAD.C[cid],h;
+ if(!c){h='<div class="acsh2">Courses <small>'+ACAD.cat.courses.length+'</small></div>';
+  h+='<a class="acsl2" href="#" data-learn="1"><i style="background:var(--green2)"></i><span>DevOps interactive course</span><em>'+acBuiltin().pct+'%</em></a>';
+  ACAD.cat.tracks.forEach(function(t){var cs=ACAD.cat.courses.filter(function(x){return x.track_id==t.id});if(!cs.length)return;
+   h+='<div class="actk"><i style="background:'+esc(t.color)+'"></i>'+esc(t.title)+'</div>'+cs.map(function(x){var st=acStats(x.id);return '<a class="acsl2" href="#course:'+x.id+'"><span>'+esc(x.title)+'</span><em>'+(st.done?st.pct+'%':'')+'</em></a>'}).join('')});
+  el.innerHTML=h;el.querySelectorAll('[data-learn]').forEach(function(a){a.onclick=function(e){e.preventDefault();goView('learn')}});return}
+ var st=acStats(cid),t=ACAD.T[c.track_id]||{},mods=ACAD.CM[cid]||[],curL=v.page=='lesson'?v.id:null,curM=curL&&ACAD.L[curL]?ACAD.L[curL].module_id:null;
+ h='<a class="acback" href="#courses">← All courses</a><a class="acct" href="#course:'+cid+'" style="--tc:'+esc(t.color||'#2f86ce')+'"><small>'+esc(t.title||'')+' · '+esc(AC_PROV[c.provider]||'')+'</small><b>'+esc(c.title)+'</b></a>'+
+  '<div class="acsp2"><u class="acbar"><i style="width:'+st.pct+'%"></i></u><span>'+st.done+' / '+st.n+' done</span></div>';
+ h+=mods.map(function(m,mi){var ls=ACAD.ML[m.id],d=ls.filter(function(l){return ACAD.my[l.id]&&ACAD.my[l.id].done}).length,open=m.id==curM||(!curM&&(mods.length<5||d<ls.length&&mods.slice(0,mi).every(function(pm){return ACAD.ML[pm.id].every(function(l){return ACAD.my[l.id]&&ACAD.my[l.id].done})})));
+  return '<details class="acsm"'+(open?' open':'')+'><summary><span class="acmn">'+(mi+1<10?'0':'')+(mi+1)+'</span><b>'+esc(m.title)+'</b><em>'+d+'/'+ls.length+'</em></summary>'+
+   ls.map(function(l){var u=ACAD.my[l.id]||{};return '<a class="acsi'+(u.done?' done':'')+(l.id==curL?' cur':'')+'" href="#lesson:'+l.id+'"'+(l.id==curL?' aria-current="page"':'')+'><span class="acck">'+(u.done?'✓':'')+'</span><span class="aclt">'+esc(l.title)+'</span></a>'}).join('')+'</details>'}).join('');
+ el.innerHTML=h;
+ var cur=el.querySelector('.acsi.cur'),sc=document.querySelector('.side .sscroll');if(cur&&sc){var r=cur.getBoundingClientRect(),q=sc.getBoundingClientRect();if(r.top<q.top+60||r.bottom>q.bottom-20)sc.scrollTop+=r.top-q.top-q.height/3}else if(sc&&!curL)sc.scrollTop=0}
+(function(){var _ar=acRender;acRender=function(a){_ar(a);acSide()};
+ var _al=acAfterLoad;acAfterLoad=function(){_al();acSide()};
+ var _ps=acPaintLessonState;acPaintLessonState=function(l,p,n){_ps(l,p,n);acSide()};
+ var _sv=setView;setView=function(v,arg){_sv(v,arg);if(v!='courses'){var s=document.querySelector('.side');if(s)s.classList.remove('acmode')}}})();
 // ---------- Admin dashboard: manage tracks, courses, sections and lessons ----------
 var AD={view:{tab:'content'},busy:false};
 function adSection(){var s=$('vadmin');if(s)return s;s=document.createElement('section');s.className='view adv';s.id='vadmin';s.hidden=true;$('vcourses').after(s);return s}

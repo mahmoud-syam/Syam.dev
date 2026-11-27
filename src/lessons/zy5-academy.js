@@ -159,3 +159,25 @@ function acHome(){var el=$('hacad');if(!el){var mods=$('hmods');if(!mods)return;
    ACAD.cat.lessons.forEach(function(l){var c=acCourseOf(l.id);if(!c)return;r.push({t:'lesson',title:l.title,sub:c.title+' · '+(AC_TYPES[l.type]||''),hay:(l.title+' '+c.title+' '+(l.body||'').slice(0,400)+' '+((ACAD.my[l.id]||{}).note||'')).toLowerCase(),href:'lesson:'+l.id})})}return r}}
  if(ACAD.ok&&ACCT.on)acLoad();
 })();
+// ---------- Sidebar in the Courses view: the open course's sections and lessons ----------
+function acSideEl(){var el=$('acside');if(el)return el;var sc=document.querySelector('.side .sscroll');if(!sc)return null;el=document.createElement('nav');el.id='acside';el.setAttribute('aria-label','Course outline');sc.appendChild(el);return el}
+function acSide(){var el=acSideEl(),side=document.querySelector('.side');if(!el||!side)return;var on=VIEW=='courses';side.classList.toggle('acmode',on);if(!on)return;
+ if(!ACAD.cat){el.innerHTML='<div class="acsh2">Courses</div><p class="acmuted">Loading…</p>';return}
+ var v=ACAD.view||{},cid=v.page=='course'?v.id:v.page=='lesson'?((acCourseOf(v.id)||{}).id):null,c=cid&&ACAD.C[cid],h;
+ if(!c){h='<div class="acsh2">Courses <small>'+ACAD.cat.courses.length+'</small></div>';
+  h+='<a class="acsl2" href="#" data-learn="1"><i style="background:var(--green2)"></i><span>DevOps interactive course</span><em>'+acBuiltin().pct+'%</em></a>';
+  ACAD.cat.tracks.forEach(function(t){var cs=ACAD.cat.courses.filter(function(x){return x.track_id==t.id});if(!cs.length)return;
+   h+='<div class="actk"><i style="background:'+esc(t.color)+'"></i>'+esc(t.title)+'</div>'+cs.map(function(x){var st=acStats(x.id);return '<a class="acsl2" href="#course:'+x.id+'"><span>'+esc(x.title)+'</span><em>'+(st.done?st.pct+'%':'')+'</em></a>'}).join('')});
+  el.innerHTML=h;el.querySelectorAll('[data-learn]').forEach(function(a){a.onclick=function(e){e.preventDefault();goView('learn')}});return}
+ var st=acStats(cid),t=ACAD.T[c.track_id]||{},mods=ACAD.CM[cid]||[],curL=v.page=='lesson'?v.id:null,curM=curL&&ACAD.L[curL]?ACAD.L[curL].module_id:null;
+ h='<a class="acback" href="#courses">← All courses</a><a class="acct" href="#course:'+cid+'" style="--tc:'+esc(t.color||'#2f86ce')+'"><small>'+esc(t.title||'')+' · '+esc(AC_PROV[c.provider]||'')+'</small><b>'+esc(c.title)+'</b></a>'+
+  '<div class="acsp2"><u class="acbar"><i style="width:'+st.pct+'%"></i></u><span>'+st.done+' / '+st.n+' done</span></div>';
+ h+=mods.map(function(m,mi){var ls=ACAD.ML[m.id],d=ls.filter(function(l){return ACAD.my[l.id]&&ACAD.my[l.id].done}).length,open=m.id==curM||(!curM&&(mods.length<5||d<ls.length&&mods.slice(0,mi).every(function(pm){return ACAD.ML[pm.id].every(function(l){return ACAD.my[l.id]&&ACAD.my[l.id].done})})));
+  return '<details class="acsm"'+(open?' open':'')+'><summary><span class="acmn">'+(mi+1<10?'0':'')+(mi+1)+'</span><b>'+esc(m.title)+'</b><em>'+d+'/'+ls.length+'</em></summary>'+
+   ls.map(function(l){var u=ACAD.my[l.id]||{};return '<a class="acsi'+(u.done?' done':'')+(l.id==curL?' cur':'')+'" href="#lesson:'+l.id+'"'+(l.id==curL?' aria-current="page"':'')+'><span class="acck">'+(u.done?'✓':'')+'</span><span class="aclt">'+esc(l.title)+'</span></a>'}).join('')+'</details>'}).join('');
+ el.innerHTML=h;
+ var cur=el.querySelector('.acsi.cur'),sc=document.querySelector('.side .sscroll');if(cur&&sc){var r=cur.getBoundingClientRect(),q=sc.getBoundingClientRect();if(r.top<q.top+60||r.bottom>q.bottom-20)sc.scrollTop+=r.top-q.top-q.height/3}else if(sc&&!curL)sc.scrollTop=0}
+(function(){var _ar=acRender;acRender=function(a){_ar(a);acSide()};
+ var _al=acAfterLoad;acAfterLoad=function(){_al();acSide()};
+ var _ps=acPaintLessonState;acPaintLessonState=function(l,p,n){_ps(l,p,n);acSide()};
+ var _sv=setView;setView=function(v,arg){_sv(v,arg);if(v!='courses'){var s=document.querySelector('.side');if(s)s.classList.remove('acmode')}}})();
