@@ -574,21 +574,37 @@ a:focus-visible,[role=button]:focus-visible,summary:focus-visible,input:focus-vi
 .hbtns .pbtn{white-space:nowrap}
 @media (max-width:440px){.hcont .hbtns{flex-direction:column;align-items:stretch}.hcont .hbtns .pbtn{justify-content:center}}
 @media (max-width:700px){.hstats{gap:6px 14px;padding:16px}.hring{width:72px;height:72px}.hring svg{width:72px;height:72px}.hring b{font-size:16px}.hnums div span,.hnums div b{white-space:nowrap}.hnums{font-size:12.5px}}
-/* Courses sidebar */
+/* Sidebar: tabs + course library */
+.sbtabs{display:flex;gap:4px;padding:3px;margin:0 0 12px;border:1.3px solid var(--line);border-radius:11px;background:var(--card);flex:none}
+.sbtabs button{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;height:32px;border-radius:8px;font-size:12.5px;font-weight:700;color:var(--mut);transition:background .15s,color .15s}
+.sbtabs button small{font-size:10.5px;font-weight:700;color:var(--mut);opacity:.8}
+.sbtabs button:hover{color:var(--ink)}
+.sbtabs button.on{background:var(--green);color:var(--ink);box-shadow:inset 0 0 0 1.3px var(--ink),1px 1.5px 0 var(--drop)}.sbtabs button.on small{color:var(--ink2)}
+@media (max-width:1100px){.sbtabs{display:none}}
 #acside{display:none}
-.side.acmode #acside{display:flex;flex-direction:column;gap:2px;padding-bottom:12px}
+.side.acmode #acside{display:flex;flex-direction:column;gap:4px;padding-bottom:12px}
 .side.acmode .sscroll>:not(#acside),.side.acmode .prog{display:none!important}
-.acsh2{display:flex;justify-content:space-between;align-items:baseline;font-weight:800;font-size:15px;margin:2px 0 8px}.acsh2 small{font-size:11px;color:var(--mut);font-weight:600}
-.actk{display:flex;align-items:center;gap:8px;margin:14px 0 4px;font-size:11.5px;font-weight:800;text-transform:uppercase;color:var(--ink2);letter-spacing:.03em}.actk i{width:9px;height:9px;border-radius:3px}
-.acsl2{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:8px;text-decoration:none;color:var(--ink);font-size:13px;font-weight:600}.acsl2:hover{background:var(--card)}.acsl2 i{width:9px;height:9px;border-radius:3px;flex:none}.acsl2 span{flex:1;min-width:0;overflow-wrap:anywhere}.acsl2 em{font-style:normal;font-size:11px;color:var(--mut)}
-.acback{font-size:12px;font-weight:700;color:var(--mut);text-decoration:none;padding:4px 2px;margin-bottom:6px;align-self:flex-start}.acback:hover{color:var(--ink)}
-.acct{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border:1.3px solid var(--line);border-left:4px solid var(--tc);border-radius:11px;background:var(--card);text-decoration:none;color:var(--ink)}.acct small{font-size:10.5px;font-weight:700;color:var(--mut);text-transform:uppercase}.acct b{font-size:14px;line-height:1.3}
-.acsp2{display:flex;align-items:center;gap:10px;margin:8px 2px 6px;font-size:11.5px;color:var(--mut)}.acsp2 .acbar{flex:1}
+.acsh2{font-weight:800;font-size:14px;margin:0 2px 4px}
+.actk{display:flex;align-items:center;gap:8px;margin:12px 2px 2px;font-size:11px;font-weight:800;text-transform:uppercase;color:var(--ink2);letter-spacing:.04em}.actk i{width:9px;height:9px;border-radius:3px}
+.acrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 8px;padding:9px 10px 10px;border:1.3px solid transparent;border-left:3px solid var(--tc);border-radius:9px;text-decoration:none;color:var(--ink);background:transparent;transition:background .15s,border-color .15s}
+.acrow:hover{background:var(--card);border-color:var(--line);border-left-color:var(--tc)}
+.acrow.on{background:var(--card);border-color:var(--ink);border-left-color:var(--tc)}
+.acrt{display:flex;flex-direction:column;gap:1px;min-width:0}.acrt b{font-size:13px;line-height:1.3;overflow-wrap:anywhere}.acrt small{font-size:11px;color:var(--mut)}
+.acrp{font-size:11px;font-weight:700;color:var(--ink2);align-self:start}
+.acrow .acbar{grid-column:1/-1;height:4px}
+.acnavbar{display:flex;align-items:center;gap:8px;margin:0 0 8px}
+.acbackb{width:30px;height:30px;flex:none;display:grid;place-items:center;border:1.3px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);text-decoration:none}.acbackb:hover{border-color:var(--ink)}
+.accrumb{font-size:12px;color:var(--mut);min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.accrumb a{color:var(--ink2);text-decoration:none;font-weight:700}.accrumb a:hover{text-decoration:underline}.accrumb i{font-style:normal;margin:0 6px}.accrumb b{color:var(--mut);font-weight:600}
+.acct{display:flex;flex-direction:column;gap:3px;padding:10px 12px;border:1.3px solid var(--line);border-left:4px solid var(--tc);border-radius:11px;background:var(--card);text-decoration:none;color:var(--ink);margin-bottom:6px}.acct.on{border-color:var(--ink);border-left-color:var(--tc)}
+.acct small{font-size:10.5px;font-weight:700;color:var(--mut);text-transform:uppercase}.acct b{font-size:14px;line-height:1.3}
+.acsp2{display:flex;align-items:center;gap:10px;margin-top:5px;font-size:11px;color:var(--mut)}.acsp2 .acbar{flex:1;height:5px}
 .acsm summary{display:flex;align-items:center;gap:8px;padding:8px 4px;cursor:pointer;list-style:none;border-radius:8px;font-size:13px}.acsm summary::-webkit-details-marker{display:none}.acsm summary:hover{background:var(--card)}
 .acsm summary b{flex:1;min-width:0;font-weight:700;overflow-wrap:anywhere}.acsm summary em{font-style:normal;font-size:11px;color:var(--mut)}
+.acsm.cur>summary .acmn{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .acsi{display:flex;align-items:center;gap:8px;padding:6px 8px 6px 12px;margin-left:10px;border-left:1px solid var(--strong);font-size:12.5px;color:var(--mut);text-decoration:none;border-radius:0 8px 8px 0}
 .acsi:hover{color:var(--ink);background:var(--card)}.acsi .acck{width:15px;height:15px;font-size:9px}.acsi.done .acck{background:var(--green2);border-color:var(--ink)}
 .acsi.cur{color:var(--ink);font-weight:700;background:var(--card);border-left:3px solid var(--ink)}
+.side .root small{white-space:nowrap}
 </style>
 </head>
 <body>
@@ -597,7 +613,7 @@ a:focus-visible,[role=button]:focus-visible,summary:focus-visible,input:focus-vi
 <header class="top"><button class="menu" id="menu" aria-label="Toggle course menu">☰</button><div class="brand" id="brand" role="link" tabindex="0" title="Home"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2l9 5v12l-9 5-9-5V7z"/><path d="M9 11l-3 2 3 2M17 11l3 2-3 2"/></svg>SYAM<span>.DEV</span></div>
 <div class="search" id="search" role="button" tabindex="0" aria-label="Search lessons and commands"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="7" r="4.8"/><path d="M10.6 10.6L14 14"/></svg><span>Search the course…</span><kbd id="kbdk">Ctrl K</kbd></div><button class="sbtn" id="sbtn" aria-label="Search"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="7" r="4.8"/><path d="M10.6 10.6L14 14"/></svg></button><nav id="nav"><span data-v="learn" class="on" role="button" tabindex="0">Learn</span><span data-v="practice" role="button" tabindex="0">Practice</span><span data-v="cheat" role="button" tabindex="0">Cheatsheets</span></nav><button class="theme" id="theme" aria-label="Toggle theme">◐</button></header>
 <div class="body">
-<aside class="side" id="side" aria-label="Course menu"><div class="dhead"><div class="brand"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2l9 5v12l-9 5-9-5V7z"/><path d="M9 11l-3 2 3 2M17 11l3 2-3 2"/></svg>SYAM<span>.DEV</span></div><button class="dclose" id="dclose" aria-label="Close menu">✕</button></div><div class="dnav" id="dnav"><button data-v="home">Home</button><button data-v="learn" class="on">Learn</button><button data-v="practice">Practice</button><button data-v="cheat">Cheatsheets</button></div><div class="sscroll"><div class="root">Course <small id="tot"></small></div><div id="tree" role="navigation" aria-label="Course"></div></div>
+<aside class="side" id="side" aria-label="Course menu"><div class="dhead"><div class="brand"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2l9 5v12l-9 5-9-5V7z"/><path d="M9 11l-3 2 3 2M17 11l3 2-3 2"/></svg>SYAM<span>.DEV</span></div><button class="dclose" id="dclose" aria-label="Close menu">✕</button></div><div class="dnav" id="dnav"><button data-v="home">Home</button><button data-v="learn" class="on">Learn</button><button data-v="practice">Practice</button><button data-v="cheat">Cheatsheets</button></div><div class="sscroll"><div class="root">DevOps course <small id="tot"></small></div><div id="tree" role="navigation" aria-label="Course"></div></div>
 <div class="prog" id="prog"><button class="ph" id="ph" aria-expanded="true"><span>PROGRESS</span><b id="pc">0 / 0</b><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5L6 4l3.5 3.5"/></svg></button>
 <div class="bar2"><i id="pb2"><u></u></i></div>
 <div class="pbody"><div><ul id="plist"></ul><span class="prow2"><button class="prs" id="pexp">Export</button><button class="prs" id="pimp">Import</button><button class="prs" id="prs">Reset progress</button></span></div></div></div></aside>
@@ -5441,28 +5457,40 @@ function acHome(){var el=$('hacad');if(!el){var mods=$('hmods');if(!mods)return;
    ACAD.cat.lessons.forEach(function(l){var c=acCourseOf(l.id);if(!c)return;r.push({t:'lesson',title:l.title,sub:c.title+' · '+(AC_TYPES[l.type]||''),hay:(l.title+' '+c.title+' '+(l.body||'').slice(0,400)+' '+((ACAD.my[l.id]||{}).note||'')).toLowerCase(),href:'lesson:'+l.id})})}return r}}
  if(ACAD.ok&&ACCT.on)acLoad();
 })();
-// ---------- Sidebar in the Courses view: the open course's sections and lessons ----------
-function acSideEl(){var el=$('acside');if(el)return el;var sc=document.querySelector('.side .sscroll');if(!sc)return null;el=document.createElement('nav');el.id='acside';el.setAttribute('aria-label','Course outline');sc.appendChild(el);return el}
-function acSide(){var el=acSideEl(),side=document.querySelector('.side');if(!el||!side)return;var on=VIEW=='courses';side.classList.toggle('acmode',on);if(!on)return;
- if(!ACAD.cat){el.innerHTML='<div class="acsh2">Courses</div><p class="acmuted">Loading…</p>';return}
- var v=ACAD.view||{},cid=v.page=='course'?v.id:v.page=='lesson'?((acCourseOf(v.id)||{}).id):null,c=cid&&ACAD.C[cid],h;
- if(!c){h='<div class="acsh2">Courses <small>'+ACAD.cat.courses.length+'</small></div>';
-  h+='<a class="acsl2" href="#" data-learn="1"><i style="background:var(--green2)"></i><span>DevOps interactive course</span><em>'+acBuiltin().pct+'%</em></a>';
+// ---------- Sidebar: switch between the interactive course and the course library ----------
+var SB=(function(){try{return localStorage.getItem('syam:sb')||'learn'}catch(e){return 'learn'}})();
+function sbSet(v){if(!ACAD.ok)v='learn';SB=v;try{localStorage.setItem('syam:sb',v)}catch(e){}acSide()}
+function sbTabs(){var sc=document.querySelector('.side .sscroll');if(!sc||!ACAD.ok)return null;var t=$('sbtabs');
+ if(!t){t=document.createElement('div');t.id='sbtabs';t.className='sbtabs';t.setAttribute('role','tablist');t.setAttribute('aria-label','Sidebar');
+  t.innerHTML='<button role="tab" data-sb="learn"><span>Interactive</span><small id="sbn1"></small></button><button role="tab" data-sb="courses"><span>Courses</span><small id="sbn2"></small></button>';
+  sc.parentNode.insertBefore(t,sc);t.querySelectorAll('[data-sb]').forEach(function(b){b.onclick=function(){sbSet(b.dataset.sb);var s=document.querySelector('.side .sscroll');if(s)s.scrollTop=0}})}
+ t.querySelectorAll('[data-sb]').forEach(function(b){var on=b.dataset.sb==SB;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});
+ var bi=acBuiltin();$('sbn1').textContent=bi.done+'/'+bi.n;$('sbn2').textContent=ACAD.cat?ACAD.cat.courses.length:'';return t}
+function acSideEl(){var el=$('acside');if(el)return el;var sc=document.querySelector('.side .sscroll');if(!sc)return null;el=document.createElement('nav');el.id='acside';el.setAttribute('aria-label','Courses');sc.appendChild(el);return el}
+function acRow(href,title,meta,pct,col,active,attr){return '<a class="acrow'+(active?' on':'')+'" href="'+href+'"'+(attr||'')+(active?' aria-current="page"':'')+' style="--tc:'+esc(col)+'"><span class="acrt"><b>'+esc(title)+'</b><small>'+meta+'</small></span><span class="acrp">'+pct+'%</span><u class="acbar"><i style="width:'+pct+'%"></i></u></a>'}
+function acSide(){sbTabs();var el=acSideEl(),side=document.querySelector('.side');if(!el||!side)return;var on=SB=='courses'&&ACAD.ok;side.classList.toggle('acmode',on);if(!on)return;
+ if(!ACAD.cat){el.innerHTML='<p class="acmuted">Loading your courses…</p>';acLoad();return}
+ var v=VIEW=='courses'?(ACAD.view||{}):{},cid=v.page=='course'?v.id:v.page=='lesson'?((acCourseOf(v.id)||{}).id):null,c=cid&&ACAD.C[cid],h;
+ if(!c){var bi=acBuiltin();h='<div class="acsh2">All courses</div>';
+  h+=acRow('#','DevOps interactive course',bi.n+' lessons · built in',bi.pct,'#3fa456',VIEW=='learn',' data-learn="1"');
   ACAD.cat.tracks.forEach(function(t){var cs=ACAD.cat.courses.filter(function(x){return x.track_id==t.id});if(!cs.length)return;
-   h+='<div class="actk"><i style="background:'+esc(t.color)+'"></i>'+esc(t.title)+'</div>'+cs.map(function(x){var st=acStats(x.id);return '<a class="acsl2" href="#course:'+x.id+'"><span>'+esc(x.title)+'</span><em>'+(st.done?st.pct+'%':'')+'</em></a>'}).join('')});
-  el.innerHTML=h;el.querySelectorAll('[data-learn]').forEach(function(a){a.onclick=function(e){e.preventDefault();goView('learn')}});return}
+   h+='<div class="actk"><i style="background:'+esc(t.color)+'"></i>'+esc(t.title)+'</div>'+cs.map(function(x){var st=acStats(x.id);return acRow('#course:'+x.id,x.title,st.n+' lessons'+(st.min?' · '+acMins(st.min):''),st.pct,t.color,false)}).join('')});
+  el.innerHTML=h;el.querySelectorAll('[data-learn]').forEach(function(a){a.onclick=function(e){e.preventDefault();sbSet('learn');goView('learn')}});return}
  var st=acStats(cid),t=ACAD.T[c.track_id]||{},mods=ACAD.CM[cid]||[],curL=v.page=='lesson'?v.id:null,curM=curL&&ACAD.L[curL]?ACAD.L[curL].module_id:null;
- h='<a class="acback" href="#courses">← All courses</a><a class="acct" href="#course:'+cid+'" style="--tc:'+esc(t.color||'#2f86ce')+'"><small>'+esc(t.title||'')+' · '+esc(AC_PROV[c.provider]||'')+'</small><b>'+esc(c.title)+'</b></a>'+
-  '<div class="acsp2"><u class="acbar"><i style="width:'+st.pct+'%"></i></u><span>'+st.done+' / '+st.n+' done</span></div>';
+ h='<div class="acnavbar"><a class="acbackb" href="#courses" title="Back to all courses" aria-label="Back to all courses"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg></a><span class="accrumb"><a href="#courses">Courses</a><i>/</i><b>'+esc(t.title||'')+'</b></span></div>'+
+  '<a class="acct'+(v.page=='course'?' on':'')+'" href="#course:'+cid+'" style="--tc:'+esc(t.color||'#2f86ce')+'"><small>'+esc(AC_PROV[c.provider]||'')+(c.level?' · '+esc(c.level):'')+'</small><b>'+esc(c.title)+'</b><span class="acsp2"><u class="acbar"><i style="width:'+st.pct+'%"></i></u><span>'+st.done+' / '+st.n+'</span></span></a>';
  h+=mods.map(function(m,mi){var ls=ACAD.ML[m.id],d=ls.filter(function(l){return ACAD.my[l.id]&&ACAD.my[l.id].done}).length,open=m.id==curM||(!curM&&(mods.length<5||d<ls.length&&mods.slice(0,mi).every(function(pm){return ACAD.ML[pm.id].every(function(l){return ACAD.my[l.id]&&ACAD.my[l.id].done})})));
-  return '<details class="acsm"'+(open?' open':'')+'><summary><span class="acmn">'+(mi+1<10?'0':'')+(mi+1)+'</span><b>'+esc(m.title)+'</b><em>'+d+'/'+ls.length+'</em></summary>'+
+  return '<details class="acsm'+(m.id==curM?' cur':'')+'"'+(open?' open':'')+'><summary><span class="acmn">'+(mi+1<10?'0':'')+(mi+1)+'</span><b>'+esc(m.title)+'</b><em>'+d+'/'+ls.length+'</em></summary>'+
    ls.map(function(l){var u=ACAD.my[l.id]||{};return '<a class="acsi'+(u.done?' done':'')+(l.id==curL?' cur':'')+'" href="#lesson:'+l.id+'"'+(l.id==curL?' aria-current="page"':'')+'><span class="acck">'+(u.done?'✓':'')+'</span><span class="aclt">'+esc(l.title)+'</span></a>'}).join('')+'</details>'}).join('');
  el.innerHTML=h;
  var cur=el.querySelector('.acsi.cur'),sc=document.querySelector('.side .sscroll');if(cur&&sc){var r=cur.getBoundingClientRect(),q=sc.getBoundingClientRect();if(r.top<q.top+60||r.bottom>q.bottom-20)sc.scrollTop+=r.top-q.top-q.height/3}else if(sc&&!curL)sc.scrollTop=0}
 (function(){var _ar=acRender;acRender=function(a){_ar(a);acSide()};
  var _al=acAfterLoad;acAfterLoad=function(){_al();acSide()};
  var _ps=acPaintLessonState;acPaintLessonState=function(l,p,n){_ps(l,p,n);acSide()};
- var _sv=setView;setView=function(v,arg){_sv(v,arg);if(v!='courses'){var s=document.querySelector('.side');if(s)s.classList.remove('acmode')}}})();
+ var _sv=setView;setView=function(v,arg){_sv(v,arg);if(v=='courses')SB='courses';else if(v=='learn')SB='learn';if(v=='courses'||v=='learn'){try{localStorage.setItem('syam:sb',SB)}catch(e){}}acSide()};
+ var _rt=renderTree;renderTree=function(){_rt();sbTabs()};
+ var _sv2=save;save=function(){_sv2();if(SB=='learn')sbTabs()};
+ acSide()})();
 // ---------- Admin dashboard: manage tracks, courses, sections and lessons ----------
 var AD={view:{tab:'content'},busy:false};
 function adSection(){var s=$('vadmin');if(s)return s;s=document.createElement('section');s.className='view adv';s.id='vadmin';s.hidden=true;$('vcourses').after(s);return s}

@@ -159,25 +159,37 @@ function acHome(){var el=$('hacad');if(!el){var mods=$('hmods');if(!mods)return;
    ACAD.cat.lessons.forEach(function(l){var c=acCourseOf(l.id);if(!c)return;r.push({t:'lesson',title:l.title,sub:c.title+' · '+(AC_TYPES[l.type]||''),hay:(l.title+' '+c.title+' '+(l.body||'').slice(0,400)+' '+((ACAD.my[l.id]||{}).note||'')).toLowerCase(),href:'lesson:'+l.id})})}return r}}
  if(ACAD.ok&&ACCT.on)acLoad();
 })();
-// ---------- Sidebar in the Courses view: the open course's sections and lessons ----------
-function acSideEl(){var el=$('acside');if(el)return el;var sc=document.querySelector('.side .sscroll');if(!sc)return null;el=document.createElement('nav');el.id='acside';el.setAttribute('aria-label','Course outline');sc.appendChild(el);return el}
-function acSide(){var el=acSideEl(),side=document.querySelector('.side');if(!el||!side)return;var on=VIEW=='courses';side.classList.toggle('acmode',on);if(!on)return;
- if(!ACAD.cat){el.innerHTML='<div class="acsh2">Courses</div><p class="acmuted">Loading…</p>';return}
- var v=ACAD.view||{},cid=v.page=='course'?v.id:v.page=='lesson'?((acCourseOf(v.id)||{}).id):null,c=cid&&ACAD.C[cid],h;
- if(!c){h='<div class="acsh2">Courses <small>'+ACAD.cat.courses.length+'</small></div>';
-  h+='<a class="acsl2" href="#" data-learn="1"><i style="background:var(--green2)"></i><span>DevOps interactive course</span><em>'+acBuiltin().pct+'%</em></a>';
+// ---------- Sidebar: switch between the interactive course and the course library ----------
+var SB=(function(){try{return localStorage.getItem('syam:sb')||'learn'}catch(e){return 'learn'}})();
+function sbSet(v){if(!ACAD.ok)v='learn';SB=v;try{localStorage.setItem('syam:sb',v)}catch(e){}acSide()}
+function sbTabs(){var sc=document.querySelector('.side .sscroll');if(!sc||!ACAD.ok)return null;var t=$('sbtabs');
+ if(!t){t=document.createElement('div');t.id='sbtabs';t.className='sbtabs';t.setAttribute('role','tablist');t.setAttribute('aria-label','Sidebar');
+  t.innerHTML='<button role="tab" data-sb="learn"><span>Interactive</span><small id="sbn1"></small></button><button role="tab" data-sb="courses"><span>Courses</span><small id="sbn2"></small></button>';
+  sc.parentNode.insertBefore(t,sc);t.querySelectorAll('[data-sb]').forEach(function(b){b.onclick=function(){sbSet(b.dataset.sb);var s=document.querySelector('.side .sscroll');if(s)s.scrollTop=0}})}
+ t.querySelectorAll('[data-sb]').forEach(function(b){var on=b.dataset.sb==SB;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});
+ var bi=acBuiltin();$('sbn1').textContent=bi.done+'/'+bi.n;$('sbn2').textContent=ACAD.cat?ACAD.cat.courses.length:'';return t}
+function acSideEl(){var el=$('acside');if(el)return el;var sc=document.querySelector('.side .sscroll');if(!sc)return null;el=document.createElement('nav');el.id='acside';el.setAttribute('aria-label','Courses');sc.appendChild(el);return el}
+function acRow(href,title,meta,pct,col,active,attr){return '<a class="acrow'+(active?' on':'')+'" href="'+href+'"'+(attr||'')+(active?' aria-current="page"':'')+' style="--tc:'+esc(col)+'"><span class="acrt"><b>'+esc(title)+'</b><small>'+meta+'</small></span><span class="acrp">'+pct+'%</span><u class="acbar"><i style="width:'+pct+'%"></i></u></a>'}
+function acSide(){sbTabs();var el=acSideEl(),side=document.querySelector('.side');if(!el||!side)return;var on=SB=='courses'&&ACAD.ok;side.classList.toggle('acmode',on);if(!on)return;
+ if(!ACAD.cat){el.innerHTML='<p class="acmuted">Loading your courses…</p>';acLoad();return}
+ var v=VIEW=='courses'?(ACAD.view||{}):{},cid=v.page=='course'?v.id:v.page=='lesson'?((acCourseOf(v.id)||{}).id):null,c=cid&&ACAD.C[cid],h;
+ if(!c){var bi=acBuiltin();h='<div class="acsh2">All courses</div>';
+  h+=acRow('#','DevOps interactive course',bi.n+' lessons · built in',bi.pct,'#3fa456',VIEW=='learn',' data-learn="1"');
   ACAD.cat.tracks.forEach(function(t){var cs=ACAD.cat.courses.filter(function(x){return x.track_id==t.id});if(!cs.length)return;
-   h+='<div class="actk"><i style="background:'+esc(t.color)+'"></i>'+esc(t.title)+'</div>'+cs.map(function(x){var st=acStats(x.id);return '<a class="acsl2" href="#course:'+x.id+'"><span>'+esc(x.title)+'</span><em>'+(st.done?st.pct+'%':'')+'</em></a>'}).join('')});
-  el.innerHTML=h;el.querySelectorAll('[data-learn]').forEach(function(a){a.onclick=function(e){e.preventDefault();goView('learn')}});return}
+   h+='<div class="actk"><i style="background:'+esc(t.color)+'"></i>'+esc(t.title)+'</div>'+cs.map(function(x){var st=acStats(x.id);return acRow('#course:'+x.id,x.title,st.n+' lessons'+(st.min?' · '+acMins(st.min):''),st.pct,t.color,false)}).join('')});
+  el.innerHTML=h;el.querySelectorAll('[data-learn]').forEach(function(a){a.onclick=function(e){e.preventDefault();sbSet('learn');goView('learn')}});return}
  var st=acStats(cid),t=ACAD.T[c.track_id]||{},mods=ACAD.CM[cid]||[],curL=v.page=='lesson'?v.id:null,curM=curL&&ACAD.L[curL]?ACAD.L[curL].module_id:null;
- h='<a class="acback" href="#courses">← All courses</a><a class="acct" href="#course:'+cid+'" style="--tc:'+esc(t.color||'#2f86ce')+'"><small>'+esc(t.title||'')+' · '+esc(AC_PROV[c.provider]||'')+'</small><b>'+esc(c.title)+'</b></a>'+
-  '<div class="acsp2"><u class="acbar"><i style="width:'+st.pct+'%"></i></u><span>'+st.done+' / '+st.n+' done</span></div>';
+ h='<div class="acnavbar"><a class="acbackb" href="#courses" title="Back to all courses" aria-label="Back to all courses"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg></a><span class="accrumb"><a href="#courses">Courses</a><i>/</i><b>'+esc(t.title||'')+'</b></span></div>'+
+  '<a class="acct'+(v.page=='course'?' on':'')+'" href="#course:'+cid+'" style="--tc:'+esc(t.color||'#2f86ce')+'"><small>'+esc(AC_PROV[c.provider]||'')+(c.level?' · '+esc(c.level):'')+'</small><b>'+esc(c.title)+'</b><span class="acsp2"><u class="acbar"><i style="width:'+st.pct+'%"></i></u><span>'+st.done+' / '+st.n+'</span></span></a>';
  h+=mods.map(function(m,mi){var ls=ACAD.ML[m.id],d=ls.filter(function(l){return ACAD.my[l.id]&&ACAD.my[l.id].done}).length,open=m.id==curM||(!curM&&(mods.length<5||d<ls.length&&mods.slice(0,mi).every(function(pm){return ACAD.ML[pm.id].every(function(l){return ACAD.my[l.id]&&ACAD.my[l.id].done})})));
-  return '<details class="acsm"'+(open?' open':'')+'><summary><span class="acmn">'+(mi+1<10?'0':'')+(mi+1)+'</span><b>'+esc(m.title)+'</b><em>'+d+'/'+ls.length+'</em></summary>'+
+  return '<details class="acsm'+(m.id==curM?' cur':'')+'"'+(open?' open':'')+'><summary><span class="acmn">'+(mi+1<10?'0':'')+(mi+1)+'</span><b>'+esc(m.title)+'</b><em>'+d+'/'+ls.length+'</em></summary>'+
    ls.map(function(l){var u=ACAD.my[l.id]||{};return '<a class="acsi'+(u.done?' done':'')+(l.id==curL?' cur':'')+'" href="#lesson:'+l.id+'"'+(l.id==curL?' aria-current="page"':'')+'><span class="acck">'+(u.done?'✓':'')+'</span><span class="aclt">'+esc(l.title)+'</span></a>'}).join('')+'</details>'}).join('');
  el.innerHTML=h;
  var cur=el.querySelector('.acsi.cur'),sc=document.querySelector('.side .sscroll');if(cur&&sc){var r=cur.getBoundingClientRect(),q=sc.getBoundingClientRect();if(r.top<q.top+60||r.bottom>q.bottom-20)sc.scrollTop+=r.top-q.top-q.height/3}else if(sc&&!curL)sc.scrollTop=0}
 (function(){var _ar=acRender;acRender=function(a){_ar(a);acSide()};
  var _al=acAfterLoad;acAfterLoad=function(){_al();acSide()};
  var _ps=acPaintLessonState;acPaintLessonState=function(l,p,n){_ps(l,p,n);acSide()};
- var _sv=setView;setView=function(v,arg){_sv(v,arg);if(v!='courses'){var s=document.querySelector('.side');if(s)s.classList.remove('acmode')}}})();
+ var _sv=setView;setView=function(v,arg){_sv(v,arg);if(v=='courses')SB='courses';else if(v=='learn')SB='learn';if(v=='courses'||v=='learn'){try{localStorage.setItem('syam:sb',SB)}catch(e){}}acSide()};
+ var _rt=renderTree;renderTree=function(){_rt();sbTabs()};
+ var _sv2=save;save=function(){_sv2();if(SB=='learn')sbTabs()};
+ acSide()})();
