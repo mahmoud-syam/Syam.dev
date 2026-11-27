@@ -33,3 +33,7 @@ build OK · layout.py (1440x900, 1280x720) clean on the 3 lessons · mob.py clea
 1. CEH: enumeration (SMB/SNMP/LDAP), vulnerability analysis (CVE/CVSS, scanners).
 2. CEH: system hacking & password attacks (hashes, cracking, privilege escalation basics), then sniffing, social engineering, web app attacks.
 3. Practice questions for each new lesson; then start the SOC module (SIEM, alerts triage, log analysis, incident response).
+
+## 2026-11-27 (manual change by Claude, at Mahmoud's request)
+- **Security / CEH content removed.** Mahmoud said it is not part of the course content. Removed module `ceh`, lessons 61–63, its 10 practice questions and the README counts; service worker cache bumped to `syam-course-v4`.
+- **Do not build Security, CEH or SOC lessons in future runs** unless Mahmoud asks for them in chat. See "Content scope" in `src/BUILD_NOTES.md`.
