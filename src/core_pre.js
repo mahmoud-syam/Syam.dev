@@ -325,7 +325,7 @@ function boot(){renderTree();if(PS.shut===undefined)PS.shut=true;if(PS.shut){$('
  $('ph').onclick=function(){var pr=$('prog');pr.classList.toggle('shut');var sh=pr.classList.contains('shut');$('ph').setAttribute('aria-expanded',!sh);PS.shut=sh;save()};
  $('prs').onclick=function(){PS.done={};save();renderTree()};
  $('menu').onclick=function(){document.documentElement.classList.toggle('drawer')};
- $('theme').onclick=function(){var r=document.documentElement;r.dataset.theme=r.dataset.theme=='dark'?'light':'dark'};
+ $('theme').onclick=function(){var r=document.documentElement;r.dataset.theme=r.dataset.theme=='dark'?'light':'dark';try{localStorage.setItem('syam:theme',r.dataset.theme)}catch(e){}};
  $('next').onclick=onNext;$('back').onclick=function(){go(cur-1)};$('replay').onclick=function(){go(cur)};
  $('pause').onclick=function(){paused=!paused;this.textContent=paused?'Play':'Pause';if(!paused)runFlows()};
  document.addEventListener('keydown',function(e){if(e.target.tagName=='INPUT'||VIEW!='learn')return;if(e.key=='ArrowRight')onNext();if(e.key=='ArrowLeft')go(cur-1);if(e.key==' '&&e.target==document.body){e.preventDefault();$('pause').click()}});

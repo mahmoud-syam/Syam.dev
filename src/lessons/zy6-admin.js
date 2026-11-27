@@ -49,14 +49,14 @@ function adAct(a,id){var cat=ACAD.cat,c,t,m;
 function adTrackForm(t){mdlOpen(t?'Edit track':'New track','<div class="adform"><label>Title<input id="ftt" maxlength="120" value="'+esc(t?t.title:'')+'" placeholder="Cloud"></label><label>Description<textarea id="ftd" rows="2" maxlength="600" placeholder="What this track covers">'+esc(t?t.description:'')+'</textarea></label><label class="adrow">Color<input type="color" id="ftc" value="'+esc(t?t.color:'#2f86ce')+'"></label><div class="hbtns"><button class="pbtn" id="fts">'+(t?'Save':'Create track')+'</button></div><div id="fterr" class="mmsg"></div></div>');
  $('ftt').focus();$('fts').onclick=function(){var body={title:$('ftt').value,description:$('ftd').value,color:$('ftc').value};
   (t?acApi('PUT','/api/admin/tracks/'+t.id,body):acApi('POST','/api/admin/tracks',body)).then(function(){mdlClose();acToast(t?'Track saved':'Track created');return adReload()},function(e){$('fterr').className='mmsg bad';$('fterr').textContent=e.message})}}
-function adLinkInfo(inp,titleInp,extra){var u=$(inp).value.trim();if(!u){acToast('Paste a link first',true);return}var b=event&&event.target;if(b)b.disabled=true;
+function adLinkInfo(inp,titleInp,extra,b){var u=$(inp).value.trim();if(!u){acToast('Paste a link first',true);return}if(b)b.disabled=true;
  acApi('GET','/api/admin/link-info?url='+encodeURIComponent(u)).then(function(j){if(j.title&&$(titleInp))$(titleInp).value=j.title;if(extra)extra(j);acToast(j.title?'Title filled in':'No title found on that page')},adErr).then(function(){if(b)b.disabled=false})}
 function adCourseForm(c,trackId){var cat=ACAD.cat;mdlOpen(c?'Edit course':'New course','<div class="adform"><label>Title<input id="fct" maxlength="160" value="'+esc(c?c.title:'')+'" placeholder="AZ-104: Azure Administrator"></label>'+
  '<label>Course link (optional)<span class="adinl"><input id="fcu" value="'+esc(c?c.url:'')+'" placeholder="https://www.udemy.com/course/…"><button class="pbtn alt" type="button" id="fcg">Get title</button></span></label>'+
  '<div class="adcols"><label>Track'+adSel('fctr',cat.tracks.map(function(t){return [t.id,t.title]}),c?c.track_id:trackId)+'</label><label>Platform'+adSel('fcp',adProvOpts(),c?c.provider:'other')+'</label><label>Level<input id="fcl" maxlength="40" value="'+esc(c?c.level:'')+'" placeholder="Beginner"></label></div>'+
  '<label>Description<textarea id="fcd" rows="3" maxlength="2000">'+esc(c?c.description:'')+'</textarea></label><label class="adrow"><input type="checkbox" id="fcpub"'+(!c||c.published?' checked':'')+'> Visible to learners</label>'+
  '<div class="hbtns"><button class="pbtn" id="fcs">'+(c?'Save':'Create course')+'</button></div><div id="fcerr" class="mmsg"></div></div>');
- $('fct').focus();$('fcg').onclick=function(){adLinkInfo('fcu','fct',function(j){if(j.provider)$('fcp').value=j.provider})};
+ $('fct').focus();$('fcg').onclick=function(){adLinkInfo('fcu','fct',function(j){if(j.provider)$('fcp').value=j.provider},this)};
  $('fcs').onclick=function(){var body={title:$('fct').value,url:$('fcu').value,track_id:$('fctr').value,provider:$('fcp').value,level:$('fcl').value,description:$('fcd').value,published:$('fcpub').checked};
   (c?acApi('PUT','/api/admin/courses/'+c.id,body):acApi('POST','/api/admin/courses',body)).then(function(r){mdlClose();acToast(c?'Course saved':'Course created');return adReload().then(function(){if(!c)location.hash='admin:course:'+r.id})},function(e){$('fcerr').className='mmsg bad';$('fcerr').textContent=e.message})}}
 function adLinksText(ls){return (ls||[]).map(function(x){return (x.title?x.title+' | ':'')+x.url}).join('\n')}
@@ -70,7 +70,7 @@ function adLessonForm(l,moduleId,cb){var m=ACAD.M[moduleId],c=ACAD.C[m.course_id
  '<label>Extra links<textarea id="fll" rows="3" placeholder="One per line:  Title | https://…">'+esc(adLinksText(l&&l.links))+'</textarea></label><label class="adrow"><input type="checkbox" id="flpub"'+(!l||l.published?' checked':'')+'> Visible to learners</label>'+
  '<div class="hbtns"><button class="pbtn" id="fls">'+(l?'Save':'Add lesson')+'</button>'+(l?'':'<button class="pbtn alt" id="flsa">Add and add another</button>')+'</div><div id="flerr" class="mmsg"></div></div>');
  $('flt').focus();
- $('flg').onclick=function(){adLinkInfo('flu','flt',function(j){if(j.type)$('fly').value=j.type})};
+ $('flg').onclick=function(){adLinkInfo('flu','flt',function(j){if(j.type)$('fly').value=j.type},this)};
  $('flw').onclick=function(){$('flb').hidden=false;$('flpv').hidden=true;this.className='on';$('flp').className=''};
  $('flp').onclick=function(){$('flpv').innerHTML=acMd($('flb').value)||'<p class="acmuted">Nothing to preview.</p>';$('flb').hidden=true;$('flpv').hidden=false;this.className='on';$('flw').className=''};
  function go(again){var body={title:$('flt').value,url:$('flu').value,type:$('fly').value,minutes:$('flm').value,module_id:$('flmod').value,body:$('flb').value,links:adParseLinks($('fll').value),published:$('flpub').checked};
